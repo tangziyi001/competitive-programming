@@ -1,11 +1,20 @@
 #include <iostream>
 #include <string>
 using namespace std;
-int main(){
+class Node{
+	int label;
+	public:
+		Node(int a){label = a;}
+		void print() {cout << label <<endl;}
 
-	string a = "hahaha";
-	char b[] = {'a','b'};
-	*b = a + *b;
-	cout << a << endl;
-	return 0;
+		void set(int);
+};
+void Node::set(int num){
+	label = num;
+}
+
+int main(){
+	Node a(1);
+	a.set(4);
+	a.print();
 }
