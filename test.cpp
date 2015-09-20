@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 class Node{
 	int label;
@@ -14,7 +15,6 @@ void Node::set(int num){
 }
 
 int main(){
-	Node a(1);
-	a.set(4);
-	a.print();
+	vector<int> a;
+	cout << a[10] << endl;
 }
