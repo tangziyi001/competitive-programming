@@ -15,6 +15,22 @@ void Node::set(int num){
 }
 
 int main(){
-	vector<int> a;
-	cout << a[10] << endl;
+	string a;
+	while (getline (cin, a)){
+	if (a == ""){
+		cout << "blank" << endl;
+	}else{
+		cout << "not" << endl;
+		int idx = a.find(' ');
+		string one;
+		string two;
+		one = a.substr(0, idx + 1);
+		two = a.substr(idx + 1, a.size() - idx);
+		cout << idx << endl;
+		cout << one << endl;
+		cout << two << endl;
+		cout << endl;
+
+	}
+}
 }
