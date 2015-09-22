@@ -9,7 +9,6 @@
 #include <set>
 using namespace std;
 bool check(string a, string b){
-    
         if(a.size()==b.size()){
             int count = 0;
             int sz = (int)a.size();
@@ -23,9 +22,7 @@ bool check(string a, string b){
             }
             return true;
         }
-        return false;
-        
-    
+        return false;   
 }
 int Distance(map<string, vector<string> > all, string str1, string str2){
     queue<string> que;
