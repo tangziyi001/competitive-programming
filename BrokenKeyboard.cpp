@@ -1,5 +1,5 @@
 //UVA 11988
-// The usage of list and cstdio
+// The usage of list (its iterator) and cstdio
 #include <iostream>
 #include <cstring>
 #include <cstdio>
