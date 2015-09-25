@@ -1,4 +1,5 @@
 //UVA 10684
+// Kadane's Algorithm
 #include <iostream>
 #include <string>
 #include <vector>
