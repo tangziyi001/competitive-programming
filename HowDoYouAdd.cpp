@@ -5,9 +5,9 @@
 #include <vector>
 
 using namespace std;
-int main(){
-	int c;
-	int k;
+long main(){
+	long long c;
+	long long k;
 	while (cin >> c >> k && c != 0 && k != 0){
 		
 			int nom = 0;
