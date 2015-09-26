@@ -1,3 +1,4 @@
+//Aizu 0008
 #include <iostream>
 #include <string>
 using namespace std;
@@ -8,10 +9,6 @@ int main(){
 			cout << 0 << endl;
 		}
 		else{
-			// 36: 1 1
-			// 35: 4 2
-			// 34: 8899 8989 9898 9988 4 2
-			// 33: 9987 9978 9879 9897 9789 9798 9888 +4
 			int count = 0;
 
 			for (int a = 0; a <= 9; a++){

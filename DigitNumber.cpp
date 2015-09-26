@@ -1,3 +1,4 @@
+//Aizu 0002
 #include <iostream>
 #include <string>
 using namespace std;
