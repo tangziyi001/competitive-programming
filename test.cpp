@@ -14,7 +14,17 @@ void Node::set(int num){
 	label = num;
 }
 
+int check(int a, int b){
+	if (a == b){
+		return 1;
+	}
+	else{
+		return 1 + check(a+1,b);
+	}	
+
+
+}
 int main(){
-	double a =  1.5555555555;
-	printf("%.5f\n", a);
+int re = check(1,10);
+cout << re << endl;
 }
