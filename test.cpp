@@ -1,7 +1,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <set>
 using namespace std;
+typedef int D;
+set<D> a;
 class Node{
 	int label;
 	public:
@@ -25,6 +28,5 @@ int check(int a, int b){
 
 }
 int main(){
-int re = check(1,10);
-cout << re << endl;
+	a.insert(0);
 }
