@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <queue>
+#include <map>
 using namespace std;
 typedef int D;
 set<D> a;
@@ -28,5 +30,14 @@ int check(int a, int b){
 
 }
 int main(){
-	a.insert(0);
+	map<int,int> t;
+	t[1] = 10;
+	t[2]= 6;
+	t[3] = 4;
+	priority_queue<pair<int,string>, set<pair<int,string> >, greater<pair<int,string> > > a;
+	
+	a.push(make_pair(4,"ahu"));
+	a.push(make_pair(6,"hadh"));
+	a.push(make_pair(8,"auid"));
+	cout << a.top().second << endl;
 }

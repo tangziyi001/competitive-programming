@@ -1,5 +1,6 @@
 //UVA 929
 // First try of Dijkstra Algorithm
+// Implement Dijkstra by Priority_Queue
 #include <cstdio>
 #include <iostream>
 #include <set>
@@ -11,67 +12,62 @@
 
 using namespace std;
 typedef pair<int,int> PP;
+typedef pair<int,PP> PPP;
 int maze[1001][1001];
 int dp[1001][1001];
-set<PP> in;
-set<PP> compare;
-// Initiate variables above in main method
 
-int check(int f, int s, int gf, int gs){
-		if (f == gf && s == gs){
-			return dp[f][s];
+priority_queue<PPP> compare;
+
+int check(int gf, int gs){
+	compare.push(make_pair(-dp[1][1], make_pair(1,1)));
+	while (!compare.empty()){
+
+		PPP tmp = compare.top();compare.pop();
+		PP ttmp = tmp.second;
+		int f = ttmp.first;
+		int s = ttmp.second;
+		if(f == gf && s == gs){
+			return -tmp.first;
 		}
 	
-		if (f+1 <= gf && in.find(make_pair(f+1,s)) == in.end()){
+		if (f+1 <= gf){
 			if (dp[f+1][s] == -1 || dp[f][s] + maze[f+1][s] < dp[f+1][s]){
 				dp[f+1][s] = dp[f][s] + maze[f+1][s];
-				compare.insert(make_pair(f+1,s));
+				compare.push(make_pair(-dp[f+1][s], make_pair(f+1,s)));
 			}
 		}
-		if (f-1 >= 1 && in.find(make_pair(f-1,s)) == in.end()){
+		if (f-1 >= 1){
 			if (dp[f-1][s] == -1 || dp[f][s] + maze[f-1][s] < dp[f-1][s]){
 				dp[f-1][s] = dp[f][s] + maze[f-1][s];
-				compare.insert(make_pair(f-1,s));
+				compare.push(make_pair(-dp[f-1][s], make_pair(f-1,s)));
 			}
 		}
-		if (s+1 <= gs && in.find(make_pair(f,s+1)) == in.end()){
+		if (s+1 <= gs){
 			if (dp[f][s+1] == -1 || dp[f][s] + maze[f][s+1] < dp[f][s+1]){
 				dp[f][s+1] = dp[f][s] + maze[f][s+1];
-				compare.insert(make_pair(f,s+1));
+				compare.push(make_pair(-dp[f][s+1], make_pair(f,s+1)));
 			}
 		}
-		if (s-1 >= 1 && in.find(make_pair(f,s-1)) == in.end()){
+		if (s-1 >= 1){
 			if (dp[f][s-1] == -1 || dp[f][s] + maze[f][s-1] < dp[f][s-1]){
 				dp[f][s-1] = dp[f][s] + maze[f][s-1];
-				compare.insert(make_pair(f,s-1));
+				compare.push(make_pair(-dp[f][s-1], make_pair(f,s-1)));
 			}
 		}
 		
-		int tmp = 100000;
-		set<PP> :: iterator min = compare.end();
-		for (auto it = compare.begin(); it != compare.end(); it++){
-			if (dp[(*it).first][(*it).second] < tmp){
-				tmp = dp[(*it).first][(*it).second];
-				min = it;
-			}
-		}
-		
-		in.insert(*min);
-		compare.erase(*min);
-		return check((*min).first, (*min).second, gf, gs);
-	
-	
+	}
+	return -1;	
 }
 
 int main(){
 	int test;
 	scanf("%d", &test);
-	while(test--){
+	for(int k = 0; k < test; k++){
 		memset(dp, -1, sizeof(dp));
 		memset(maze, -1, sizeof(maze));
-		in.clear();
-		in.insert(make_pair(1,1));
-		compare.clear();
+		while(!compare.empty()){
+			compare.pop();
+		}
 		int r,c;
 		scanf("%d %d",&r,&c);
 		for (int i = 1; i <= r; i++){
@@ -84,7 +80,7 @@ int main(){
 		}
 		// Make sure that the first r,c grid has initial value
 		dp[1][1] = maze[1][1];
-		int re = check(1,1,r,c);
+		int re = check(r,c);
 		printf("%d\n",re);
 
 	}
