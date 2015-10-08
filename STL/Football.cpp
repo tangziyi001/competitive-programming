@@ -1,3 +1,6 @@
+//UVA 10194
+// Multifield-sort, to lower case.
+// Trap: Lexicographic order should change all words to lower case first.
 #include <iostream>
 #include <cstdio>
 #include <string>
