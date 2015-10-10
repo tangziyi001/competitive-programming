@@ -12,8 +12,8 @@
 #include <queue>
 using namespace std;
 typedef vector<int> vi;
-typedef pair<int,int> pii;
-typedef vector<ii> vpi;
+typedef pair<int,int> pi;
+typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
 
 // Union Find
