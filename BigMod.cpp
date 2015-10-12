@@ -21,7 +21,7 @@ typedef vector<vpi> vvpi;
 const int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
 
 int main(){
-
+	
 
 
 
