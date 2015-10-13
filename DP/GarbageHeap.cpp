@@ -1,5 +1,5 @@
 //UVA10755
-// 2D Max and Kadane's Algorithm, Prefix Sum
+// 2D Max and Kadane's Algorithm, Prefix Sum, Big Number
 
 #include <iostream>
 #include <cstdio>
@@ -15,7 +15,7 @@
 #include <queue>
 #include <bitset>
 using namespace std;
-#define INF 1E9
+#define INF 1E18
 typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
@@ -23,7 +23,7 @@ typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
 const int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
 
-long sum[25][25][25];
+ll sum[25][25][25];
 int main(){
 	int test;
 	cin >> test;

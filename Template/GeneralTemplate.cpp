@@ -1,3 +1,7 @@
+/*	
+ *	Created by Ziyi Tang
+ */
+
 #include <iostream>
 #include <cstdio>
 #include <string>
@@ -12,7 +16,7 @@
 #include <queue>
 #include <bitset>
 using namespace std;
-#define INF 1E9
+#define INF 1E18
 typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
