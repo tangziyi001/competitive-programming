@@ -25,47 +25,43 @@ typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
 const int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
-
-int dp[10005][110];
-vi price;
-vi favor;
+ 
+int dp[10250][110];
+int price[110];
+int favor[110];
 int bud, fav;
 int check(int m, int n){
-	if (m < 0 && bud < 1800){
+	if(m > bud && bud < 1800){
 		return -1000;
 	}
-	else if (m < -200){
+	if(m > bud + 200){
 		return -1000;
 	}
-	if (n == 0){
-		if (m < 0 && bud-m <= 2000){
+	if(n == fav){
+		if (m > bud && m <= 2000){
 			return -1000;
 		}
-		else{
-			return 0;
-		}
+		return 0;
 	}
 	if (dp[m][n] != -1){
 		return dp[m][n];
 	}
 	else{
-		return dp[m][n] = max(favor[n] + check(m-price[n], n-1), check(m, n-1));
+		return dp[m][n] = max(favor[n] + check(m+price[n],n+1), check(m, n+1));
 	}
 }
 int main(){
-	while (cin >> bud >> fav){
+	while (scanf("%d %d", &bud, &fav) != EOF){
 		memset(dp,-1,sizeof(dp));
 		int tmpfav = fav;
-		price.clear();
-		favor.clear();
 		int tmp1, tmp2;
-		while (tmpfav--){
-			cin >> tmp1 >> tmp2;
-			price.push_back(tmp1);
-			favor.push_back(tmp2);
+		for (int i = 0; i < tmpfav; i++){
+			scanf("%d %d", &tmp1, &tmp2);
+			price[i] = tmp1;
+			favor[i] = tmp2;
 		}
-		int result = check(bud, fav-1);
-		cout << result << endl;
+		int result = check(0, 0);
+		printf("%d\n", result);
 	}
 
 
