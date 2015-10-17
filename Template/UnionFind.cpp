@@ -32,15 +32,10 @@ public:
 		if (p[i] == i){
 			return i;
 		}
-		else{
-			p[i] = findRep(p[i]); // Update parent to the root
-			return p[i];
-		}
+		return p[i] = findRep(p[i]); // Update parent to the root;
 	}
-	bool isSameSet(i, j){
-		int x = findRep(i);
-		int y = findRep(j);
-		return x == y;
+	bool isSameSet(int i, int j){
+		return findRep(i) == findRep(j);
 	}
 	void unionSet(int i, int j){
 		if (!isSameSet(i,j)){
@@ -58,11 +53,3 @@ public:
 	}
 
 };
-int main(){
-
-
-
-
-
-	return 0;
-}
