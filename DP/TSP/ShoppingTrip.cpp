@@ -28,19 +28,19 @@ typedef vector<vpi> vvpi;
 const int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
 
 int n,m;
-double mat[55][55];
-double dp[15][5000];
-vector<pair<int,double> > all;
+int mat[55][55];
+int dp[15][5000];
+vpi all;
 int sz;
 
-double tsp(int pos, int path){
+int tsp(int pos, int path){
 	if (path == (1 << sz) -1){
 		return -mat[all[pos].first][0];
 	}
 	if (dp[pos][path] != -1)
 		return dp[pos][path];
 	else{
-		double maxp = (double)-INF;
+		int maxp = -INF;
 		maxp = max(maxp, -mat[all[pos].first][0]);
 		
 		for (int i = 0; i < sz; i++){
@@ -73,12 +73,13 @@ int test;
 		all.clear();
 		all.push_back(make_pair(0, 0));
 		scanf("%d %d",&n,&m);
-		int x,y;
-		double p;
+		int x,y,pin;
+		int p1,p2;
 		for (int i = 0; i < m; i++){
-			scanf("%d %d %lf",&x,&y,&p);
-			mat[x][y] = p;
-			mat[y][x] = p;
+			scanf("%d %d %d.%d",&x,&y,&p1,&p2);
+			pin = p1*100+p2;
+			mat[x][y] = pin;
+			mat[y][x] = pin;
 		}
 
 		// ASAP: Floyd Warshall
@@ -95,16 +96,19 @@ int test;
 		int num;
 		scanf("%d",&num);
 		int pos; 
-		double save;
+		int save1, save2;
+		int sain;
 		for (int i = 0; i < num; i++){
-			scanf("%d %lf", &pos, &save);
-			all.push_back(make_pair(pos, save));
+			scanf("%d %d.%d", &pos, &save1, &save2);
+			sain = save1 * 100 + save2;
+			all.push_back(make_pair(pos, sain));
 		}
 		sz = num+1;
 		int start = 1;
-		double re = tsp(0,start);
-		if (re > 0)
-			printf("Daniel can save $%.2lf\n", re);
+		int re = tsp(0,start);
+		if (re > 0){
+			printf("Daniel can save $%d.%2d\n", re/100, re%100);
+		}
 		else
 			printf("Don’t leave the house\n");
 		
