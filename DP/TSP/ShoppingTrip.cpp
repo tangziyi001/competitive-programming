@@ -29,7 +29,7 @@ const int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
 
 int n,m;
 int mat[55][55];
-int dp[15][5000];
+int dp[15][10005];
 vpi all;
 int sz;
 
@@ -65,7 +65,7 @@ int test;
 			}
 		}
 		for (int i = 0; i < 15; i++){
-			for(int j = 0; j < 5000; j++){
+			for(int j = 0; j < 10000; j++){
 				dp[i][j] = -1;
 			}
 		}
@@ -78,8 +78,10 @@ int test;
 		for (int i = 0; i < m; i++){
 			scanf("%d %d %d.%d",&x,&y,&p1,&p2);
 			pin = p1*100+p2;
-			mat[x][y] = pin;
-			mat[y][x] = pin;
+			if (mat[x][y] > pin){
+				mat[x][y] = pin;
+				mat[y][x] = pin;
+			}	
 		}
 
 		// ASAP: Floyd Warshall
@@ -107,10 +109,10 @@ int test;
 		int start = 1;
 		int re = tsp(0,start);
 		if (re > 0){
-			printf("Daniel can save $%d.%2d\n", re/100, re%100);
+			printf("Daniel can save $%d.%02d\n", re/100, re%100);
 		}
 		else
-			printf("Don’t leave the house\n");
+			printf("Don't leave the house\n");
 		
 	}
 	return 0;
