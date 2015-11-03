@@ -1,7 +1,7 @@
 /*
  *	UVA 11831
  *	Created by Ziyi Tang
- *	
+ *	Basic Graph Traversal
  */
 
 #include <iostream>
