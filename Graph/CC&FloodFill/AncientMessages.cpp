@@ -1,7 +1,7 @@
 /*
  *	UVA 1103
  *	Created by Ziyi Tang
- *	Advanced DFS
+ *	Muti-DFS, the graph must be surrounded by extra '0' to make sure the back ground can be DFS successfully.
  */
 
 #include <iostream>
