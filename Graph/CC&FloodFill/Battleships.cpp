@@ -1,5 +1,5 @@
 /*
- *	UVA 11593
+ *	UVA 11953
  *	Created by Ziyi Tang
  *	
  */
@@ -44,7 +44,7 @@ void dfs(int r, int c){
 	for (int i = 0; i < 4; i++){
 		int tx = r + dir[i][0];
 		int ty = c + dir[i][1];
-		if (check(tx,ty) && mark[tx][ty] == 0 && grid[tx][ty] == 'x'){
+		if (check(tx,ty) && mark[tx][ty] == 0 && (grid[tx][ty] == 'x' || grid[tx][ty] == '@')){
 			dfs(tx,ty);
 		}
 	}
@@ -56,23 +56,11 @@ int main(){
 		FILL(mark,0);
 		cin >> N;
 		string line;
+		getchar();
 		REP(i,0,N){
 			getline(cin,line);
 			REP(j,0,N){
 				grid[i][j] = line[j];
-			}
-		}
-		REP(i,0,N){
-			REP(j,0,N){
-				if (grid[i][j] == '@'){
-					grid[i][j] = '.';
-					for (int k = 0; k < 4; k++){
-						int tx = i + dir[k][0];
-						int ty = j + dir[k][1];
-						if (check(tx,ty) && grid[tx][ty] == 'x')
-							grid[i][j] = 'x';
-					}
-				}
 			}
 		}
 
@@ -86,7 +74,7 @@ int main(){
 			}
 		}
 
-		printf("Case %d: %d", t, count);
+		printf("Case %d: %d\n", t, count);
 	}
 
 	return 0;
