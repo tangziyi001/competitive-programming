@@ -1,7 +1,7 @@
 /*
  *	UVA 11094
  *	Created by Ziyi Tang
- *	
+ *	Scrolled DFS Flood Fill
  */
 
 #include <iostream>
