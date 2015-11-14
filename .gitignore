@@ -1,3 +1,4 @@
 *.out
 test.cpp
 *.class
+*.txt

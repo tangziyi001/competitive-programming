@@ -35,7 +35,6 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 int n;
 vvpi all;
 vpi re;
-int grid[30][30];
 int grida[30][30];
 int gridb[30][30];
 int allow[30][30];
@@ -45,7 +44,11 @@ int main(){
 		re.clear();
 		REP(i,0,30){
 			REP(j,0,30){
-					grid[i][j] = INF;
+				if(i == j){
+					grida[i][j] = 0;
+					gridb[i][j] = 0;
+					continue;
+				}
 					grida[i][j] = INF;
 					gridb[i][j] = INF;
 			}
@@ -57,28 +60,21 @@ int main(){
 			int tx = (int)x-65;
 			int ty = (int)y-65;
 			if(a=='Y'){
-				grid[tx][ty] = e;
 				grida[tx][ty] = e;
 				if(b=='B'){
 					grida[ty][tx] = e;
-					grid[ty][tx] = e;
 				}
 			}
 			else{
-				grid[ty][tx] = e;
 				gridb[tx][ty] = e;
 				if(b=='B'){
 					gridb[ty][tx] = e;
-					grid[tx][ty] = e;
 				}
 			}
 		}
 		REP(k,0,30){
 			REP(i,0,30){
 				REP(j,0,30){
-					if(grid[i][k] != INF && grid[k][j] != INF){
-						grid[i][j] = min(grid[i][j],grid[i][k]+grid[k][j]);
-					}	
 					if((grida[i][k] != INF && grida[k][j] != INF) && (grida[i][k]+grida[k][j] < grida[i][j])){
 						grida[i][j] = grida[i][k]+grida[k][j];
 					}
@@ -91,21 +87,30 @@ int main(){
 
 		char tx,ty;
 		cin >> tx >> ty;
-		int minp = grid[(int)tx-65][(int)ty-65];
+		//int minp = grid[(int)tx-65][(int)ty-65];
+		int minp = INF;
+		vi re;
 		x = (int)tx-65;
 		y = (int)ty-65;
-		if(x == y){
-			cout << 0 << " " << (char)(x+65) << endl;
-		}
-		else{
-				if(minp != INF){
-				cout << minp;
-				vi re;
 				REP(i,0,26){
 					int cost = grida[x][i]+gridb[y][i];
-					if(cost == minp)
+					if(cost < minp){
+						minp = cost;
+						re.clear();
 						re.push_back(i);
+					}
+					else if(cost == minp && cost != INF){
+						re.push_back(i);
+					}
 				}
+				if(x == y && minp != 0){
+					re.clear();
+					minp = 0;
+					re.push_back(x);
+				}
+
+			if(minp != INF){
+				cout << minp;
 				sort(re.begin(),re.end());
 				int sz = re.size();
 				REP(i,0,sz){
@@ -118,7 +123,7 @@ int main(){
 				cout << "You will never meet." << endl;
 			}
 
-		}
+		
 		
 	}
 	return 0;
