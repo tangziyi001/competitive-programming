@@ -1,7 +1,7 @@
 /*
- *	
+ *	CodeForces 598E
  *	Created by Ziyi Tang
- *	
+ *	Dynamic Programming
  */
 
 //#include <bits/stdc++.h>
@@ -43,7 +43,9 @@ int rec(int i, int j, int k){
 		return dp[i][j][k];
 	int minp = INF;
 	REP(tk,0,k+1){
+		// Divide what I want into two part
 		int rk = k - tk;
+		// Everytime I can either horizontally cut the chocolate or vertically cut the chocolate
 		REP(ti,1,i){
 			minp = min(minp, j*j + rec(ti,j,tk) + rec(i-ti,j,rk));
 		}

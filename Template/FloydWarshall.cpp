@@ -28,6 +28,7 @@ typedef vector<vpi> vvpi;
 const int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
 #define MAXN 100
 
+//v vertices and e edges
 int v,e;
 ll fw[MAXN][MAXN];
 int main(){
