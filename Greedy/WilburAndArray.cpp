@@ -1,7 +1,7 @@
 /*
- *	
+ *	CodeForces 596B
  *	Created by Ziyi Tang
- *	
+ *	Greedy
  */
 
 //#include <bits/stdc++.h>
@@ -9,7 +9,6 @@
 #include <cstdio>
 #include <string>
 #include <cstring>
-#include <cstdlib>
 #include <sstream>
 #include <cmath>
 #include <algorithm>
@@ -34,9 +33,22 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 
 
-
+int all[200010];
 int main(){
-
+	int n;
+	cin >> n;
+	REP(i,0,n){
+		int now;
+		cin >> now;
+		all[i] = now;
+	}
+	int tmp = 0;
+	ll sum;
+	REP(i,0,n){
+		sum += abs(all[i]-tmp);
+		tmp = all[i];
+	}
+	cout << sum << endl;
 
 	return 0;
 }

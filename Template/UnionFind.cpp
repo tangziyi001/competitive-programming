@@ -20,13 +20,13 @@ typedef vector<int> vi;
 typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
-#define MAXN 100
+#define MAXN 1000
 
 
 vi all;
 int n;
 int p[MAXN];
-int rank[MAXN];
+int rk[MAXN];
 int findRep(int i){
 	if (p[i] == i){
 		return i;
@@ -38,20 +38,21 @@ bool isSameSet(int i, int j){
 }
 void unionSet(int i, int j){
 	if (!isSameSet(i,j)){
-		if (rank[i] > rank[j]){
+		if (rk[i] > rk[j]){
 			p[j] = i;
 		}
-		else if(rank[i] < rank[j]){
+		else if(rk[i] < rk[j]){
 			p[i] = j;
 		}
 		else{
 			p[i] = j;
-			rank[j]++;
+			rk[j]++;
 		}
 	}
 }
 int main(){
 	cin >> n;
+	all.clear();
 	all.assign(n,0);
 	for(int i = 0; i < n; i++){
 		all[i] = i;
