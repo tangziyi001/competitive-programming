@@ -34,18 +34,21 @@ ll grid[MAXN][MAXN];
 int main(){
 	cin >> v >> e;
 	
-	// No Self Loop 
+	// Clear (No self loop)
 	for (int i = 0; i < v; i++){
 		for (int j = 0; j < v; j++){
 			grid[i][j] = i == j ? 0 : INFL;
 		}
 	}
-	// Fill in the Adj Matrix
+
+	// Input the Adj Matrix
 	for (int i = 0; i < e; i++){
 		ll a,b,c;
 		cin >> a >> b >> c;
 		grid[a][b] = c;
 	}
+
+	// Begin
 	for (int k = 0; k < v; k++){
 		for (int i = 0; i < v; i++){
 			for (int j = 0; j < v; j++){

@@ -1,5 +1,5 @@
 /*
- *	Union Find
+ *	Union Find Template
  *	Created by Ziyi Tang
  *
  */
@@ -51,12 +51,16 @@ void unionSet(int i, int j){
 	}
 }
 int main(){
+	// Input n elements
 	cin >> n;
+
+	// Clear
 	all.clear();
 	all.assign(n,0);
 	for(int i = 0; i < n; i++){
 		all[i] = i;
 	}
+	
 
 
 
