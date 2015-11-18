@@ -1,7 +1,7 @@
 /*
  *	Tarjan Algorithm for Strong Connected Component
  *	Created by Ziyi Tang
- *  NOTE: The "lows" is not the lead of each node, the "lead" is.
+ *	
  */
 
 //#include <bits/stdc++.h>
@@ -32,15 +32,14 @@ const long INFL = (long)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 1000
+#define MAXN 2010
 
 vvi all; // Unweighted Directed Graph
 int nums[MAXN];
 int lows[MAXN];
 int mark[MAXN];
-int lead[MAXN]; // The lead of each node from SCC
 vi member; // The members
-vi head; // The lead of each SCC
+vi head; // The root of each SCC
 int counter;
 int numSCC; // The number of SCCs
 
@@ -62,47 +61,51 @@ void tarjan(int now){
 		numSCC++;
 		while(1){
 			int nxt = member.back(); member.pop_back();
-			lead[nxt] = now;
-			printf("%d ",nxt); // Print members
+			//printf("%d ",nxt); // Print members
 			mark[nxt] = 0;
 			if(now == nxt)
 				break;
 		}
-		printf("\n");
+		//printf("\n");
 	}
 }
 int main(){
 	int n,m;
 	// n vertices and m edges
-	cin >> n >> m;
+	while(cin >> n >> m && n != 0 && m != 0){
 
-	// Clear
-	FILL(nums,-1);
-	FILL(lows, 0);
-	FILL(mark,0);
-	FILL(lead,-1);
-	head.clear();
-	all.clear();
-	vi tmp;
-	all.assign(n,tmp);
-	counter = 0;
-	numSCC = 0;
+		// Clear
+		FILL(nums,-1);
+		FILL(lows, 0);
+		FILL(mark,0);
+		head.clear();
+		all.clear();
+		vi tmp;
+		all.assign(n,tmp);
+		counter = 0;
+		numSCC = 0;
 
-	// Input
-	int sta,ter;
-	REP(i,0,m){
-		cin >> sta >> ter;
-		all[sta].push_back(ter);
-	}
-
-	// Begin
-	REP(i,0,n){
-		if(nums[i] == -1){
-			tarjan(i);
+		// Input
+		int sta,ter,way;
+		REP(i,0,m){
+			cin >> sta >> ter >> way;
+			all[sta-1].push_back(ter-1);
+			if(way == 2)
+				all[ter-1].push_back(sta-1);
 		}
+
+		// Begin
+		REP(i,0,n){
+			if(nums[i] == -1){
+				tarjan(i);
+			}
+		}
+
+		// Test
+		if(numSCC == 1)
+			cout << 1 << endl;
+		else
+			cout << 0 << endl;
 	}
-
-	// Test
-
 	return 0;
 }

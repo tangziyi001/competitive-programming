@@ -1,7 +1,7 @@
 /*
  *	UVA 11504
  *	Created by Ziyi Tang
- *	Count the number of 0 degree node within Tarjan-compacted Graph
+ *	Count the number of 0 degree node within Tarjan-contract Graph
  */
 
 //#include <bits/stdc++.h>
@@ -39,6 +39,8 @@ int nums[MAXN];
 int lows[MAXN];
 int mark[MAXN];
 int deg[MAXN];
+int flag[MAXN];
+int root[MAXN];
 vi member; // The members within a SCC
 vi head; // The root of each SCC
 int counter;
@@ -46,13 +48,14 @@ int numSCC; // The number of SCCs
 int re;
 void tarjan(int now){
 	mark[now] = 1;
-	lows[now] = nums[now] = counter++;
+	lows[now] = nums[now] = root[now] = counter++;
 	member.push_back(now);
 	int sz = all[now].size();
 	REP(i,0,sz){
 		int tmp = all[now][i];
 		if(nums[tmp] == -1)
 			tarjan(tmp);
+
 		if(mark[tmp]) // If marked, update the lows
 			lows[now] = min(lows[now],lows[tmp]);
 	}
@@ -62,27 +65,22 @@ void tarjan(int now){
 		numSCC++;
 		while(1){
 			int nxt = member.back(); member.pop_back();
+			root[nxt] = now;
 			//printf("%d ",nxt); // Print members
 			mark[nxt] = 0;
+			int nsz = all[nxt].size();
+			REP(i,0,nsz){
+				int tmp = all[nxt][i];
+				if(root[tmp] == root[nxt]){
+					deg[tmp]--;
+				}
+			}
 			if(now == nxt)
 				break;
 		}
 		//if(member.size() == 0)
 			
 		//printf("\n");
-	}
-}
-void dfs(int now){
-	int sz = all[now].size();
-	mark[now] = 1;
-	REP(i,0,sz){
-		int tmp = all[now][i];
-		if(lows[now] != lows[tmp]){
-			deg[lows[tmp]]=1;
-		}
-		if(mark[tmp] == 0){
-			dfs(tmp);
-		}
 	}
 }
 int main(){
@@ -98,7 +96,9 @@ int main(){
 		FILL(nums,-1);
 		FILL(lows, 0);
 		FILL(mark,0);
-		FILL(deg,-1);
+		FILL(deg,0);
+		FILL(flag,0);
+		FILL(root,0);
 		head.clear();
 		all.clear();
 		vi tmp;
@@ -110,6 +110,7 @@ int main(){
 		int sta,ter;
 		REP(i,0,m){
 			cin >> sta >> ter;
+			deg[ter-1]++;
 			all[sta-1].push_back(ter-1);
 		}
 
@@ -119,17 +120,18 @@ int main(){
 				tarjan(i);
 			}
 		}
+		
 		REP(i,0,n){
-			if(mark[i] == 0){
-				dfs(i);
-			}
+			//cout << i << " " << deg[i] << " " << root[i] << endl;
+			if(deg[i] != 0)
+				flag[root[i]] = -1;
 		}
-		re = head.size();
-		REP(i,0,n){
-			if(deg[i] == 1){
-				re--;
-			}
+		int sz = head.size();
+		REP(i,0,sz){
+			if(flag[head[i]] == 0)
+				re++;
 		}
+		
 		cout << re << endl;
 		// Test
 	}
