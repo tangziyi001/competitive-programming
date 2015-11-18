@@ -1,7 +1,7 @@
 /*
- *	Articulation Template
+ *	UVA 10765
  *	Created by Ziyi Tang
- *	Articulation Point, Count the remaining part after cut
+ *	Articulation Point, Count the remaining parts after cut
  */
 
 //#include <bits/stdc++.h>
