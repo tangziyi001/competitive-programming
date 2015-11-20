@@ -1,7 +1,11 @@
 /*
  *	UVA 11504
  *	Created by Ziyi Tang
- *	Count the number of 0 degree node within Tarjan-contract Graph
+ *	Count the number of 0 degree node within Tarjan-contract Graph.
+ *  NOTE: The "lows" is not the lead of each node, the "lead" is.
+ *  Reduce the "degree" of the next vertex when the currect vertex has the
+ *  same lead as the next vertex. A SCC has 0 degree if all of its members has
+ *  0 "degree".
  */
 
 //#include <bits/stdc++.h>

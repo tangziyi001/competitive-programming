@@ -30,33 +30,47 @@ const int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
 
 //v vertices and e edges
 int v,e;
-ll grid[MAXN][MAXN];
+int grid[MAXN][MAXN];
+int p[MAXN][MAXN];
+
+void printPath(int i, int j){
+	if (i != j) 
+		printPath(i, p[i][j]);
+	printf(" %d", j); 
+}
 int main(){
 	cin >> v >> e;
 	
 	// Clear (No self loop)
 	for (int i = 0; i < v; i++){
 		for (int j = 0; j < v; j++){
-			grid[i][j] = i == j ? 0 : INFL;
+			grid[i][j] = (i == j) ? 0 : INF;
+			p[i][j] = i;
 		}
 	}
-
 	// Input the Adj Matrix
 	for (int i = 0; i < e; i++){
-		ll a,b,c;
-		cin >> a >> b >> c;
-		grid[a][b] = c;
+		int x,y,c;
+		cin >> x >> y >> c;
+		grid[x][y] = c;
 	}
 
 	// Begin
 	for (int k = 0; k < v; k++){
 		for (int i = 0; i < v; i++){
 			for (int j = 0; j < v; j++){
-				if (grid[i][k] == INFL || grid[k][j] == INFL)
+				if (grid[i][k] == INF || grid[k][j] == INF)
 					continue;
-				grid[i][j] = min(grid[i][j], grid[i][k] + grid[k][j]);
+				if(grid[i][k] + grid[k][j] < grid[i][j]){
+					grid[i][j] =  grid[i][k] + grid[k][j];
+					p[i][j] = p[k][j];
+				}
 			}
 		}
 	}
+
+	// Print Path
+	cin >> a >> b;
+	printPath(a,b);
 	return 0;
 }
