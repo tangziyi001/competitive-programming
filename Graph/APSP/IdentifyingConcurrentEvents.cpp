@@ -1,7 +1,7 @@
 /*
  *	UVA 334
  *	Created by Ziyi Tang
- *	
+ *	Floyd Warshall for Transitive Closure
  */
 
 //#include <bits/stdc++.h>
