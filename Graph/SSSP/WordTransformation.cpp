@@ -1,7 +1,7 @@
 /*
- *	
+ *	UVA 00429
  *	Created by Ziyi Tang
- *	
+ *	BFS. Each word is a vertex. 
  */
 
 //#include <bits/stdc++.h>
