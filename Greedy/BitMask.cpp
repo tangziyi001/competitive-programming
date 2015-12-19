@@ -1,7 +1,10 @@
 /*
- *	
+ *	UVA 10718
  *	Created by Ziyi Tang
- *	
+ *	Check from the most significant bit if the bit can be set to 1 
+ *	when the corresponding bit from the original integer is 0 and the 
+ *	resulting integer will not exceed the upperbound, or the corresponding 
+ *	bit from the original integer is 1 and the resulting integer will not exceed the lowerbound.
  */
 
 //#include <bits/stdc++.h>
@@ -35,6 +38,22 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 
 int main(){
-	
-	return 0;
+	unsigned long long n,l,u;
+	while(cin >> n >> l >> u){
+		queue<int> que;
+		bitset<32> a(n);
+		bitset<32> b(0);
+		for (int i = 31; i >= 0; i--){
+			bitset<32> tmp = b;
+			tmp[i] = 1;
+			if(a[i] == 0 && tmp.to_ullong() <= u){
+				b = tmp;
+			}
+			else if(a[i] == 1 && tmp.to_ullong() <= l){
+				b = tmp;
+			}
+		}
+		cout << b.to_ullong() << endl;
+	}
+ 	return 0;
 }
