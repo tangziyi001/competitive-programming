@@ -1,7 +1,9 @@
 /*
  *	UVA 10557
  *	Created by Ziyi Tang
- *	
+ *	DFS to find a path from the starting point to the ending point
+ *	without negative vertex. If reach a positive cycle, then check if that
+ *	vertex can reach the ending point.
  */
 
 //#include <bits/stdc++.h>

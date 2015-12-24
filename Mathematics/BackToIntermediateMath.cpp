@@ -1,0 +1,54 @@
+/*
+ *	UVA 10773
+ *	Created by Ziyi Tang
+ *	Basic Math
+ */
+
+//#include <bits/stdc++.h>
+#include <iostream>
+#include <cstdio>
+#include <string>
+#include <cstring>
+#include <cstdlib>
+#include <sstream>
+#include <cmath>
+#include <algorithm>
+#include <list>
+#include <vector>
+#include <set>
+#include <map>
+#include <stack>
+#include <queue>
+#include <bitset>
+using namespace std;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef pair<int,int> pi;
+typedef vector<pi> vpi;
+typedef vector<vpi> vvpi;
+const int INF = (int)1E9;
+const long INFL = (long)1E18;
+const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
+#define REP(i,s,t) for(int i=(s);i<(t);i++)
+#define FILL(x,v) memset(x,v,sizeof(x))
+#define MAXN 1000
+
+int main(){
+	int test;
+	cin >> test;
+	REP(t,1,test+1){
+		double d,u,v;
+		cin >> d >> v >> u;
+		if(v == 0 || u == 0 || v >= u)
+			printf("Case %d: can't determine\n",t);
+		else{
+			double t1 = d/(sqrt(u*u-v*v));
+			double t2 = d/u;
+			double re = t1-t2;
+			printf("Case %d: %.3lf\n",t,re);
+		}
+
+	}
+	return 0;
+}
