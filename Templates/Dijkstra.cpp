@@ -1,7 +1,7 @@
 /*
  *	Dijkstra Template
  *	Created by Ziyi Tang
- *	
+ *	O(V+E)
  */
 
 //#include <bits/stdc++.h>

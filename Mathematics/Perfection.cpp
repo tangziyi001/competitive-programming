@@ -1,7 +1,7 @@
 /*
- *	Bellman Ford’s algorithm
+ *	UVA 00382
  *	Created by Ziyi Tang
- *	O(VE)
+ *	Find Divisors
  */
 
 //#include <bits/stdc++.h>
@@ -34,49 +34,22 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-int dis[MAXN];
-vvpi all;
 int main(){
-	int n,m;
-	cin >> n >> m;
-
-	// Clear
-	all.clear();
-	REP(i,0,n){
-		dis[i] = INF;
-	}
-	vpi ttmp;
-	all.assign(n,ttmp);
-
-	// Initialize
-	int sta,ter,cost;
-	REP(i,0,m){
-		cin >> sta >> ter >> cost;
-		all[sta].push_back(make_pair(ter,cost));
-	}
-
-	// Begin
-	REP(i,0,n-1){
-		REP(j,0,n){
-			int sz = all[j].size();
-			REP(k,0,sz){
-				pi tmp = all[j][k];
-				dis[tmp.first] = min(dis[tmp.first], dis[j] + tmp.second);
-			}
+	int now;
+	printf("PERFECTION OUTPUT\n");
+	while(cin >> now && now != 0){
+		int sum = 0;
+		REP(i,1,now){
+			if(now % i == 0)
+				sum += i;
 		}
+		if(now > sum)
+			printf("%5d  DEFICIENT\n", now);
+		else if(now < sum)
+			printf("%5d  ABUNDANT\n", now);
+		else
+			printf("%5d  PERFECT\n", now);
 	}
-
-	// Check Negative Cycle
-	bool nega = false; // True if there is any negative cycle
-	REP(i,0,n){
-		int sz = all[i].size();
-		REP(j,0,sz){
-			pi tmp = all[i][j];
-			if (dis[tmp.first] > dis[i] + tmp.second){
-				nega = true; break;
-			}
-		}
-	}
-
+	printf("END OF OUTPUT\n");
 	return 0;
 }

@@ -21,9 +21,10 @@ typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
 #define MAXN 1000
+#define FILL(x,v) memset(x,v,sizeof(x));
 
 
-vi all;
+int all[MAXN];
 int n;
 int p[MAXN];
 int rk[MAXN];
@@ -38,15 +39,17 @@ bool isSameSet(int i, int j){
 }
 void unionSet(int i, int j){
 	if (!isSameSet(i,j)){
-		if (rk[i] > rk[j]){
-			p[j] = i;
+		int p1 = findRep(i);
+		int p2 = findRep(j);
+		if (rk[p1] > rk[p2]){
+			p[p2] = p1;
 		}
-		else if(rk[i] < rk[j]){
-			p[i] = j;
+		else if(rk[p1] < rk[p2]){
+			p[p1] = p2;
 		}
 		else{
-			p[i] = j;
-			rk[j]++;
+			p[p1] = p2;
+			rk[p2]++;
 		}
 	}
 }
@@ -55,10 +58,11 @@ int main(){
 	cin >> n;
 
 	// Clear
-	all.clear();
-	all.assign(n,0);
+	FILL(all,0);
+	FILL(rk,0);
 	for(int i = 0; i < n; i++){
 		all[i] = i;
+		p[i] = i;
 	}
 	
 

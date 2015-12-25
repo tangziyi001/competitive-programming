@@ -1,7 +1,7 @@
 /*
- *	Bellman Ford’s algorithm
+ *	UVA 10346
  *	Created by Ziyi Tang
- *	O(VE)
+ *	Modulo Iteration. Cumulate the remain numbers.
  */
 
 //#include <bits/stdc++.h>
@@ -34,49 +34,22 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-int dis[MAXN];
-vvpi all;
 int main(){
-	int n,m;
-	cin >> n >> m;
-
-	// Clear
-	all.clear();
-	REP(i,0,n){
-		dis[i] = INF;
-	}
-	vpi ttmp;
-	all.assign(n,ttmp);
-
-	// Initialize
-	int sta,ter,cost;
-	REP(i,0,m){
-		cin >> sta >> ter >> cost;
-		all[sta].push_back(make_pair(ter,cost));
-	}
-
-	// Begin
-	REP(i,0,n-1){
-		REP(j,0,n){
-			int sz = all[j].size();
-			REP(k,0,sz){
-				pi tmp = all[j][k];
-				dis[tmp.first] = min(dis[tmp.first], dis[j] + tmp.second);
+	ll n,k;
+	while(scanf("%lld %lld",&n,&k)!=EOF){
+		ll re = 0;
+		ll rem = 0;
+		while(n != 0){
+			re += n;
+			ll tmp = n%k;
+			n /= k;
+			rem += tmp;
+			if(rem >= k){
+				rem -= k;
+				n += 1;
 			}
 		}
+		cout << re << endl;
 	}
-
-	// Check Negative Cycle
-	bool nega = false; // True if there is any negative cycle
-	REP(i,0,n){
-		int sz = all[i].size();
-		REP(j,0,sz){
-			pi tmp = all[i][j];
-			if (dis[tmp.first] > dis[i] + tmp.second){
-				nega = true; break;
-			}
-		}
-	}
-
 	return 0;
 }

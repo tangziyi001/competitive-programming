@@ -1,7 +1,7 @@
 /*
- *	Bellman Ford’s algorithm
+ *	UVA 1225
  *	Created by Ziyi Tang
- *	O(VE)
+ *	Strip Digits
  */
 
 //#include <bits/stdc++.h>
@@ -34,49 +34,28 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-int dis[MAXN];
-vvpi all;
+vi counter;
 int main(){
-	int n,m;
-	cin >> n >> m;
-
-	// Clear
-	all.clear();
-	REP(i,0,n){
-		dis[i] = INF;
-	}
-	vpi ttmp;
-	all.assign(n,ttmp);
-
-	// Initialize
-	int sta,ter,cost;
-	REP(i,0,m){
-		cin >> sta >> ter >> cost;
-		all[sta].push_back(make_pair(ter,cost));
-	}
-
-	// Begin
-	REP(i,0,n-1){
-		REP(j,0,n){
-			int sz = all[j].size();
-			REP(k,0,sz){
-				pi tmp = all[j][k];
-				dis[tmp.first] = min(dis[tmp.first], dis[j] + tmp.second);
+	int test;
+	cin >> test;
+	while(test--){
+		counter.clear();
+		counter.assign(10,0);
+		int num;
+		cin >> num;
+		REP(i,1,num+1){
+			int tmp = i;
+			while(tmp != 0){
+				counter[tmp%10]++;
+				tmp /= 10;
 			}
 		}
-	}
-
-	// Check Negative Cycle
-	bool nega = false; // True if there is any negative cycle
-	REP(i,0,n){
-		int sz = all[i].size();
-		REP(j,0,sz){
-			pi tmp = all[i][j];
-			if (dis[tmp.first] > dis[i] + tmp.second){
-				nega = true; break;
-			}
+		REP(i,0,10){
+			if(i != 0)
+				cout << " ";
+			cout << counter[i];
 		}
+		cout << endl;
 	}
-
 	return 0;
 }

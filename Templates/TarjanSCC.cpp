@@ -40,7 +40,7 @@ int lows[MAXN];
 int mark[MAXN];
 int lead[MAXN]; // The lead of each node from SCC
 vi member; // The members
-vi head; // The lead of each SCC
+vi head; // The leads of each SCC
 int counter;
 int numSCC; // The number of SCCs
 

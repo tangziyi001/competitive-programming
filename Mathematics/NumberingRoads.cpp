@@ -1,7 +1,7 @@
 /*
- *	Bellman Ford’s algorithm
+ *	UVA 11723
  *	Created by Ziyi Tang
- *	O(VE)
+ *	Basic Math
  */
 
 //#include <bits/stdc++.h>
@@ -34,49 +34,23 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-int dis[MAXN];
-vvpi all;
 int main(){
-	int n,m;
-	cin >> n >> m;
-
-	// Clear
-	all.clear();
-	REP(i,0,n){
-		dis[i] = INF;
-	}
-	vpi ttmp;
-	all.assign(n,ttmp);
-
-	// Initialize
-	int sta,ter,cost;
-	REP(i,0,m){
-		cin >> sta >> ter >> cost;
-		all[sta].push_back(make_pair(ter,cost));
-	}
-
-	// Begin
-	REP(i,0,n-1){
-		REP(j,0,n){
-			int sz = all[j].size();
-			REP(k,0,sz){
-				pi tmp = all[j][k];
-				dis[tmp.first] = min(dis[tmp.first], dis[j] + tmp.second);
+	int n,r;
+	int test = 0;
+	while(cin >> r >> n && r != 0 && n != 0){
+		test++;
+		if(r > 27*n)
+			printf("Case %d: impossible\n",test);
+		else{
+			int re = 0;
+			if(n >= r)
+				re = 0;
+			else{
+				int rem = r-n;
+				re = (int)ceil((double)rem/n);
 			}
+			printf("Case %d: %d\n",test,re);
 		}
 	}
-
-	// Check Negative Cycle
-	bool nega = false; // True if there is any negative cycle
-	REP(i,0,n){
-		int sz = all[i].size();
-		REP(j,0,sz){
-			pi tmp = all[i][j];
-			if (dis[tmp.first] > dis[i] + tmp.second){
-				nega = true; break;
-			}
-		}
-	}
-
 	return 0;
 }
