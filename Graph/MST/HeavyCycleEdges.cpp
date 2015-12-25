@@ -1,7 +1,7 @@
 /*
- *	Minimum Spanning Tree (Kruskal’s algorithm)
+ *	UVA 11747
  *	Created by Ziyi Tang
- *	O(ElogV)
+ *	MST Find Heavy Edges
  */
 
 //#include <bits/stdc++.h>
@@ -32,11 +32,12 @@ const long INFL = (long)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 1000
+#define MAXN 25005
 
 int p[MAXN];
+priority_queue<int, vi, greater<int> > re;
 vector<pair<int, pi> >all; // Undirected Weighted Graph
-int m;
+int m,n;
 
 int findParent(int i){
 	if(p[i] == i)
@@ -54,31 +55,54 @@ void unionSet(int i, int j){
 		p[findParent(i)] = findParent(j);
 }
 int main(){
-	cin >> n >> m; // The number of edges
+	while(cin >> n >> m && (n != 0 || m != 0)){
 
-	// Clear
-	all.clear();
-	REP(i,0,n){
-		p[i] = i;
-	}
-
-	// Input Edge Cost
-	int u,v,w;
-	REP(i,0,m){
-		cin >> u >> v >> w;
-		all.push_back(make_pair(w, make_pair(u,v)));
-	}
-	sort(all.begin(),all.end());
-	int total_cost = 0;
-	REP(i,0,m){
-		pair<int,pi> now = all[i];
-		if(!isSameSet(now.second.first, now.second.second)){
-			unionSet(now.second.first, now.second.second);
-			total_cost += now.first;
+		// Clear
+		all.clear();
+		REP(i,0,n){
+			p[i] = i;
 		}
-	}
 
-	// Output
-	cout << total_cost << endl;
+		// Input Edge Cost
+		int u,v,w;
+		REP(i,0,m){
+			cin >> u >> v >> w;
+			all.push_back(make_pair(w, make_pair(u,v)));
+		}
+		sort(all.begin(),all.end());
+		int total_cost = 0;
+		REP(i,0,m){
+			pair<int,pi> now = all[i];
+			if(!isSameSet(now.second.first, now.second.second)){
+				unionSet(now.second.first, now.second.second);
+				total_cost += now.first;
+			}
+			else{
+				//cout << now.second.first << " " << now.second.second << endl;
+				re.push(now.first);
+			}
+		}
+
+		// Output
+		int start = 1;
+		if(re.empty()){
+			cout << "forest";
+		}
+		else{
+			while(!re.empty()){
+				if(start){
+					start = 0;
+				}
+				else{
+					cout << " ";
+				}
+				cout << re.top();
+				re.pop();
+			}
+		}
+		cout << endl;
+		
+			
+	}
 	return 0;
 }
