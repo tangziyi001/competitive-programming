@@ -1,7 +1,7 @@
 /*
- *	Minimum Spanning Tree (Kruskal’s algorithm)
+ *	UVA 10369
  *	Created by Ziyi Tang
- *	O(ElogV)
+ *	Minimum Spanning Forest
  */
 
 //#include <bits/stdc++.h>
@@ -35,8 +35,9 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 
 int p[MAXN];
-vector<pair<int, pi> >all; // Undirected Weighted Graph
-int n,m;
+vector<pair<double, pi> >all; // Undirected Weighted Graph
+vpi vers;
+int n,m,s;
 
 int findParent(int i){
 	if(p[i] == i)
@@ -54,31 +55,49 @@ void unionSet(int i, int j){
 		p[findParent(i)] = findParent(j);
 }
 int main(){
-	cin >> n >> m; // The number of edges
+	int test;
+	cin >> test;
+	REP(i,0,test){
+		cin >> s >> n; // The number of edges
 
-	// Clear
-	all.clear();
-	REP(i,0,n){
-		p[i] = i;
-	}
-
-	// Input Edge Cost
-	int u,v,w;
-	REP(i,0,m){
-		cin >> u >> v >> w;
-		all.push_back(make_pair(w, make_pair(u,v)));
-	}
-	sort(all.begin(),all.end());
-	int total_cost = 0;
-	REP(i,0,m){
-		pair<int,pi> now = all[i];
-		if(!isSameSet(now.second.first, now.second.second)){
-			unionSet(now.second.first, now.second.second);
-			total_cost += now.first;
+		// Clear
+		all.clear();
+		vers.clear();
+		REP(i,0,n){
+			p[i] = i;
 		}
-	}
 
-	// Output
-	cout << total_cost << endl;
+		// Create Edges
+		REP(i,0,n){
+			int x,y;
+			cin >> x >> y;
+			vers.push_back(make_pair(x,y));
+			REP(j,0,i){
+				pi tmp = vers[j];
+				int tx = tmp.first;
+				int ty = tmp.second;
+				double len = sqrt((tx-x)*(tx-x)+(ty-y)*(ty-y));
+				all.push_back(make_pair(len, make_pair(i,j)));
+			}
+		}
+		m = all.size();
+		int rem = n;
+		sort(all.begin(),all.end());
+		double now_cost = 0;
+		REP(i,0,m){
+			if(rem == s)
+				break;
+			pair<double,pi> now = all[i];
+			if(!isSameSet(now.second.first, now.second.second)){
+				unionSet(now.second.first, now.second.second);
+				now_cost = now.first;
+				rem--;
+			}
+			
+		}
+		// Output
+		printf("%.2lf\n",now_cost);
+	}
+	
 	return 0;
 }

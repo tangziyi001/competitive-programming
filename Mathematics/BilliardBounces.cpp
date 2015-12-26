@@ -1,7 +1,7 @@
 /*
  *	UVA 11130
  *	Created by Ziyi Tang
- *	Reflection of Table
+ *	Reflection of Table. Use of sin, cos functions with Rad. Rad = 3.1415*angle/180
  */
 
 //#include <bits/stdc++.h>
