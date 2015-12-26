@@ -1,7 +1,7 @@
 /*
- *	UVA 11130
+ *	UVA 11254
  *	Created by Ziyi Tang
- *	Reflection of Table
+ *	Formula for arithmetic progression: Sn = na1 + n(n-1)d/2. Try different n and find valid a1.
  */
 
 //#include <bits/stdc++.h>
@@ -35,16 +35,18 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 
 int main(){
-	int a,b,v,A,s;
-	while(cin >> a >> b >> v >> A >> s && (a!=0||b!=0||v!=0||A!=0||s!=0)){
-		double len = (double)v*s/2;
-		double hor = len*cos(A*3.1415/180);
-		double ver = len*sin(A*3.1415/180);
-		int h = (hor-0.5*a)/a;
-		int v = (ver-0.5*b)/b;
-		if(hor >= 0.5*a) h++;
-		if(ver >= 0.5*b) v++;
-		printf("%d %d\n",h,v);
+	int sum;
+	while(cin >> sum && sum != -1){
+		int tar = ceil(sqrt(2*sum));
+		int re = -1;
+		int ini = -1;
+		for(int n = tar; n > 0; n--){
+			int nom = sum-n*(n-1)/2;
+			if(nom%n == 0 && nom/n != 0){
+				re = n; ini = nom/n; break;
+			}
+		}
+		printf("%d = %d + ... + %d\n",sum,ini,ini+re-1);
 	}
 	return 0;
 }
