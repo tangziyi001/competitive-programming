@@ -1,7 +1,7 @@
 /*
- *	Segment Tree for RMQ
+ *	UVA 11235
  *	Created by Ziyi Tang
- *	O(logn)
+ *	Segment Tree: Pack identical numbers into one node with value equals to the amount of that number.
  */
 
 //#include <bits/stdc++.h>
@@ -35,8 +35,9 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 
 vi all;
+vi look;
 int st[4*MAXN+1];
-int n;
+int n,q;
 
 void build(int p, int L, int R){
 	if(L == R){
@@ -47,9 +48,9 @@ void build(int p, int L, int R){
 		int right = (p << 1) + 1;
 		build(left, L, (L+R)/2);
 		build(right, (L+R)/2+1, R);
-		int p1_idx = st[left];
-		int p2_idx = st[right];
-		st[p] = (all[p1_idx] <= all[p2_idx]) ? p1_idx : p2_idx;
+		int p1 = st[left];
+		int p2 = st[right];
+		st[p] = (all[p1] >= all[p2]) ? p1 : p2;
 	}
 
 }
@@ -61,11 +62,11 @@ int rmq(int p, int L, int R, int l, int r){
 		return st[p];
 	int left = p << 1;
 	int right = (p << 1) + 1;
-	int p1_idx = rmq(left, L, (L+R)/2, l, r);
-	int p2_idx = rmq(right, (L+R)/2+1, R, l, r);
-	if(p1_idx == -1) return p2_idx;
-	if(p2_idx == -1) return p1_idx;
-	return (all[p1_idx] <= all[p2_idx]) ? p1_idx : p2_idx;
+	int p1 = rmq(left, L, (L+R)/2, l, r);
+	int p2 = rmq(right, (L+R)/2+1, R, l, r);
+	if(p1 == -1) return p2;
+	if(p2 == -1) return p1;
+	return (all[p1] >= all[p2]) ? p1 : p2;
 }
 
 void update(int p, int L, int R, int i){
@@ -78,46 +79,53 @@ void update(int p, int L, int R, int i){
 			update(left, L, (L+R)/2, i);
 		else
 			update(right, (L+R)/2+1, R, i);
-		int p1_idx = st[left];
-		int p2_idx = st[right];
-		st[p] = (all[p1_idx] <= all[p2_idx]) ? p1_idx : p2_idx;
+		int p1 = st[left];
+		int p2 = st[right];
+		st[p] = (all[p1] >= all[p2]) ? p1 : p2;
 	}
 }
 
 int main(){
-	cin >> n; // Numbers
+	while(cin >> n && n != 0){
+		cin >> q;
+		// Clear
+		all.clear();
+		look.clear();
+		FILL(st,0);
 
-	// Clear
-	all.clear();
-	all.assign(n,0);
-	FILL(st,0);
+		// Input
+		int ttmp;
+		int now = INF;
+		int idx = 0;
+		REP(i,0,n){
+			cin >> ttmp;
+			if(now == INF){
+				now = ttmp;
+				look.push_back(now);
+				all.push_back(1);
+				continue;
+			}
+			if(now == ttmp)
+				all[idx]++;
+			else{
+				now = ttmp;
+				look.push_back(now);
+				all.push_back(1);
+				idx++;
+			}
+		}
+		int sz = all.size();
 
-	// Input
-	int ttmp;
-	REP(i,0,n){
-		cin >> ttmp;
-		all[i] = ttmp;
+		// Build
+		build(1,0,n-1);
+
+		// Query & Test
+		int l,r;
+		REP(i,0,q){
+			cin >> l >> r;
+			int p = rmq(1,0,n-1,l-1,r-1);
+			cout <<  << endl;
+		}
 	}
-
-	// Build
-	build(1,0,n-1);
-
-	// Query & Test
-	int l,r;
-	cin >> l >> r;
-	int p = rmq(1,0,n-1,l,r);
-	cout << p << " is " << all[p] << endl;
-	
-
-	// Update
-	int idx,val;
-	cin >> idx >> val;
-	all[idx] = val;
-	update(1,0,n-1,idx);
-
-	// Another Test
-	cin >> l >> r;
-	p = rmq(1,0,n-1,l,r);
-	cout << p << " is " << all[p] << endl;
 	return 0;
 }
