@@ -32,16 +32,20 @@ const long INFL = (long)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 1000
+#define MAXN 100005
 
+vi cont;
+vi value;
+vi num;
+vi Left;
+vi Right;
 vi all;
-vi look;
 int st[4*MAXN+1];
 int n,q;
 
 void build(int p, int L, int R){
 	if(L == R){
-		st[p] = L;
+		st[p] = cont[L];
 	}
 	else{
 		int left = p << 1;
@@ -50,8 +54,9 @@ void build(int p, int L, int R){
 		build(right, (L+R)/2+1, R);
 		int p1 = st[left];
 		int p2 = st[right];
-		st[p] = (all[p1] >= all[p2]) ? p1 : p2;
+		st[p] = (p1 >= p2) ? p1 : p2;
 	}
+	
 
 }
 
@@ -66,65 +71,109 @@ int rmq(int p, int L, int R, int l, int r){
 	int p2 = rmq(right, (L+R)/2+1, R, l, r);
 	if(p1 == -1) return p2;
 	if(p2 == -1) return p1;
-	return (all[p1] >= all[p2]) ? p1 : p2;
+	return (p1 >= p2) ? p1 : p2;
 }
 
-void update(int p, int L, int R, int i){
-	if(L == R)
-		st[p] = L;
-	else{
-		int left = p << 1;
-		int right = (p << 1) + 1;
-		if(i <= (L+R)/2)
-			update(left, L, (L+R)/2, i);
-		else
-			update(right, (L+R)/2+1, R, i);
-		int p1 = st[left];
-		int p2 = st[right];
-		st[p] = (all[p1] >= all[p2]) ? p1 : p2;
-	}
-}
 
 int main(){
 	while(cin >> n && n != 0){
 		cin >> q;
 		// Clear
+		cont.clear();
+		value.clear();
+		num.clear();
+		Left.clear();
+		Right.clear();
 		all.clear();
-		look.clear();
 		FILL(st,0);
 
 		// Input
 		int ttmp;
 		int now = INF;
 		int idx = 0;
+		int tleft = 0;
+		int tright = n-1;
 		REP(i,0,n){
 			cin >> ttmp;
+			all.push_back(ttmp);
 			if(now == INF){
 				now = ttmp;
-				look.push_back(now);
-				all.push_back(1);
+				value.push_back(now);
+				cont.push_back(1);
+				num.push_back(idx);
+				Left.push_back(tleft);
 				continue;
 			}
-			if(now == ttmp)
-				all[idx]++;
+			if(now == ttmp){
+				cont[idx]++;	
+			}
 			else{
 				now = ttmp;
-				look.push_back(now);
-				all.push_back(1);
+				value.push_back(now);
+				cont.push_back(1);
 				idx++;
+				tleft = i;
 			}
+			num.push_back(idx);
+			Left.push_back(tleft);
 		}
-		int sz = all.size();
+		now = num[n-1];
+		Right.assign(n,0);
+		Right[n-1] = n-1;
+		tright = n-1;
+		for(int i = n-2; i >= 0; i--){
+			if(num[i] != now){
+				now = num[i];
+				tright = i;
+			}
+			Right[i] = tright;
+		}
 
+		// Test
+		// REP(i,0,value.size()){
+		// 	cout << value[i] << " ";
+		// }
+		// cout << endl;
+		// REP(i,0,cont.size()){
+		// 	cout << cont[i] << " ";
+		// }
+		// cout << endl;
+		// REP(i,0,num.size()){
+		// 	cout << num[i] << " ";
+		// }
+		// cout << endl;
+		// REP(i,0,Left.size()){
+		// 	cout << Left[i] << " ";
+		// }
+		// cout << endl;
+		// REP(i,0,Left.size()){
+		// 	cout << Right[i] << " ";
+		// }
+		// cout << endl;
+		// REP(i,0,all.size()){
+		// 	cout << all[i] << " ";
+		// }
 		// Build
-		build(1,0,n-1);
+		int sz = cont.size();
+		build(1,0,sz-1);
 
 		// Query & Test
 		int l,r;
 		REP(i,0,q){
 			cin >> l >> r;
-			int p = rmq(1,0,n-1,l-1,r-1);
-			cout <<  << endl;
+			l--;r--;
+			int re;
+			if(all[l] == all[r]){
+				re = r - l + 1;
+			}
+			else{
+				int maxp = -INF;
+				maxp = max(Right[l] - l + 1, r - Left[r] + 1);
+				if(num[l] + 1 <= num[r] - 1)
+					maxp = max(maxp, rmq(1,0,sz-1, num[l] + 1, num[r] - 1));
+				re = maxp;
+			}
+			cout << re << endl;
 		}
 	}
 	return 0;
