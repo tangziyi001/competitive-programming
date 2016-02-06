@@ -1,7 +1,8 @@
 /*
- *	
+ *	UVA 11683
  *	Created by Ziyi Tang
- *	
+ *	Trick: for each bar i, add a[i] - a[i-1] to the sum if i is taller than i-1.
+ *	For the last bar, add the difference between the max height and that bar.
  */
 
 //#include <bits/stdc++.h>
@@ -34,6 +35,23 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
+vector<int> all;
 int main(){
+	int n,m;
+	while(scanf("%d %d",&n,&m) && (n != 0 && m != 0)){
+		all.clear();
+		int sum = 0;
+		REP(i,0,m){
+			int tmp;
+			scanf("%d",&tmp);
+			all.push_back(tmp);
+		}
+		all.push_back(n);
+		REP(i,1,m+1){
+			//cout << all[i]-all[i-1] << endl;
+			sum += (all[i]-all[i-1] > 0 ? (all[i]-all[i-1]) : 0);
+		}
+		cout << sum << endl;
+	}
 	return 0;
 }

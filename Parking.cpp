@@ -1,5 +1,6 @@
+
 /*
- *	
+ *	UVA 11364
  *	Created by Ziyi Tang
  *	
  */
@@ -34,6 +35,21 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
+vi all;
 int main(){
+	int n;
+	cin >> n;
+	while(n--){
+		all.clear();
+		int num;
+		cin >> num;
+		REP(i,0,num){
+			int tmp;
+			cin >> tmp;
+			all.push_back(tmp);
+		}
+		sort(all.begin(),all.end());
+		cout << (double)(all[num-1]-all[0])*2 << endl;
+	}
 	return 0;
 }

@@ -34,6 +34,33 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
+int mark[3005];
+vector<int> all;
 int main(){
+	int n = 0;
+	while(cin >> n){
+		FILL(mark,0);
+		all.clear();
+		int tmp;
+		int re = 0;
+		REP(i,0,n){
+			cin >> tmp;
+			all.push_back(tmp);
+			if(i == 0){
+				mark[0] = 1;
+				continue;
+			}
+			int dif = abs(all[i]-all[i-1]);
+			mark[dif] = 1;
+		}
+		int i = 1;
+		for(; i <= n-1; i++){
+			if(mark[i] == 0){
+				cout << "Not jolly" << endl;
+				break;
+			}
+		}
+		if(i == n) cout << "Jolly" << endl;
+	}
 	return 0;
 }

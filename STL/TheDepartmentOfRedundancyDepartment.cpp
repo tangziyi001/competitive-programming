@@ -1,5 +1,5 @@
 /*
- *	
+ *	UVA 484
  *	Created by Ziyi Tang
  *	
  */
@@ -34,6 +34,23 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
+map<int,int> all;
+vector<int> order;
 int main(){
+	string str;
+	//getline(cin,str);
+	int now;
+	//stringstream ss(str);
+	while(scanf("%d",&now) != EOF){
+		if(all.find(now) == all.end()){
+			order.push_back(now);
+			all[now] = 1;
+		}
+		else all[now] += 1;
+	}
+	int sz = order.size();
+	REP(i,0,sz){
+		cout << order[i] << " " << all[order[i]] << endl;
+	}
 	return 0;
 }

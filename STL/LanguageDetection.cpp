@@ -1,5 +1,5 @@
 /*
- *	
+ *	UVA 12250
  *	Created by Ziyi Tang
  *	
  */
@@ -34,6 +34,24 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
+map<string,string> all;
 int main(){
+	all["HELLO"] = "ENGLISH";
+	all["HOLA"] = "SPANISH";
+	all["HALLO"] = "GERMAN";
+	all["BONJOUR"] = "FRENCH";
+	all["CIAO"] = "ITALIAN";
+	all["ZDRAVSTVUJTE"] = "RUSSIAN";
+	string now;
+	int cas = 0;
+	while(cin >> now && now != "#"){
+		cas++;
+		if(all.find(now) != all.end()){
+			printf("Case %d: %s\n", cas, all[now].c_str());
+		}
+		else{
+			printf("Case %d: UNKNOWN\n",cas);
+		}
+	}
 	return 0;
 }
