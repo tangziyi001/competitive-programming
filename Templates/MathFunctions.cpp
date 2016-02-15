@@ -36,6 +36,7 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 
 // GCD
 int gcd(int a, int b){
+	if(a == 0 || b == 0) return 1;
 	return b == 0 ? a : gcd(b, a % b);
 }
 
