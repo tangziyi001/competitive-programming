@@ -1,7 +1,7 @@
 /*
- *	
+ *	CodeForces 343A
  *	Created by Ziyi Tang
- *	
+ *	Pair Counting
  */
 
 //#include <bits/stdc++.h>
@@ -34,7 +34,36 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
+int all[105][105];
 int main(){
+	int n;
+	cin >> n;
+	getchar();
+	string line;
+	REP(i,0,n){
+		getline(cin,line);
+		REP(j,0,n){
+			if(line[j] == 'C') all[i][j] = 1;
+			else all[i][j] = 0;
+		}
+	}
+	int num = 0;
+	REP(i,0,n){
+		int sum = 0;
+		REP(j,0,n){
+			sum+=all[i][j];
+		}
+		num+=(sum*(sum-1)/2);
+	}
+	REP(j,0,n){
+		int sum = 0;
+		REP(i,0,n){
+			sum+=all[i][j];
+		}
+		num+=(sum*(sum-1)/2);
+	}
+	cout << num << endl;
+
+
 	return 0;
 }
-
