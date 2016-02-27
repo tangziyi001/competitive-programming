@@ -34,6 +34,23 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
+// LIS Greedy + Divide and Conquer
+int LIS(vector<int>& s)
+{
+    if (s.size() == 0) return 0;
+    vector<int> v;
+    v.push_back(s[0]);
+    for (int i = 1; i < s.size(); ++i)
+    {
+        int n = s[i];
+        if (n > v.back())
+            v.push_back(n);
+        else
+            *lower_bound(v.begin(), v.end(), n) = n;
+    }
+    return v.size();
+}
+
 // Next lexicographical permutation
 void myswap(int* a, int *b){
     int tmp = *a;

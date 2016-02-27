@@ -1,8 +1,4 @@
-/*	
- *	Pisano's Period: 60/300/1500/15000
- *	Created by Ziyi Tang
- */
-
+// UVA 10689
 import java.util.Scanner;
 import java.math.BigInteger;
 class Main{
