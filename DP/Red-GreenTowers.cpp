@@ -4,7 +4,7 @@
  *	dp[i][j]: the number of different towers for level i with exact j red blocks.
  *	dp[i][j] = dp[i-1][j] + dp[i-1][j-i] (if j >= i)
  *	Note: Use 1D array.
- *  Sum up all possible towers with 0 to r-1 red blocks.
+ *	Sum up all possible towers with 0 to r-1 red blocks.
  */
 
 //#include <bits/stdc++.h>
