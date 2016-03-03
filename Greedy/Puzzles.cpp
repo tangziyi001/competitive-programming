@@ -1,8 +1,7 @@
 /*
- *	UVA 11341
+ *	CodeForces 337A
  *	Created by Ziyi Tang
- *	dp[i][j] = max(dp[i][j], all[i][k] + dp[i-1][j-k]);
- *  dp[i][j] = -1 if this situation is impossible to achieve.
+ *	Greedy Sorting
  */
 
 //#include <bits/stdc++.h>
@@ -35,32 +34,20 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-int dp[15][105];
-int all[15][105];
-int mark[15][105];
+vi all;
 int main(){
-	int t;
-	cin >> t;
-	while(t--){
-		FILL(dp,-1);
-		int n,m;
-		cin >> n >> m;
-		REP(i,1,n+1) REP(j,1,m+1){
-			int tmp;
-			cin >> tmp;
-			all[i][j] = tmp;
-		}
-		dp[0][0] = 0;
-		REP(i,1,n+1) REP(j,1,m+1) REP(k,1,j+1) {
-			if(all[i][k] >= 5 && dp[i-1][j-k] != -1)
-				dp[i][j] = max(dp[i][j], all[i][k] + dp[i-1][j-k]);
-		}
-		double re = (double)dp[n][m]/n+1e-9;
-		if(dp[n][m] != -1)
-			printf("Maximal possible average mark - %.2lf.\n", re);
-		else
-			printf("Peter, you shouldn\'t have played billiard that much.\n");
+	int n,m,tmp;
+	cin >> m >> n;
+	REP(i,0,n){
+		cin >> tmp;
+		all.push_back(tmp);
 	}
+	sort(all.begin(),all.end());
+	int minp = INF;
+	REP(i,0,n-m+1){
+		minp = min(minp, all[i+m-1]-all[i]);
+	}
+	cout << minp << endl;
 	return 0;
 }
 

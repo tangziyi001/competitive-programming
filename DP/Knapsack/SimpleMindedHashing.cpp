@@ -1,7 +1,7 @@
 /*
  *	
  *	Created by Ziyi Tang
- *	3D DP
+ *	dp[i][j][k] = dp[i-1][j-1][k-i] + dp[i-1][j][k]
  */
 
 //#include <bits/stdc++.h>
@@ -34,25 +34,27 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-int dp[30][30][400]; // dp[pos][count][sum]
-int l,s;
+int dp[30][30][500];
 int main(){
 	FILL(dp,0);
-	int cas = 0;
 	dp[0][0][0] = 1;
-	REP(i,1,27) REP(j,0,i+1) REP(k,0,400) {
-		dp[i][j][k] = dp[i-1][j][k];
-		if(j > 0 && k >= i)
-			dp[i][j][k] += dp[i-1][j-1][k-i];
-	}
-	while(cin >> l >> s && l != 0 && s != 0){
-		cas++;
-		if(l > 26)
-			printf("Case %d: %d\n", cas, 0);
-		else{
-			int re = dp[26][l][s];
-			printf("Case %d: %d\n", cas, re);
+	REP(i,1,27){
+		REP(j,0,27){
+			REP(k,0,500){
+				dp[i][j][k] = dp[i-1][j][k];
+				if(k >= i && j > 0)
+					dp[i][j][k] += dp[i-1][j-1][k-i];
+			}
 		}
+	}
+	int cas = 0;
+	int l,s;
+	while(cin >> l >> s && (l != 0 || s != 0)){
+		cas++;
+		if(l > 26 || s > 490)
+			printf("Case %d: %d\n", cas, 0);
+		else 
+			printf("Case %d: %d\n", cas, dp[26][l][s]);
 	}
 	return 0;
 }
