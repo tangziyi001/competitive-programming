@@ -1,8 +1,7 @@
 /*
- *	CodeForces 260C
+ *	ICPC NY 2008B
  *	Created by Ziyi Tang
- *	Compute the count of each element
- *	dp[i] = max(i*cont[i] + dp[i-2], dp[i-1]);
+ *	Basic Map
  */
 
 //#include <bits/stdc++.h>
@@ -35,23 +34,27 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-ll cont[100005];
-ll dp[100005];
+map<char,char> all;
 int main(){
-	int n, tmp;
-	int maxe = 0;
+	int n;
 	cin >> n;
-	REP(i,0,n){
-		cin >> tmp;
-		maxe = max(maxe, tmp);
-		cont[tmp]++;
+	getchar();	
+	REP(t,1,n+1){
+		all.clear();
+		string line1, line2;
+		getline(cin, line1);
+		getline(cin, line2);
+		REP(i,0,26){
+			all[(char)('A'+i)] = line2[i];
+		}
+		int sz = line1.size();
+		REP(i,0,sz){
+			if(line1[i] != ' ')
+				line1[i] = all[line1[i]];
+		}
+		printf("%d %s\n",t,line1.c_str());
 	}
-	dp[0] = 0;
-	dp[1] = cont[1]*1;
-	REP(i,2,maxe+1){
-		dp[i] = max(i*cont[i] + dp[i-2], dp[i-1]);
-	}
-	cout << dp[maxe] << endl;
+
 	return 0;
 }
 

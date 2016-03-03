@@ -1,8 +1,8 @@
 /*
- *	CodeForces 260C
+ *	CodeForces 191A
  *	Created by Ziyi Tang
- *	Compute the count of each element
- *	dp[i] = max(i*cont[i] + dp[i-2], dp[i-1]);
+ *	dp[i] = max(dp[i-1]+val, val);
+ *	val = (all[i] == 0) ? 1 : -1
  */
 
 //#include <bits/stdc++.h>
@@ -35,23 +35,25 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-ll cont[100005];
-ll dp[100005];
+int all[105];
+int dp[105];
 int main(){
 	int n, tmp;
-	int maxe = 0;
 	cin >> n;
+	int sum = 0;
 	REP(i,0,n){
 		cin >> tmp;
-		maxe = max(maxe, tmp);
-		cont[tmp]++;
+		all[i] = tmp;
+		sum += tmp;
 	}
-	dp[0] = 0;
-	dp[1] = cont[1]*1;
-	REP(i,2,maxe+1){
-		dp[i] = max(i*cont[i] + dp[i-2], dp[i-1]);
+	dp[0] = (all[0] == 0) ? 1 : -1;
+	int maxp = dp[0];
+	REP(i,1,n){
+		int val = all[i] == 0 ? 1 : -1;
+		dp[i] = max(dp[i-1]+val, val);
+		maxp = max(maxp, dp[i]);
 	}
-	cout << dp[maxe] << endl;
+	cout << sum+maxp << endl;
 	return 0;
 }
 

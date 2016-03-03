@@ -1,8 +1,7 @@
 /*
- *	CodeForces 260C
+ *	ICPC NY 2008D
  *	Created by Ziyi Tang
- *	Compute the count of each element
- *	dp[i] = max(i*cont[i] + dp[i-2], dp[i-1]);
+ *	dp[i] += dp[(i-j)/2]; for 0 <= j <= i if i-j is even
  */
 
 //#include <bits/stdc++.h>
@@ -35,23 +34,20 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-ll cont[100005];
-ll dp[100005];
+int dp[10000];
 int main(){
+	FILL(dp,0);
+	dp[0] = 1;
+	dp[1] = 1;
+	REP(i,2,10000) REP(j,0,i+1) if((i-j)%2 == 0){
+		dp[i] += dp[(i-j)/2];
+	}
 	int n, tmp;
-	int maxe = 0;
 	cin >> n;
-	REP(i,0,n){
+	REP(i,1,n+1){
 		cin >> tmp;
-		maxe = max(maxe, tmp);
-		cont[tmp]++;
+		printf("%d %d\n",i,dp[tmp]);
 	}
-	dp[0] = 0;
-	dp[1] = cont[1]*1;
-	REP(i,2,maxe+1){
-		dp[i] = max(i*cont[i] + dp[i-2], dp[i-1]);
-	}
-	cout << dp[maxe] << endl;
 	return 0;
 }
 

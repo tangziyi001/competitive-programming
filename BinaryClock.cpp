@@ -1,8 +1,7 @@
 /*
- *	CodeForces 260C
+ *	ICPC NY 2008C
  *	Created by Ziyi Tang
- *	Compute the count of each element
- *	dp[i] = max(i*cont[i] + dp[i-2], dp[i-1]);
+ *	Basic Binary
  */
 
 //#include <bits/stdc++.h>
@@ -35,23 +34,40 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-ll cont[100005];
-ll dp[100005];
 int main(){
-	int n, tmp;
-	int maxe = 0;
+	int n;
 	cin >> n;
-	REP(i,0,n){
-		cin >> tmp;
-		maxe = max(maxe, tmp);
-		cont[tmp]++;
+	getchar();
+	REP(t,1,n+1){
+		string line;
+		getline(cin,line);
+		int h,m,s;
+		vi all;
+		h = stoi(line.substr(0,2));
+		m = stoi(line.substr(3,2));
+		s = stoi(line.substr(6,2));
+		all.push_back(h);
+		all.push_back(m);
+		all.push_back(s);
+		string hor, ver;
+		for(int i = 5; i >= 0; i--){
+			REP(j,0,3){
+				if(all[j] & (1 << i))
+					ver+='1';
+				else
+					ver+='0';
+			}
+		}
+		REP(j,0,3){
+			for(int i = 5; i >= 0; i--){
+				if(all[j] & (1 << i))
+					hor+='1';
+				else
+					hor+='0';
+			}
+		}
+		printf("%d %s %s\n",t,ver.c_str(),hor.c_str());
 	}
-	dp[0] = 0;
-	dp[1] = cont[1]*1;
-	REP(i,2,maxe+1){
-		dp[i] = max(i*cont[i] + dp[i-2], dp[i-1]);
-	}
-	cout << dp[maxe] << endl;
 	return 0;
 }
 
