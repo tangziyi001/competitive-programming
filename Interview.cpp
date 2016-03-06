@@ -1,5 +1,5 @@
 /*
- *	Knuth-Morris-Pratt's Algorithm
+ *	CodeForces 344A
  *	Created by Ziyi Tang
  *	
  */
@@ -34,50 +34,34 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-string T,P;
-int cont;
-int b[MAXN], n, m;
-void kmpPre(){
-	int i = 0, j = -1;
-	b[0] = -1;
-	while(i < m){
-		while(j >= 0 && P[i] != P[j])
-			j = b[j];
-		i++;j++;
-		b[i] = j;
-	}
-}
-void kmpSearch(){
-	int i = 0, j = 0;
-	while(i < n){
-		while(j >= 0 && T[i] != P[j]) j = b[j];
-		i++; j++;
-		if(j == m){ // Find
-			//printf("P is found at %d in T", i - j);
-			cont++;
-			j = b[j];
-		}
-	}
-}
+vi a1;
+vi a2;
 int main(){
-	int t;
-	while(t--){
-		string line;
-		cin >> line;
-		int q;
-		cin >> q;
-		T = line;
-		n = line.size();
-		REP(i,0,q){
-			string now;
-			cin >> now;
-			P = now;
-			m = now.size();
-			cont = 0;
-			kmpPre();
-			kmpSearch();
-			cout << cont << endl;
+	int n;
+	cin >> n;
+	REP(i,0,n){
+		int tmp;
+		cin >> tmp;
+		a1.push_back(tmp);
+	}
+	REP(j,0,n){
+		int tmp;
+		cin >> tmp;
+		a2.push_back(tmp);
+	}
+	int maxp = 0;
+	REP(i,0,n){
+		int tmp1 = 0;
+		int tmp2 = 0;
+		tmp1 |= a1[i];
+		tmp2 |= a2[i];
+		REP(j,i,n){
+			tmp1 |= a1[j];
+			tmp2 |= a2[j];
+			maxp = max(maxp, tmp1+tmp2);
 		}
 	}
+	cout << maxp << endl;
 	return 0;
 }
+
