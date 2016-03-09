@@ -1,7 +1,7 @@
 /*
- *	CodeForces 580A
+ *	APS Midterm E
  *	Created by Ziyi Tang
- *	dp[i] = (all[i] >= all[i-1]) ? dp[i-1]+1 : 1;
+ *	LIS with Greedy + D&G
  */
 
 //#include <bits/stdc++.h>
@@ -34,22 +34,46 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-int all[100005];
+
+// LIS Greedy + Divide and Conquer
+int LIS(vector<int>& s, int k)
+{
+    if (s.size() == 0) return 0;
+    vector<int> v;
+    v.push_back(s[0]);
+    for (int i = 1; i < s.size(); ++i)
+    {
+        int n = s[i];
+        if (n-k >= v.back())
+            v.push_back(n);
+        else{
+            auto it = lower_bound(v.begin(), v.end(), n);
+            if(it == v.begin() || n >= *(it-1)+k){
+            	*it = n;
+            }
+        }
+    }
+    return v.size();
+}
+
+vi all;
 int dp[100005];
 int main(){
-	int n, tmp;
-	cin >> n;
-	REP(i,0,n){
-		cin >> tmp;
-		all[i] = tmp;
+	int test;
+	cin >> test;
+	while(test--){
+		all.clear();
+		FILL(dp,0);
+		int n,k;
+		cin >> n >> k;
+		REP(i,0,n){
+			int tmp;
+			cin >> tmp;
+			all.push_back(tmp);
+		}
+		int re = LIS(all,k);
+		cout << re << endl;
 	}
-	dp[0] = 1;
-	int maxp = dp[0];
-	REP(i,1,n){
-		dp[i] = (all[i] >= all[i-1]) ? dp[i-1]+1 : 1;
-		maxp = max(maxp, dp[i]);
-	}
-	cout << maxp << endl;
 	return 0;
 }
 

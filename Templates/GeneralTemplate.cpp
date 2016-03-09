@@ -35,6 +35,7 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 
 int main(){
+
 	return 0;
 }
 

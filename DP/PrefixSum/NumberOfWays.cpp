@@ -1,5 +1,5 @@
 /*
- *	CodeForces 226C
+ *	CodeForces 466C
  *	Created by Ziyi Tang
  *	Prefix Sum with two pointers
  *	Use prefix sum to count the number of ways 0...i has sum of sum/3.

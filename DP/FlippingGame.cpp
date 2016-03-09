@@ -1,5 +1,5 @@
 /*
- *	CodeForces 191A
+ *	CodeForces 327A
  *	Created by Ziyi Tang
  *	dp[i] = max(dp[i-1]+val, val);
  *	val = (all[i] == 0) ? 1 : -1

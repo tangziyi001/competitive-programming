@@ -1,5 +1,5 @@
 /*
- *	CodeForces 119A
+ *	CodeForces 189A
  *	Created by Ziyi Tang
  *	Count Max Number of Coin Change
  */
