@@ -2,3 +2,5 @@
 test.cpp
 *.class
 *.txt
+*.in
+*.out
