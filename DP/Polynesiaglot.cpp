@@ -1,7 +1,8 @@
 /*
  *	Code Jam to IO 2016 for Women C
  *	Created by Ziyi Tang
- *	
+ *	dp[i][1] = c*dp[i-1][0]
+ *	dp[i][0] = v*dp[i-1][0]+v*dp[i-1][1]
  */
 
 //#include <bits/stdc++.h>
