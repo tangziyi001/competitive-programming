@@ -1,6 +1,6 @@
 /*
  *	
- *	Created by Ziyi Tang
+ *	Coded by Ziyi Tang
  *	
  */
 
@@ -38,6 +38,6 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 int main(){
 	freopen(".in", "r", stdin);
   	freopen(".out", "w", stdout);
-  	
+
 	return 0;
 }
