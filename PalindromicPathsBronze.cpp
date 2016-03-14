@@ -1,8 +1,9 @@
 /*
  *	USACO 2015 US Open, Bronze 4
  *	Created by Ziyi Tang
- *	Store left-upper triangular prefix. Check right-lower triangular prefix for
- *	for each square on the diagnal.
+ *	For each square on the diagnal. Store left-upper triangular prefix. 
+ *	Then Check all right-lower triangular prefix.
+ *	If match, then insert that valid prefix into a set.
  */
 
 //#include <bits/stdc++.h>

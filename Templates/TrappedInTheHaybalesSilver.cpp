@@ -1,5 +1,5 @@
 /*
- *	
+ *	USACO 2015 US Open, Silver 2
  *	Created by Ziyi Tang
  *	
  */
