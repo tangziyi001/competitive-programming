@@ -1,11 +1,12 @@
 /*
- *	
+ *	USACO 2015 February Contest, Bronze 2
  *	Coded by Ziyi Tang
- *
+ *	DP
  */
 
 //#include <bits/stdc++.h>
 #include <iostream>
+#include <fstream>
 #include <cstdio>
 #include <string>
 #include <cstring>
@@ -34,8 +35,26 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
+ll dp[100005][3];
+string line;
+int n;
 int main(){
-
+	freopen("cow.in", "r", stdin);
+  	freopen("cow.out", "w", stdout);
+  	cin >> n >> line;
+  	REP(i,0,3){
+  		dp[0][i] = 0;
+  	}
+  	REP(i,1,n+1){
+  		REP(j,0,3)
+  			dp[i][j] = dp[i-1][j];
+  		if(line[i-1] == 'C')
+  			dp[i][0] += 1;
+  		if(line[i-1] == 'O')
+  			dp[i][1] += dp[i][0];
+  		if(line[i-1] == 'W')
+  			dp[i][2] += dp[i][1];
+  	}
+  	cout << dp[n][2] << endl;
 	return 0;
 }
-
