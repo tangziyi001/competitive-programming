@@ -1,5 +1,5 @@
 /*
- *	
+ *	USACO 2014 December Contest, Bronze 3
  *	Coded by Ziyi Tang
  *	
  */
