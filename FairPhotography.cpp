@@ -33,18 +33,51 @@ const long INFL = (long)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 1000
+#define MAXN 2000010
 
-vpi all; //(pos, sign)
+vpi data; //(pos, sign)
 vi sum;
-vpi luOdd; // (prefix, idx);
-vpi luEven;
+int all[MAXN];
+int st[4*MAXN+1];
+int rmq(int p, int L, int R, int l, int r){
+  if(l > R || r < L)
+    return -1;
+  if(L >= l && R <= r)
+    return st[p];
+  int left = p << 1;
+  int right = (p << 1) + 1;
+  int p1_idx = rmq(left, L, (L+R)/2, l, r);
+  int p2_idx = rmq(right, (L+R)/2+1, R, l, r);
+  if(p1_idx == -1) return p2_idx;
+  if(p2_idx == -1) return p1_idx;
+  return (all[p1_idx] >= all[p2_idx]) ? p1_idx : p2_idx;
+}
+
+void update(int p, int L, int R, int i){
+  if(L == R)
+    st[p] = L;
+  else{
+    int left = p << 1;
+    int right = (p << 1) + 1;
+    if(i <= (L+R)/2)
+      update(left, L, (L+R)/2, i);
+    else
+      update(right, (L+R)/2+1, R, i);
+    int p1_idx = st[left];
+    int p2_idx = st[right];
+    st[p] = (all[p1_idx] >= all[p2_idx]) ? p1_idx : p2_idx;
+  }
+}
+
+
 int main(){
-	 freopen("fairphoto.in", "r", stdin);
-  	freopen("fairphoto.out", "w", stdout);
+	  freopen("fairphoto.in", "r", stdin);
+    freopen("fairphoto.out", "w", stdout);
 
   	int n;
   	cin >> n;
+    FILL(st,0);
+    FILL(all,0);
   	REP(i,0,n){
   		int pos;
   		char c;
@@ -52,56 +85,21 @@ int main(){
   		int sign;
   		if(c == 'W') sign = 1;
   		else sign = -1;
-  		all.push_back(make_pair(pos,sign));
+  		data.push_back(make_pair(pos,sign));
   	}
-  	sort(all.begin(),all.end());
+  	sort(data.begin(),data.end());
   	sum.push_back(0);
-  	REP(i,1,n){
-      sum.push_back(sum[i-1] + all[i-1].second);
+    REP(i,1,n+1){
+      sum.push_back(sum[i-1] + data[i-1].second);
     }
-    int tmpOdd = INF;
-    int tmpEven = INF;
-    REP(i,0,n+1){
-      if((i&1) && sum[i] < tmpOdd){
-        luOdd.push_back(make_pair(sum[i], i-1));
-        tmpOdd = sum[i];
-      }
-      else if(!(i&1) && sum[i] < tmpEven){
-        luEven.push_back(make_pair(sum[i], i-1));
-        tmpEven = sum[i];
-      } 
-    }
-    // REP(i,0,luOdd.size()){
-    //   cout << luOdd[i].first << " " << luOdd[i].second << endl;
-    // }
-    // //cout << "even" << endl;
-    // REP(i,0,luEven.size()){
-    //   cout << luEven[i].first << " " << luEven[i].second << endl;
-    // }
-    reverse(luOdd.begin(), luOdd.end());
-    reverse(luEven.begin(), luEven.end());
+
     int maxp = 0;
-    REP(i,0,n){
-      if(!((i+1)&1)){
-        auto it = upper_bound(luEven.begin(), luEven.end(), make_pair(sum[i+1], -INF));
-        it--;
-        int idx = (*it).second;
-        // cout << idx << endl;
-        // cout << all[i].first-all[idx+1].first << endl;
-        maxp = max(maxp, all[i].first-all[idx+1].first);
-      }
-      else{
-        auto it = upper_bound(luOdd.begin(), luOdd.end(), make_pair(sum[i+1], -INF));
-        it--;
-        int idx = (*it).second;
-        // cout << idx << endl;
-        // cout << all[i].first-all[idx+1].first << endl;
-        maxp = max(maxp, all[i].first-all[idx+1].first);
-      }
+    for(int i = n; i >= 1; i++){
+      int p = rmq(1,0,n-1,sum[i],MAXN-1);
+      all[sum[i]] = max(i-1, all[p]);
+      maxp = max(maxp, all[p])
+      update(1,0,n-1,sum[i]);
     }
-    cout << maxp << endl;
-    
-  	
 
 	return 0;
 }
