@@ -1,7 +1,7 @@
 /*
- *	Edmonds Karp's Algorithm
+ *	UVA 11045
  *	Created by Ziyi Tang
- *	O(V^3 E)
+ *	Max Flow O(V^3 E)
  */
 
 //#include <bits/stdc++.h>

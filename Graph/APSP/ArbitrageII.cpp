@@ -1,7 +1,7 @@
 /*
- *	
+ *	UVA 436
  *	Coded by Ziyi Tang
- *
+ *	Floyd Warshall
  */
 
 //#include <bits/stdc++.h>
@@ -34,9 +34,8 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-map<string,int> si;
 vector<string> is;
-double all[35][35][35];
+double all[35][35];
 int main(){
 	int n;
 	int test = 0;
@@ -46,7 +45,7 @@ int main(){
 		is.clear();
 		FILL(all,0);
 		REP(i,0,35) REP(j,0,35){
-			if(i == j) all[i][j][0] = 1;
+			if(i == j) all[i][j] = 1;
 		}
 		REP(i,0,n){
 			string line;
@@ -64,11 +63,11 @@ int main(){
 			string sta,ter;
 			double cost;
 			ss >> sta >> cost >> ter;
-			all[si[sta]][si[ter]][0] = cost;
+			all[si[sta]][si[ter]] = cost;
 		}
 		REP(t,1,n+1){
 			REP(k,0,n) REP(i,0,n) REP(j,0,n){
-				all[i][j][t] = max(all[i][j][t], all[i][k][t-1]*all[k][j][0]);
+				all[i][j] = max(all[i][j], all[i][k]*all[k][j]);
 			}
 		}
 		// REP(i,0,n) {
@@ -79,8 +78,8 @@ int main(){
 		// }
 		bool flag = false;
 		REP(i,0,n){
-			if(all[i][i][n] > 1.0){
-				flag = 1;break;
+			if(all[i][i] > 1.0){
+				flag = true;break;
 			}
 		}
 		if(flag){
