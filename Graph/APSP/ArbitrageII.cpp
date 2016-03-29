@@ -34,6 +34,7 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
+map<string,int> si;
 vector<string> is;
 double all[35][35];
 int main(){
