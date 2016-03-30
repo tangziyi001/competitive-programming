@@ -51,11 +51,21 @@ ll binet(int n){
 	return (ll)((pow(g,n)-(pow(-g,-n)))/sqrt(5));
 }
 
+ll power(ll base, ll n){
+	if(n == 0) return 1;
+	if(n&1){
+		ll tmp = power(base,(n-1)/2);
+		return base*tmp*tmp;
+	}
+	else{
+		ll tmp = power(base,n/2);
+		return tmp*tmp;
+	}
+}
 
 int main(){
-	for(int i = 0; i < 100; i++){
-		cout << i << " " << binet(i) << endl;
-	}
+	REP(i,0,10)
+	cout << power(2,i) << endl;
 	return 0;
 }
 
