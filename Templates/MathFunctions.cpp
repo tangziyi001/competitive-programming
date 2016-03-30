@@ -58,3 +58,20 @@ int main(){
 	}
 	return 0;
 }
+
+/*
+ *	Compute Polynomial; Given coefficients ai and value x
+ *	Naive approach: iteraye through every xi
+ *	Faster way: b_n = a_n, b_n-1=a_n-1+b_n*x
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
