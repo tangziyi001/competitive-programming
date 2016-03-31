@@ -63,6 +63,7 @@ ll power(ll base, ll n){
 	}
 }
 
+
 int main(){
 	REP(i,0,10)
 	cout << power(2,i) << endl;
