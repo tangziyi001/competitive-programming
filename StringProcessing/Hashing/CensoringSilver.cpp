@@ -42,23 +42,25 @@ ll power(ll base, ll n){
 	if(n == 0) return 1;
 	if(n&1){
 		ll tmp = power(base,(n-1)/2)%MOD;
-		return (base*tmp*tmp)%MOD;
+		return (base*tmp*tmp+MOD)%MOD;
 	}
 	else{
 		ll tmp = power(base,n/2);
-		return (tmp*tmp)%MOD;
+		return (tmp*tmp+MOD)%MOD;
 	}
 }
 
 ll buildHash(string now){
 	int sz = now.size();
-	ll sum;
+	ll sum = 0LL;
 	REP(i,0,sz){
-		sum += (int)now[i]*power(7,i)%MOD;
+		sum += (ll)now[i]*power(7,i)%MOD;
 	}
 	return sum%MOD;
 }
 int main(){
+	freopen("censor.in", "r", stdin);
+  	freopen("censor.out", "w", stdout);
 	string S,T;
 	cin >> S >> T;
 	int idx = 0;
@@ -68,10 +70,11 @@ int main(){
 	pre[idx] = 0;
 	REP(i,0,ssz){
 		all[idx] = S[i];
-		pre[idx+1] = ((S[i]*power(7,idx))%MOD + pre[idx])%MOD;
+		pre[idx+1] = ((S[i]*power(7,idx))%MOD + pre[idx] + MOD)%MOD;
+		//cout << pre[idx+1] << all[idx] << endl;
 		if(idx >= tsz-1){
-			ll newThash = Thash*power(7,idx-tsz+1)%MOD;
-			if(newThash == pre[idx+1]-pre[idx+1-T.size()]){
+			ll newThash = (Thash*power(7,idx-tsz+1)+MOD)%MOD;
+			if(newThash == (pre[idx+1]-pre[idx+1-T.size()]+MOD)%MOD){
 				idx-=T.size();
 			}
 		}
