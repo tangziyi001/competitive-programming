@@ -75,8 +75,8 @@ int main(){
  *	Naive approach: iteraye through every xi
  *	Faster way: b_n = a_n, b_n-1=a_n-1+b_n*x
  *
- *
- *
+ *	Combination: C(n,k) = n!/((n-k)!k!)
+ *	
  *
  *
  *
