@@ -1,7 +1,7 @@
 /*
- *	
+ *	UVA 10970
  *	Coded by Ziyi Tang
- *
+ *	
  */
 
 //#include <bits/stdc++.h>
