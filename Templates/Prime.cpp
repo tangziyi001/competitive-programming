@@ -33,10 +33,10 @@ const long INFL = (long)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 1000
+#define MAXN 10000010
 
 ll _sieve_size; 
-bitset<10000010> bs; 
+bitset<MAXN> bs; 
 vi primes;
 void sieve(ll upperbound){ 
 	_sieve_size = upperbound + 1; 
@@ -57,6 +57,34 @@ bool isPrime(ll N) {
 	return true;
 }
 
+// Number of Prime Factor (may have same number)
+ll numPF(ll N) {
+	ll PF_idx = 0, PF = primes[PF_idx], ans = 0; 
+	while (PF * PF <= N){
+		while (N % PF == 0){ 
+			N /= PF; ans++; 
+		}
+		PF = primes[++PF_idx]; 
+	}
+	if (N != 1) ans++;
+		return ans; 
+}
+
+// Number of Divisors
+ll numDiv(ll N) {
+	ll PF_idx = 0, PF = primes[PF_idx], ans = 1; // start from ans = 1 
+	while (PF * PF <= N){
+		ll power = 0; // count the power 
+		while (N % PF == 0){ 
+			N /= PF; power++; 
+		}
+		ans *= (power + 1);
+		PF = primes[++PF_idx]; 
+	}
+  	if(N != 1)
+  		ans *= 2;
+	return ans; 
+}
 int main(){
 
 	return 0;
