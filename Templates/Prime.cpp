@@ -1,5 +1,5 @@
 /*
- *	Prime
+ *	Work with Prime
  *	Coded by Ziyi Tang
  *	
  */
@@ -48,7 +48,7 @@ void sieve(ll upperbound){
 		primes.push_back((int)i); 
 	}
 }
-bool isPrime(ll N) {
+bool isPrime(ll N){
 	// note: only work for N <= (last prime in vi "primes")^2
 	if (N <= _sieve_size) return bs[N]; 
 	for (int i = 0; i < (int)primes.size(); i++)
@@ -57,8 +57,8 @@ bool isPrime(ll N) {
 	return true;
 }
 
-// Number of Prime Factor (may have same number)
-ll numPF(ll N) {
+// Number of Prime Factor of N (may have same number) O(sqrt(N)/ln*sqrt(N))
+ll numPF(ll N){
 	ll PF_idx = 0, PF = primes[PF_idx], ans = 0; 
 	while (PF * PF <= N){
 		while (N % PF == 0){ 
@@ -70,8 +70,8 @@ ll numPF(ll N) {
 		return ans; 
 }
 
-// Number of Divisors
-ll numDiv(ll N) {
+// Number of Divisors of N
+ll numDiv(ll N){
 	ll PF_idx = 0, PF = primes[PF_idx], ans = 1; // start from ans = 1 
 	while (PF * PF <= N){
 		ll power = 0; // count the power 
@@ -85,6 +85,36 @@ ll numDiv(ll N) {
   		ans *= 2;
 	return ans; 
 }
+
+// Sum of Divisors of N
+ll sumDiv(ll N){
+ll PF_idx = 0, PF = primes[PF_idx], ans = 1; // start from ans = 1 
+	while (PF * PF <= N){
+		ll power = 0;
+		while (N % PF == 0){
+			N /= PF;
+			power++; 
+		}
+		ans *= ((ll)pow((double)PF, power + 1.0) - 1) / (PF - 1); 
+		PF = primes[++PF_idx];
+	}
+	if(N != 1)
+		ans *= ((ll)pow((double)N, 2.0) - 1) / (N - 1); // last return ans;
+}
+
+// Number of integers < N that are relatively prime to N
+ll EulerPhi(ll N){
+	ll PF_idx = 0, PF = primes[PF_idx], ans = N; // start from ans = N 
+	while (PF * PF <= N){
+		if (N % PF == 0) ans -= ans / PF; 
+		while (N % PF == 0) N /= PF;
+		PF = primes[++PF_idx];
+	}
+	if (N != 1) ans -= ans / N; 
+	return ans;
+}
+
+// Extended 
 int main(){
 
 	return 0;
