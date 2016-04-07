@@ -1,5 +1,5 @@
 /*
- *	Minimum Spanning Tree (Kruskal’s algorithm)
+ *	USACO 2014 March Contest, Silver 1
  *	Created by Ziyi Tang
  *	O(ElogV)
  */
