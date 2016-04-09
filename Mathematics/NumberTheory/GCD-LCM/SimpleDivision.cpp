@@ -1,7 +1,7 @@
 /*
- *	MathFunctions
- *	Created by Ziyi Tang
- *	
+ *	UVA 10407
+ *	Coded by Ziyi Tang
+ *	Same Remainder & GCD/LCM
  */
 
 //#include <bits/stdc++.h>
@@ -34,53 +34,31 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-// GCD
+vi all;
+vi diff;
 int gcd(int a, int b){
 	return b == 0 ? a : gcd(b, a % b);
 }
-
-// LCM
-int lcm(int a, int b){
-	return a * (b / gcd(a , b));
-}
-
-// Binet's Formula, approximate fib
-ll binet(int n){
-	double g = (1+sqrt(5))/2;
-	return (ll)((pow(g,n)-(pow(-g,-n)))/sqrt(5));
-}
-
-ll power(ll base, ll n){
-	if(n == 0LL) return 1LL;
-	//if(n == 1LL) return base;
-	ll tmp = power(base,n/2);
-	ll now = tmp*tmp;
-	if(n&1){
-		now = base*now;
-	}
-	return now;
-}
-
-
 int main(){
-	REP(i,0,10)
-	cout << power(2,i) << endl;
+	string line;
+	while(getline(cin,line)){
+		if(line[0] == '0') break;
+		all.clear();
+		diff.clear();
+		stringstream ss(line);
+		int now;
+		while(ss >> now && now != 0) all.push_back(now);
+		int sz = all.size();
+		REP(i,0,sz-1){
+			diff.push_back(abs(all[i+1]-all[i]));
+			//cout << diff[i] << endl;
+		}
+		int allgcd = diff[0];
+		sz = diff.size();
+		REP(i,1,sz){
+			allgcd = gcd(allgcd,diff[i]);
+		}
+		cout << allgcd << endl;
+	}
 	return 0;
 }
-
-/*
- *	Compute Polynomial; Given coefficients ai and value x
- *	Naive approach: iteraye through every xi
- *	Faster way: b_n = a_n, b_n-1=a_n-1+b_n*x
- *
- *	Combination: C(n,k) = n!/((n-k)!k!)
- *	
- *
- *
- *
- *
- *
- *
- *
- *
- */

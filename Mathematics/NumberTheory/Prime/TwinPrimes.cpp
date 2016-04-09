@@ -1,11 +1,12 @@
 /*
- *	UVA 10140
- *	Created by Ziyi Tang
- *	
+ *	UVA 10394
+ *	Coded by Ziyi Tang
+ *	Prime Sieve
  */
 
 //#include <bits/stdc++.h>
 #include <iostream>
+#include <fstream>
 #include <cstdio>
 #include <string>
 #include <cstring>
@@ -32,34 +33,27 @@ const long INFL = (long)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 2200000000
+#define MAXN 20000010
 
-int all[sqrt(MAXN)];
-int main(){
-	FILL(all,0);
-	for(ll i = 2; i < MAXN; i++){
-		if(all[i] == 0){
-			for(ll j = 2; j*i < MAXN; j++){
-				all[j] = 1;
-			}
-		}
+ll _sieve_size; 
+bitset<MAXN> bs; 
+vpi pairs;
+
+void sieve(ll upperbound){ 
+	_sieve_size = upperbound + 1; 
+	bs.set();
+	bs[0] = bs[1] = 0;
+	for(ll i = 2; i <= _sieve_size; i++) if (bs[i]) {
+		for (ll j = i * i; j <= _sieve_size; j += i)
+			bs[j] = 0;
+		if(bs[i-2]) pairs.push_back(make_pair(i-2,i));
 	}
-	ll l,r;
-	cout << "done" << endl;
-	while(cin >> l >> r){
-		ll max_left = -1;
-		ll max_right = -1;
-		ll min_left = -1;
-		int min_dis = -1;
-		for(int i = l; i <= r; i++){
-			if(max_left == -1) max_left = i;
-			else(max_right = i);
-		}
-		if(max_left == -1 || max_right == -1){
-			cout << "no" << endl;
-		}else{
-			cout << all[max_left] << endl;
-		}
+}
+int main(){
+	sieve(MAXN);
+	int tmp;
+	while(cin >> tmp){
+		printf("(%d, %d)\n",pairs[tmp-1].first,pairs[tmp-1].second);
 	}
 	return 0;
 }
