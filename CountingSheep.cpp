@@ -1,5 +1,5 @@
 /*
- *	
+ *	Google Code Jam 2016 Online Qualification Round 1
  *	Coded by Ziyi Tang， CS480 S16 Algorithmic Problem Solving, New York University
  *
  */
@@ -35,6 +35,35 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 
 int main(){
+	int t;
+	cin >> t;
+	REP(cas,1,t+1){
+		ll mark = 0;
+		ll n;
+		cin >> n;
+		ll flag = -1;
+		REP(c,1,100000){
+			ll now = c*n;
+			//cout << now << endl;
+			ll tmp = now;
+			while(tmp != 0){
+				int cur = tmp%10;
+				mark |= (1 << cur);
+				tmp/=10;
+			}
+			if(mark == (1 << 10) - 1){
+				flag = now;
+				break;
+			}
+		}
+		if(flag == -1){
+			printf("Case #%d: INSOMNIA\n",cas);
+		}
+		else{
+			ll pro = flag*n;
+			printf("Case #%d: %lld\n",cas, flag);
+		}
 
+	}
 	return 0;
 }

@@ -1,5 +1,5 @@
 /*
- *	
+ *	Google Code Jam 2016 Online Qualification Round 2
  *	Coded by Ziyi Tang， CS480 S16 Algorithmic Problem Solving, New York University
  *
  */
@@ -34,7 +34,54 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
+string line;
+int sz;
+int cur;
+int cont;
+void rev(int ter){
+	reverse(line.begin(),line.begin()+ter+1);
+	REP(i,0,ter+1){
+		if(line[i] == '+')
+			line[i] = '-';
+		else
+			line[i] = '+';
+	}
+}
 int main(){
-
+	int t;
+	cin >> t;
+	REP(cas,1,t+1){
+		cin >> line;
+		cont = 0;
+		sz = line.size();
+		int flag = 1;
+		while(flag){
+			//cout << line << endl;
+			cur = 0;
+			while(line[cur] == '+'){
+				cur++;
+				if(cur == sz){
+					flag = 0;
+					break;
+				}
+			}
+			if(flag && cur){
+				rev(cur-1);
+				cont++;
+			}
+			else if(flag){
+				int tmp = sz-1;
+				while(tmp >= 0){
+					if(line[tmp] == '-'){
+						rev(tmp);
+						cont++;
+						break;
+					}
+					else tmp--;
+				}
+			}
+		}
+		printf("Case #%d: %d\n",cas,cont);
+	}
 	return 0;
 }
