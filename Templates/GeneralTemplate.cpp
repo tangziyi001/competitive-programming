@@ -1,6 +1,6 @@
 /*
  *	
- *	Coded by Ziyi Tang， CS480 S16 Algorithmic Problem Solving, New York University
+ *	Coded by Ziyi Tang
  *
  */
 
