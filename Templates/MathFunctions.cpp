@@ -50,6 +50,18 @@ ll binet(int n){
 	return (ll)((pow(g,n)-(pow(-g,-n)))/sqrt(5));
 }
 
+// Combination DP
+ll comb[MAXN][MAXN]; // n choose k
+void dp(){
+	comb[0][0] = 1LL;
+	REP(i,1,MAXN) REP(j,0,i+1){
+		comb[i][j] = comb[i-1][j];
+		if(j >= 1)
+			comb[i][j] += comb[i-1][j-1];
+	}
+}
+
+// Power Computation
 ll power(ll base, ll n){
 	if(n == 0LL) return 1LL;
 	//if(n == 1LL) return base;
