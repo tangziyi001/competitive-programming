@@ -34,9 +34,9 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 
-string T,P;
+string T,P; // String Pattern
 int cont;
-int b[MAXN], n, m;
+int b[MAXN], n, m; // string size, pattern size
 void kmpPre(){
 	int i = 0, j = -1;
 	b[0] = -1;
