@@ -9,6 +9,7 @@ class Main{
 		Scanner sc = new Scanner(System.in);
 		while(sc.hasNext()){
 			BigInteger num = sc.nextBigInteger();
+			
 		}
 	}
 }
