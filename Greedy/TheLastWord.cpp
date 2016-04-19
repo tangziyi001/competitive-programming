@@ -1,7 +1,7 @@
 /*
- *	
+ *	Google Codejam 2016 Round 1A 1
  *	Coded by Ziyi Tang, CS480 S16 New York University
- *
+ *	Greedy
  */
 
 //#include <bits/stdc++.h>
@@ -36,6 +36,26 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MOD 1000000007
 
 int main(){
-
+	int test;
+	cin >> test;
+	REP(t,1,test+1){
+		string line;
+		cin >> line;
+		string tmp = "";
+		int sz = line.size();
+		char cur = line[0];
+		tmp = cur;
+		REP(i,1,sz){
+			if(line[i] >= cur){
+				cur = line[i];
+				string nn = cur+tmp;
+				tmp = nn;
+			}
+			else{
+				tmp += line[i];
+			}
+		}
+		printf("Case #%d: %s\n", t, tmp.c_str());
+	}
 	return 0;
 }

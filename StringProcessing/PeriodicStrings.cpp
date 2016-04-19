@@ -36,6 +36,33 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MOD 1000000007
 
 int main(){
-
+	int test;
+	cin >> test;
+	REP(cas,1,test+1){
+		string now;
+		cin >> now;
+		int sz = now.size();
+		int re = -1;
+		REP(k,1,sz+1){
+			if(sz%k != 0) continue;
+			string p = now.substr(0,k);
+			//cout << p << endl;
+			int flag = 1;
+			for(int i = 0; i < sz-k+1; i+=k){
+				string t = now.substr(i,k);
+				//cout << "t " << t << endl;
+				if(p != t){
+					flag = 0;
+					break;
+				}
+			}
+			if(flag){
+				re = k;
+				break;
+			}
+		}
+		if(cas != 1) cout << endl;
+		cout << re << endl;
+	}
 	return 0;
 }

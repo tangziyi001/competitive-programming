@@ -1,7 +1,7 @@
 /*
- *	
+ *	UVA 847
  *	Coded by Ziyi Tang, CS480 S16 New York University
- *
+ *	Stan always times 9 and Ollie always times 2
  */
 
 //#include <bits/stdc++.h>
@@ -36,6 +36,23 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MOD 1000000007
 
 int main(){
+	int n;
+	while(cin >> n){
+		int now = 0;
+		ll cur = 1LL;
+		while(cur < n){
+			if(!now){
+				cur*=9;
+			}
+			else
+				cur*=2;
+			now ^= 1;
+		}
+		if(!now) cout << "Ollie wins." << endl;
+		else
+			cout << "Stan wins." << endl;
+
+	}
 
 	return 0;
 }
