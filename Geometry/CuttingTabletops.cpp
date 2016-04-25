@@ -1,7 +1,7 @@
 /*
- *	Geometry Template
+ *	UVA 10406
  *	Coded by Ziyi Tang
- *
+ *	Geometry
  */
 
 //#include <bits/stdc++.h>
@@ -34,9 +34,9 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 #define MOD 1000000007
-#define EPS 1e-9
+#define EPS 1e-8
 
-// ---------- Point ----------
+// Point
 struct point{
 	double x,y;
 	point(){x = y = 0;}
@@ -56,42 +56,26 @@ double dist(point a, point b){
 	return hypot(a.x-b.x, a.y-b.y);
 }
 
-// Rotate by rotation matrix
-point rotate(point now, double theta){
-	double rad = theta * M_PI/180.0;
-	return point(now.x * cos(rad) - now.y * sin(rad),
-			now.x * sin(rad) + now.y * cos(rad));
-}
-
-// ---------- Polygon ----------
-
 // Polygon Area
 vector<point> Poly;
 double area(const vector<point> &P) {
 	double result = 0.0, x1, y1, x2, y2;
 	int sz = P.size();
-	for (int i = 0; i < sz; i++) {
-		x1 = P[i].x; x2 = P[(i+1)%sz].x;
-		y1 = P[i].y; y2 = P[(i+1)%sz].y; 
+	for (int i = 0; i < sz-1; i++) {
+		x1 = P[i].x; x2 = P[i+1].x;
+		y1 = P[i].y; y2 = P[i+1].y; 
 		result += (x1 * y2 - x2 * y1);
 	}
 	return fabs(result) / 2.0; 
 }
 
-// ---------- Vector ----------
+// Vector
 struct vec{
 	double x,y;
 	vec(double _x, double _y) : x(_x), y(_y) {}
 };
 vec toVec(point a, point b){
 	return vec(b.x - a.x, b.y - a.y);
-}
-vec scale(vec v, double s){
-	return vec(v.x * s, v.y * s);
-}
-// Translate a point
-point translate(vec v, point p){
-	return point(v.x + p.x, v.y + p.y);
 }
 // Dot Product
 double dot(vec a, vec b){
@@ -110,12 +94,39 @@ double angle(point a, point o, point b){
 	return acos(dot(oa, ob) / sqrt(norm_sq(oa) * norm_sq(ob))); 
 }
 
-
 int main(){
-	point a(10,10);
-	point b(10,10);
-	point c(5,18);
-	if(a == b) cout << "eq" << endl;
-	if(c < b) cout << "bi" << endl;
-	return 0;
+	double d;
+	int n;
+	while(cin >> d >> n && (fabs(d-0.0) > EPS || n != 0)){
+		Poly.clear();
+		REP(i,0,n){
+			double tx,ty;
+			cin >> tx >> ty;
+			Poly.push_back(point(tx,ty));
+		}
+		Poly.push_back(Poly[0]);
+		double ori_area = area(Poly);
+		//cout << ori_area << endl;
+		REP(i,0,n){
+			point a = Poly[i];
+			point b = Poly[i+1];
+			double dis = dist(a,b);
+			ori_area -= dis*d;
+		}
+		REP(i,0,n){
+			point now = Poly[i];
+			point left = Poly[(i-1+n)%n];
+			point right = Poly[i+1];
+			double ang = angle(left,now,right);
+			if(fabs(ang - M_PI/2.0) < EPS){
+				//cout << "an" << endl;
+				ori_area += d*d;
+			}else{
+				double theta = ang/2.0;
+				double tri_double = d*d/(tan(theta));
+				ori_area += tri_double;
+			}
+		}
+		printf("%.3lf\n", ori_area);
+	}
 }
