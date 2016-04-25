@@ -1,7 +1,7 @@
 /*
- *	Geometry Template
+ *	UVA 10065
  *	Coded by Ziyi Tang
- *
+ *	Convex Hull and Polygon Area
  */
 
 //#include <bits/stdc++.h>
@@ -54,13 +54,6 @@ struct point{
 // Euclid Distance
 double dist(point a, point b){
 	return hypot(a.x-b.x, a.y-b.y);
-}
-
-// Rotate by rotation matrix
-point rotate(point now, double theta){
-	double rad = theta * M_PI/180.0;
-	return point(now.x * cos(rad) - now.y * sin(rad),
-			now.x * sin(rad) + now.y * cos(rad));
 }
 
 // ---------- Polygon ----------
@@ -158,10 +151,26 @@ vector<point> CH(vector<point> P){
 }  
 
 int main(){
-	point a(10,10);
-	point b(10,10);
-	point c(5,18);
-	if(a == b) cout << "eq" << endl;
-	if(c < b) cout << "bi" << endl;
+	int n;
+	int cas = 0;
+	while(cin >> n && n != 0){
+		cas++;
+		Poly.clear();
+		int a,b;
+		REP(i,0,n){
+			cin >> a >> b;
+			Poly.push_back(point(a,b));
+		}
+		Poly.push_back(Poly[0]);
+		double ori = area(Poly);
+		vector<point> convex = CH(Poly);
+		// REP(i,0,convex.size()){
+		// 	printf("%lf %lf\n", convex[i].x, convex[i].y);
+		// }
+		double con = area(convex);
+		printf("Tile #%d\n", cas);
+		printf("Wasted Space = %.2lf %%\n\n", (con-ori)/con*100);
+	}
+
 	return 0;
 }
