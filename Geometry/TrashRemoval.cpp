@@ -1,7 +1,7 @@
 /*
- *	Geometry Template
+ *	UVA 01111
  *	Coded by Ziyi Tang
- *
+ *	Convex Hull, The distance from a point to a line
  */
 
 //#include <bits/stdc++.h>
@@ -63,6 +63,22 @@ point rotate(point now, double theta){
 			now.x * sin(rad) + now.y * cos(rad));
 }
 
+// ---------- Line ----------
+struct line{
+	double a,b,c;
+	line() {a = b = c = 0;}
+	line(double _a, double _b, double _c) : a(_a), b(_b), c(_c) {}
+};
+// The resulting line is passed by ref
+void pointsToLine(point p1, point p2, line &l) {
+	if (fabs(p1.x - p2.x) < EPS) { // vertical line is fine
+		l.a = 1.0; l.b = 0.0; l.c = -p1.x; 
+	} else {
+		l.a = -(double)(p1.y - p2.y) / (p1.x - p2.x);
+		l.b = 1.0; // IMPORTANT: we fix the value of b to 1.0 
+		l.c = -(double)(l.a * p1.x) - p1.y;
+	}
+}
 
 // ---------- Vector ----------
 struct vec{
@@ -183,13 +199,39 @@ vector<point> CH(vector<point> P){
 	return S; 
 }  
 
-
-
 int main(){
-	point a(10,10);
-	point b(10,10);
-	point c(5,18);
-	if(a == b) cout << "eq" << endl;
-	if(c < b) cout << "bi" << endl;
+	int n;
+	int cas = 0;
+	while(cin >> n && n != 0){
+		cas++;
+		Poly.clear();
+		int a,b;
+		REP(i,0,n){
+			cin >> a >> b;
+			Poly.push_back(point(a,b));
+		}
+		Poly.push_back(Poly[0]);
+		vector<point> Con = CH(Poly);
+		int sz = Con.size();
+		// REP(i,0,sz){
+		// 	cout << Con[i].x << Con[i].y << endl;
+		// }
+		double re  = 1000000000.00;
+		REP(i,0,sz-1){
+			double maxp = 0.0;
+			point now = Con[i];
+			point nxt = Con[i+1];
+			line tmp;
+			pointsToLine(now,nxt,tmp);
+			//cout << tmp.a << tmp.b << tmp.c << endl;
+			REP(j,0,sz-1){
+				point cur = Con[j];
+				double distance = fabs(tmp.a*cur.x + tmp.b*cur.y + tmp.c)/sqrt(tmp.a*tmp.a+tmp.b*tmp.b);
+				maxp = max(maxp, distance);
+			}
+			re = min(maxp, re);
+		}
+		printf("Case %d: %.2lf\n",cas,re);
+	}
 	return 0;
 }

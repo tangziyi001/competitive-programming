@@ -1,9 +1,3 @@
-/*
- *	Geometry Template
- *	Coded by Ziyi Tang
- *
- */
-
 //#include <bits/stdc++.h>
 #include <iostream>
 #include <cstdio>
@@ -63,49 +57,6 @@ point rotate(point now, double theta){
 			now.x * sin(rad) + now.y * cos(rad));
 }
 
-
-// ---------- Vector ----------
-struct vec{
-	double x,y;
-	vec(double _x, double _y) : x(_x), y(_y) {}
-};
-vec toVec(point a, point b){
-	return vec(b.x - a.x, b.y - a.y);
-}
-vec scale(vec v, double s){
-	return vec(v.x * s, v.y * s);
-}
-// Translate a point
-point translate(vec v, point p){
-	return point(v.x + p.x, v.y + p.y);
-}
-// Dot Product
-double dot(vec a, vec b){
-	return a.x * b.x + a.y * b.y;
-}
-// Norm Square
-double norm_sq(vec v){
-	return v.x * v.x + v.y * v.y;
-}
-// Cross Product
-double cross(vec a, vec b){ 
-	return a.x * b.y - a.y * b.x;
-}
-// returns true if point r is on the same line as the line pq 
-bool collinear(point p, point q, point r) {
-	return fabs(cross(toVec(p, q), toVec(p, r))) < EPS; 
-}
-// Vector Angle: returns angle aob in rad 
-double angle(point a, point o, point b){ 
-	vec oa = toVec(o, a);
-	vec ob = toVec(o, b);
-	return acos(dot(oa, ob) / sqrt(norm_sq(oa) * norm_sq(ob))); 
-}
-// CCW Check
-bool ccw(point p, point q, point r) {
-	return cross(toVec(p, q), toVec(p, r)) > 0; 
-}
-
 // ---------- Polygon ----------
 
 // Polygon Area
@@ -120,34 +71,6 @@ double area(const vector<point> &P) {
 	}
 	return fabs(result) / 2.0; 
 }
-
-// Is convex
-// returns true if we always make the same turn while examining
-// all the edges of the polygon one by one
-bool isConvex(const vector<point> &P) {
-  int sz = (int)P.size();
-  if (sz <= 3) return false;   // a point/sz=2 or a line/sz=3 is not convex
-  bool isLeft = ccw(P[0], P[1], P[2]);               // remember one result
-  for (int i = 1; i < sz-1; i++)            // then compare with the others
-    if (ccw(P[i], P[i+1], P[(i+2) == sz ? 1 : i+2]) != isLeft)
-      return false;            // different sign -> this polygon is concave
-  return true; }  
-
-// Point in polygon
-// returns true if point p is in either convex/concave polygon P
-bool inPolygon(point pt, const vector<point> &P) {
-	if ((int)P.size() == 0) 
-		return false;
-  		double sum = 0;    // assume the first vertex is equal to the last vertex
-  	for (int i = 0; i < (int)P.size()-1; i++) {
-	    if (ccw(pt, P[i], P[i+1]))
-	         sum += angle(P[i], pt, P[i+1]);                   // left turn/ccw
-	    else sum -= angle(P[i], pt, P[i+1]); 				   // right turn/cw
-	}                 
-  	return fabs(fabs(sum) - 2*M_PI) < EPS; 
-}
-
-// Graham’s Scan algorithm
 point pivot(0,0);
 bool angleCmp(point a, point b){
 	if(collinear(pivot,a,b))
@@ -183,13 +106,27 @@ vector<point> CH(vector<point> P){
 	return S; 
 }  
 
-
-
 int main(){
-	point a(10,10);
-	point b(10,10);
-	point c(5,18);
-	if(a == b) cout << "eq" << endl;
-	if(c < b) cout << "bi" << endl;
+	int test;
+	vector<point> all;
+	while(test--){
+		all.clear();
+		int n;
+		cin >> n;
+		double area1 = 0.0;
+		REP(i,0,n){
+			double x,y,w,h,theta;
+			cin >> y >> x >> h >> w >> theta;
+			theta = 90-theta;
+			area1 += w*h;
+			all.push_back(rotate(point(x-w/2, y-h/2), theta));
+			all.push_back(rotate(point(x-w/2, y+h/2), theta));
+			all.push_back(rotate(point(x+w/2, y-h/2), theta));
+			all.push_back(rotate(point(x+w/2, y+h/2), theta));
+		}
+		Poly = CH(all);
+		double area2 = area(Poly);
+		printf("%.1f\n%%", area1/area2);
+	}
 	return 0;
 }

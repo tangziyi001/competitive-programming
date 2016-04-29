@@ -1,7 +1,7 @@
 /*
- *	Geometry Template
+ *	UVA 11909
  *	Coded by Ziyi Tang
- *
+ *	Triangle Computation
  */
 
 //#include <bits/stdc++.h>
@@ -186,10 +186,22 @@ vector<point> CH(vector<point> P){
 
 
 int main(){
-	point a(10,10);
-	point b(10,10);
-	point c(5,18);
-	if(a == b) cout << "eq" << endl;
-	if(c < b) cout << "bi" << endl;
+	int l,w,h,theta;
+	while(cin >> l >> w >> h >> theta){
+		double vol1 = l*w*h;
+		double hh = l*tan(theta*M_PI/180);
+		if(fabs(hh-h) < EPS){
+			printf("%.3f mL\n", vol1/2);
+		}
+		else if(hh < h){
+			double vol2 = w*hh*l/2.0;
+			printf("%.3f mL\n", vol1-vol2);
+		}
+		else{
+			double ll = h/tan(theta*M_PI/180);
+			double vol2 = w*ll*h/2.0;
+			printf("%.3f mL\n", vol2);
+		}
+	}
 	return 0;
 }

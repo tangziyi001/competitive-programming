@@ -1,7 +1,7 @@
 /*
- *	Geometry Template
+ *	UVA 681
  *	Coded by Ziyi Tang
- *
+ *	Convex Hull
  */
 
 //#include <bits/stdc++.h>
@@ -42,9 +42,9 @@ struct point{
 	point(){x = y = 0;}
 	point(double _x, double _y) : x(_x), y(_y) {}
 	bool operator < (point tmp) const{
-		if(fabs(x - tmp.x) > EPS)
-			return x < tmp.x;
-		return y < tmp.y;
+		if(fabs(y - tmp.y) > EPS)
+			return y < tmp.y;
+		return x < tmp.x;
 	}
 	bool operator == (point tmp) const{
 		return (fabs(x - tmp.x) < EPS && fabs(y - tmp.y) < EPS);
@@ -54,13 +54,6 @@ struct point{
 // Euclid Distance
 double dist(point a, point b){
 	return hypot(a.x-b.x, a.y-b.y);
-}
-
-// Rotate by rotation matrix
-point rotate(point now, double theta){
-	double rad = theta * M_PI/180.0;
-	return point(now.x * cos(rad) - now.y * sin(rad),
-			now.x * sin(rad) + now.y * cos(rad));
 }
 
 
@@ -184,12 +177,41 @@ vector<point> CH(vector<point> P){
 }  
 
 
-
 int main(){
-	point a(10,10);
-	point b(10,10);
-	point c(5,18);
-	if(a == b) cout << "eq" << endl;
-	if(c < b) cout << "bi" << endl;
+	int K;
+	cin >> K;
+	cout << K << endl;
+	REP(k,0,K){
+		Poly.clear();
+		int n;
+		cin >> n;
+		if(n == -1)
+			cin >> n;
+		REP(i,0,n){
+			int a,b;
+			cin >> a >> b;
+			Poly.push_back(point(a,b));
+		}
+		//Poly.push_back(Poly[0]);
+		vector<point> con = CH(Poly);
+		con.pop_back();
+		int sz = con.size();
+		point sta = con[0];
+		int idx = 0;
+		REP(i,1,sz){
+			if(con[i] < sta){
+				sta = con[i];
+				idx = i;
+			}
+		}
+		if(k != 0)
+			cout << -1 << endl;
+		cout << sz+1 << endl;
+		REP(i,0,sz){
+			cout << con[(idx+i)%sz].x << " " << con[(idx+i)%sz].y << endl;
+		}
+		cout << sta.x << " " << sta.y << endl;
+	}
+
 	return 0;
 }
