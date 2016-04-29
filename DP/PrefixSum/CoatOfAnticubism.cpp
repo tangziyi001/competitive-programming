@@ -1,7 +1,7 @@
 /*
- *	
+ *	CodeForces 667B - Coat of Anticubism
  *	Coded by Ziyi Tang
- *
+ *	
  */
 
 //#include <bits/stdc++.h>
@@ -35,7 +35,30 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 #define MOD 1000000007
 
+vector<ll> all;
+ll sum[100010];
 int main(){
+	int n;
+	cin >> n;
+	REP(i,0,n){
+		ll tmp;
+		cin >> tmp;
+		all.push_back(tmp);
+	}
+	sort(all.begin(), all.end());
+	sum[0] = 0LL;
+	REP(i,0,n){
+		sum[i+1] = sum[i] + all[i];
+	}
+	ll minp = INFL;
+	// REP(i,0,n+1){
+	// 	cout << sum[i] << endl;
+	// }
+	REP(i,0,n-1){
+		minp = min(minp, (sum[n]-sum[i+1]) - (sum[i+1]));
+	}
+	minp = min(minp, all[n-1]-sum[n-1]);
+	cout << minp+1 << endl;
 
 	return 0;
 }
