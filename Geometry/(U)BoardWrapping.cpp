@@ -56,7 +56,47 @@ point rotate(point now, double theta){
 	return point(now.x * cos(rad) - now.y * sin(rad),
 			now.x * sin(rad) + now.y * cos(rad));
 }
-
+// ---------- Vector ----------
+struct vec{
+	double x,y;
+	vec(double _x, double _y) : x(_x), y(_y) {}
+};
+vec toVec(point a, point b){
+	return vec(b.x - a.x, b.y - a.y);
+}
+vec scale(vec v, double s){
+	return vec(v.x * s, v.y * s);
+}
+// Translate a point
+point translate(vec v, point p){
+	return point(v.x + p.x, v.y + p.y);
+}
+// Dot Product
+double dot(vec a, vec b){
+	return a.x * b.x + a.y * b.y;
+}
+// Norm Square
+double norm_sq(vec v){
+	return v.x * v.x + v.y * v.y;
+}
+// Cross Product
+double cross(vec a, vec b){ 
+	return a.x * b.y - a.y * b.x;
+}
+// returns true if point r is on the same line as the line pq 
+bool collinear(point p, point q, point r) {
+	return fabs(cross(toVec(p, q), toVec(p, r))) < EPS; 
+}
+// Vector Angle: returns angle aob in rad 
+double angle(point a, point o, point b){ 
+	vec oa = toVec(o, a);
+	vec ob = toVec(o, b);
+	return acos(dot(oa, ob) / sqrt(norm_sq(oa) * norm_sq(ob))); 
+}
+// CCW Check
+bool ccw(point p, point q, point r) {
+	return cross(toVec(p, q), toVec(p, r)) > 0; 
+}
 // ---------- Polygon ----------
 
 // Polygon Area
@@ -71,6 +111,8 @@ double area(const vector<point> &P) {
 	}
 	return fabs(result) / 2.0; 
 }
+
+
 point pivot(0,0);
 bool angleCmp(point a, point b){
 	if(collinear(pivot,a,b))
@@ -109,6 +151,7 @@ vector<point> CH(vector<point> P){
 int main(){
 	int test;
 	vector<point> all;
+	cin >> test;
 	while(test--){
 		all.clear();
 		int n;
