@@ -1,7 +1,7 @@
 /*
  *	Geometry Template
  *	Coded by Ziyi Tang
- *
+ *	
  */
 
 //#include <bits/stdc++.h>
@@ -104,6 +104,19 @@ double angle(point a, point o, point b){
 // CCW Check
 bool ccw(point p, point q, point r) {
 	return cross(toVec(p, q), toVec(p, r)) > 0; 
+}
+
+// Check Intersection for two line segment
+bool check(pair<point, point> a, pair<point, point> b){
+	if(max(a.first.x,a.second.x) >= min(b.first.x, b.second.x)
+		&& max(a.first.y,a.second.y) >= min(b.first.y, b.second.y)
+		&& max(b.first.x,b.second.x) >= min(a.first.x, a.second.x)
+		&& max(b.first.y,b.second.y) >= min(a.first.y, a.second.y)){
+		if(cross(toVec(a.first, b.first), toVec(a.first, a.second)) * cross(toVec(a.first, a.second), toVec(a.second, b.second)) >= 0
+		&& cross(toVec(b.first, a.first), toVec(b.first, b.second)) * cross(toVec(b.first, b.second), toVec(b.second, a.second)) >= 0 )
+		return true;
+	}
+	return false;
 }
 
 // ---------- Polygon ----------
