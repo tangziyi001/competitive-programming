@@ -1,7 +1,7 @@
 /*
- *	Binary Indexed Tree
+ *	CodeForces 673A - Bear and Game
  *	Created by Ziyi Tang
- *	
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -33,28 +33,34 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
+#define MOD 1000000007
 
-int ft[MAXN+1];
-int sz;
 vi all;
-int rsq(int b){
-	int sum = 0;
-	for(; b; b-=(b&-b))
-		sum += ft[b];
-	return sum;
-}
-int rsq(int a, int b){
-	return rsq(b) - (a == 1 ? 0 : rsq(a-1));
-}
-void adjust(int k, int v){
-	for(; k < sz; k += (k&-k))
-		ft[k] += v;
-}
 int main(){
-	
-	// Clear
-	FILL(ft,0);
-	all.clear();
+	int n;
+	cin >> n;
+	REP(i,0,n){
+		int tmp;
+		cin >> tmp;
+		all.push_back(tmp);
+	}
+	int start = 0;
+	int flag = 0;
+	REP(i,0,n){
+		int now  = all[i];
+		if(start+15 < now){
+			flag = 1;
+			break;
+		}
+		else
+			start = now;
+	}
+	if(start + 15 < 90)
+		flag = 1;
 
+	if(flag)
+		cout << start+15 << endl;
+	else
+		cout << 90 << endl;
 	return 0;
 }

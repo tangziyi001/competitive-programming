@@ -1,7 +1,7 @@
 /*
- *	Binary Indexed Tree
+ *	673B - Problems for Round
  *	Created by Ziyi Tang
- *	
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -33,28 +33,29 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
+#define MOD 1000000007
 
-int ft[MAXN+1];
-int sz;
-vi all;
-int rsq(int b){
-	int sum = 0;
-	for(; b; b-=(b&-b))
-		sum += ft[b];
-	return sum;
-}
-int rsq(int a, int b){
-	return rsq(b) - (a == 1 ? 0 : rsq(a-1));
-}
-void adjust(int k, int v){
-	for(; k < sz; k += (k&-k))
-		ft[k] += v;
-}
+vpi all;
 int main(){
-	
-	// Clear
-	FILL(ft,0);
-	all.clear();
+	int n,m;
+	cin >> n >> m;
+	REP(i,0,m){
+		int a,b;
+		cin >> a >> b;
+		all.push_back(make_pair(min(a,b), max(a,b)));
+	}
+	sort(all.begin(), all.end());
+	int sta = 1,ter = n;
+	REP(j,0,m){
+		if(all[j].first > sta)
+			sta = all[j].first;
+		if(all[j].second < ter)
+			ter = all[j].second;
+	}
+	if(sta >= ter)
+		cout << 0 << endl;
+	else
+		cout << ter-sta << endl;
 
 	return 0;
 }

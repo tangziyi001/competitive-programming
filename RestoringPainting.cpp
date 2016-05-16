@@ -1,7 +1,7 @@
 /*
- *	Binary Indexed Tree
- *	Created by Ziyi Tang
  *	
+ *	Created by Ziyi Tang
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -33,28 +33,31 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
+#define MOD 1000000007
 
-int ft[MAXN+1];
-int sz;
-vi all;
-int rsq(int b){
-	int sum = 0;
-	for(; b; b-=(b&-b))
-		sum += ft[b];
-	return sum;
-}
-int rsq(int a, int b){
-	return rsq(b) - (a == 1 ? 0 : rsq(a-1));
-}
-void adjust(int k, int v){
-	for(; k < sz; k += (k&-k))
-		ft[k] += v;
-}
 int main(){
-	
-	// Clear
-	FILL(ft,0);
-	all.clear();
+	int n,a,b,c,d;
+	cin >> n >> a >> b >> c >> d;
+	vi all;
+	int ab = a+b;
+	int bd = b+d;
+	int dc = c+d;
+	int ca = c+a;
+	all.push_back(ab);
+	all.push_back(bd);
+	all.push_back(dc);
+	all.push_back(ca);
+	int maxp = *max_element(all.begin(), all.end());
+	int minp = *min_element(all.begin(), all.end());
+	//cout << minp << " " << maxp << endl;
+	ll diff = (minp+n)-(maxp+1);
+	//cout << diff << endl;
+	if(diff < 0LL)
+		cout << 0 << endl;
+	else{
+		ll re = n*(diff+1LL);
+		cout << re << endl;
+	}
 
 	return 0;
 }

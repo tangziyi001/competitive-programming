@@ -1,7 +1,7 @@
 /*
- *	Binary Indexed Tree
- *	Created by Ziyi Tang
  *	
+ *	Created by Ziyi Tang
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -33,28 +33,20 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
+#define MOD 1000000007
 
-int ft[MAXN+1];
-int sz;
-vi all;
-int rsq(int b){
-	int sum = 0;
-	for(; b; b-=(b&-b))
-		sum += ft[b];
-	return sum;
-}
-int rsq(int a, int b){
-	return rsq(b) - (a == 1 ? 0 : rsq(a-1));
-}
-void adjust(int k, int v){
-	for(; k < sz; k += (k&-k))
-		ft[k] += v;
-}
 int main(){
-	
-	// Clear
-	FILL(ft,0);
-	all.clear();
-
+	int a,b,c;
+	cin >> a >> b >> c;
+	if(c == 0){
+		if(a == b)
+			cout << "YES" << endl;
+		else
+			cout << "NO" << endl;
+	}
+	else if((b-a)%c == 0 && (b-a)/c >= 0)
+		cout << "YES" << endl;
+	else
+		cout << "NO" << endl;
 	return 0;
 }

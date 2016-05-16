@@ -56,7 +56,7 @@ int main(){
 	p.clear();
 	FILL(res,0);
 	// Setup res, s and t
-
+	
 	// Begin
 	mf = 0;
 	while(1){

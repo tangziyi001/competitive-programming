@@ -1,7 +1,7 @@
 /*
- *	Segment Tree for RMQ
+ *	673C - Bear and Colors
  *	Created by Ziyi Tang
- *	O(logn)
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -32,9 +32,12 @@ const long INFL = (long)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 1000
+#define MAXN 5005
+#define MOD 1000000007
 
-
+vi all;
+vi re;
+vi A;
 struct SegmentTree{
 	vi A;
 	int n;
@@ -50,7 +53,7 @@ struct SegmentTree{
 			build(right, (L+R)/2+1, R);
 			int p1_idx = st[left];
 			int p2_idx = st[right];
-			st[p] = (A[p1_idx] <= A[p2_idx]) ? p1_idx : p2_idx;
+			st[p] = (A[p1_idx] >= A[p2_idx]) ? p1_idx : p2_idx;
 		}
 	}
 
@@ -65,7 +68,7 @@ struct SegmentTree{
 		int p2_idx = rmq(right, (L+R)/2+1, R, l, r);
 		if(p1_idx == -1) return p2_idx;
 		if(p2_idx == -1) return p1_idx;
-		return (A[p1_idx] <= A[p2_idx]) ? p1_idx : p2_idx;
+		return (A[p1_idx] >= A[p2_idx]) ? p1_idx : p2_idx;
 	}
 
 	void update(int p, int L, int R, int i){
@@ -80,7 +83,7 @@ struct SegmentTree{
 				update(right, (L+R)/2+1, R, i);
 			int p1_idx = st[left];
 			int p2_idx = st[right];
-			st[p] = (A[p1_idx] <= A[p2_idx]) ? p1_idx : p2_idx;
+			st[p] = (A[p1_idx] >= A[p2_idx]) ? p1_idx : p2_idx;
 		}
 	}
 	SegmentTree(vi &_A){
@@ -97,38 +100,30 @@ struct SegmentTree{
 		update(1,0,n-1,idx);
 	}
 };
-
-vi all;
 int main(){
 	int n;
-	cin >> n; // Numbers
-
-	// Clear
-	all.clear();
-	all.assign(n,0);
-
-	// Input
-	int ttmp;
+	cin >> n;
+	re.assign(n,0);
 	REP(i,0,n){
-		cin >> ttmp;
-		all[i] = ttmp;
+		int tmp;
+		cin >> tmp;
+		all.push_back(tmp-1);
 	}
-
-	SegmentTree st(all);
-
-	// Test
-	int l,r;
-	int i,v;
-	cin >> i >> v;
-
-	//////// Update
-	all[i] = v; // Must change the original array
-	st.update(i,v);
-	////////
-
-	while(cin >> l >> r){
-		int p = st.rmq(l,r);
-		cout << p << " is " << all[p] << endl;
+	REP(i,0,n){
+		A.assign(n,0);
+		SegmentTree st(A);
+		REP(j,i,n){
+			int now = all[j];
+			A[now]++;
+			st.update(now,A[now]);
+			int maxp = st.rmq(0,n-1);
+			re[maxp]++;
+		}
 	}
+	REP(i,0,n){
+		if(i != 0) cout << " ";
+		cout << re[i]; 
+	}
+	cout << endl;
 	return 0;
 }
