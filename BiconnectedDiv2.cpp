@@ -1,7 +1,7 @@
 /*
- *	Codeforces - 677D
+ *	Topcoder SRM 693 2
  *	Created by Ziyi Tang
- *
+ *	Observation
  */
 
 //#include <bits/stdc++.h>
@@ -35,17 +35,24 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 #define MOD 1000000007
 
-int grid[305][305];
-vvpi all;
-int main(){
-	int n,m,p;
-	cin >> n >> m >> p;
-	all.assign(n*m, vpi(0,pi(0,0)));
-	REP(i,0,n) REP(j,0,m){
-		int now;
-		cin >> now;
-		all[i][j] = now;
+class BiconnectedDiv2 {
+public:
+	int minimize(vector <int>, vector <int>);
+};
+
+int BiconnectedDiv2::minimize(vector <int> w1, vector <int> w2) {
+	int sz1 = w1.size();
+	int sz2 = w2.size();
+	vi can;
+	int sum1 = 0;
+	sum1 += w1[0];
+	sum1 += w1[sz1-1];
+	REP(i,0,sz2){
+		sum1 += w2[i];
 	}
-	REP(i,0,n) REP(j,0,m) 
-	return 0;
+	if(sz1 == 2) return sum1;
+	REP(i,1,sz1-1){
+		if(w1[i] < 0) sum1 += w1[i];
+	}
+	return sum1;
 }
