@@ -37,6 +37,8 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 int ft[MAXN+1];
 int sz;
 vi all;
+
+// Index started with 1
 int rsq(int b){
 	int sum = 0;
 	for(; b; b-=(b&-b))
