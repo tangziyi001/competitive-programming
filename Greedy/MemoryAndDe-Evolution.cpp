@@ -1,7 +1,7 @@
 /*
- *	Binary Indexed Tree
+ *	Codeforces 712C - Memory and De-Evolution
  *	Created by Ziyi Tang
- *	
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -28,43 +28,32 @@ typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
 const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
+#define MOD 1000000007
 
-int ft[MAXN+1];
-int sz;
-vi all;
-
-struct BITree{
-	// Start Index 1
-	int n_;
-	int bt[MAXN];
-	BITree(int n) : n_(n) {
-		FILL(bt,0);
-	}
-	int rsq(int b){
-		int sum = 0;
-		for(; b; b-=(b&-b)){
-			sum+=bt[b];
-		}
-		return sum;
-	}
-	void update(int i, int val){
-		for(; i <= n_; i+=(i&-i)){
-			bt[i] += val;
-		}
-	}
-	void clear(){
-		FILL(bt,0);
-	}
-};
+vi tri;
+int a,b;
+bool checkCom(vector<int>& tri){
+	if(tri[0] == a && tri[1] == a && tri[2] == a)
+		return true;
+	return false;
+}
 int main(){
-	
-	// Clear
-	all.clear();
-
+	cin >> a >> b;
+	REP(i,0,3){
+		tri.push_back(b);
+	}
+	int cont = 0;
+	while(!checkCom(tri)){
+		REP(i,0,3) if(tri[i] != a){
+			tri[i] = min(a, tri[(i+1)%3]+tri[(i+2)%3]-1);
+			cont++;
+		}
+	}
+	cout << cont << endl;
 	return 0;
 }

@@ -35,7 +35,13 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 #define MOD 1000000007
 
-int main(){
+vector<vector<string>> all;
 
+int main(){
+	
+	REP(i,0,12){
+		char now = 'A' + i;
+
+	}
 	return 0;
 }
