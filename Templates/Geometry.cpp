@@ -126,9 +126,9 @@ vector<point> Poly; // Last point is the replicate of the first point
 double area(const vector<point> &P) {
 	double result = 0.0, x1, y1, x2, y2;
 	int sz = P.size();
-	for (int i = 0; i < sz; i++) {
-		x1 = P[i].x; x2 = P[(i+1)%sz].x;
-		y1 = P[i].y; y2 = P[(i+1)%sz].y; 
+	for (int i = 0; i < sz-1; i++) {
+		x1 = P[i].x; x2 = P[i+1].x;
+		y1 = P[i].y; y2 = P[i+1].y; 
 		result += (x1 * y2 - x2 * y1);
 	}
 	return fabs(result) / 2.0; 
