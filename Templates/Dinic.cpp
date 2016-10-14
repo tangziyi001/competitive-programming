@@ -39,10 +39,11 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define M 205000  
 struct Edge{  
     ll from, to, cap, nex;  
-}edge[M*2];//注意这个一定要够大 不然会re 还有反向弧  
+}edge[M*2]; // Must be big enough
   
 ll head[N], edgenum;  
-void add(ll u, ll v, ll cap, ll rw = 0){ //如果是有向边则：add(u,v,cap); 如果是无向边则：add(u,v,cap,cap);  
+void add(ll u, ll v, ll cap, ll rw = 0){ // Directed Edge: add(u,v,cap);
+                                         // Undirected Edge：add(u,v,cap,cap);
     Edge E = { u, v, cap, head[u]};  
     edge[ edgenum ] = E;  
     head[u] = edgenum ++;  
@@ -100,7 +101,7 @@ ll Dinic(ll from, ll to){
                     top = loc;  
                     u = edge[Stack[top]].from;  
             }  
-            for(ll i = cur[u]; i!=-1; cur[u] = i = edge[i].nex)//cur[u] 表示u所在能增广的边的下标  
+            for(ll i = cur[u]; i!=-1; cur[u] = i = edge[i].nex) 
                 if(edge[i].cap && (sign[u] + 1 == sign[ edge[i].to ]))break;  
             if(cur[u] != -1)  
             {  
