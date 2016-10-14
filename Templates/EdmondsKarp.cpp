@@ -1,7 +1,7 @@
 /*
  *	Edmonds Karp's Algorithm
  *	Created by Ziyi Tang
- *	O(V^3 E)
+ *	O(VE^2)
  */
 
 //#include <bits/stdc++.h>
