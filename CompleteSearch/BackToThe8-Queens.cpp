@@ -1,7 +1,7 @@
 /*
  *	UVA 11085
  *	Created by Ziyi Tang
- *	Pre-Computation
+ *	Backtracking
  */
 
 //#include <bits/stdc++.h>
@@ -28,69 +28,48 @@ typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
 const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 1000
+#define MAXN 2000
+#define MOD 1000000007
 
-vvi pre;
 vi all;
-vi now;
-
-bool place(int pos, int idx){
-	REP(i,0,pos){
-		if(now[i] == idx || abs(now[i]-idx) == abs(i-pos))
-			return false;
+set<int> dia1;
+set<int> dia2;
+int rec(int col, int bm){
+	//if(dp[col][bm] != -1) return dp[col][bm];
+	if(col == 8) return 0;
+	int minp = INF;
+	REP(i,0,8){
+		if((bm & (1 << i)) == 0 && dia1.count(col+i) == 0 && dia2.count(col-i) == 0){
+			int dis = (all[col] == i) ? 0 : 1;
+			//cout << col << " " << i << endl;
+			dia1.insert(col+i);
+			dia2.insert(col-i);
+			minp = min(minp, dis + rec(col+1, bm | (1 << i)));
+			dia1.erase(col+i);
+			dia2.erase(col-i);
+		}
 	}
-	return true;
+	return minp;
 }
-void rec(int pos){
-	if(pos == 8){
-		pre.push_back(now); 
-		return;
-	}
-	REP(i,0,8) if(place(pos, i)){
-		now[pos] = i;
-		rec(pos+1);
-	}
-}
-
 int main(){
-	
-	pre.clear();
-	now.assign(8,0);
-	rec(0);
-	int sz = pre.size();
-	// REP(i,0,sz){
-	// 	REP(j,0,8){
-	// 		cout << pre[i][j] << " ";
-	// 	}
-	// 	cout << endl;
-	// }
-
-	int first;
+	int tmp = 0;
 	int test = 0;
-	while(cin >> first){
+	while(cin >> tmp){
 		test++;
 		all.clear();
-		all.push_back(first-1);
+		dia1.clear();
+		dia2.clear();
+		all.push_back(tmp-1);
+		int bm = 0;
 		REP(i,0,7){
-			int tmp;
 			cin >> tmp;
 			all.push_back(tmp-1);
 		}
-		int minp = INF;
-		REP(i,0,sz){
-			int cont = 0;
-			REP(j,0,8){
-				if(all[j] != pre[i][j])
-					cont++;
-			}
-			minp = min(minp,cont);
-		}
-		printf("Case %d: %d\n",test, minp);
-
+		printf("Case %d: %d\n", test, rec(0, bm));
 	}
 	return 0;
 }
