@@ -1,7 +1,7 @@
 /*
- *	Tarjan Algorithm for Strong Connected Component
+ *	UVA 11770
  *	Created by Ziyi Tang
- *  NOTE: The "lows" is not the lead of each node, the "lead" is.
+ *	Compress SCC to a vertex and count income degree
  */
 
 //#include <bits/stdc++.h>
@@ -28,13 +28,13 @@ typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
 const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 1000
+#define MAXN 10005
+#define MOD 1000000007
 
-int n,m; // n vertices and m edges
 vvi all; // Unweighted Directed Graph
 int nums[MAXN];
 int lows[MAXN];
@@ -64,46 +64,60 @@ void tarjan(int now){
 		while(1){
 			int nxt = member.back(); member.pop_back();
 			lead[nxt] = now;
-			printf("%d ",nxt); // Print members
+			//printf("%d ",nxt); // Print members
 			mark[nxt] = 0;
 			if(now == nxt)
 				break;
 		}
-		printf("\n");
-	}
-}
-void init(){
-	// Clear
-	FILL(nums,-1);
-	FILL(lows, 0);
-	FILL(mark,0);
-	FILL(lead,-1);
-	head.clear();
-	all.clear();
-	vi tmp;
-	all.assign(n,tmp);
-	counter = 0;
-	numSCC = 0;
-}
-
-void Tarjan(){
-	// Begin
-	REP(i,0,n){
-		if(nums[i] == -1){
-			tarjan(i);
-		}
+		//printf("\n");
 	}
 }
 int main(){
-	
-	cin >> n >> m;
-	init();
-	// Input
-	int sta,ter;
-	REP(i,0,m){
-		cin >> sta >> ter;
-		all[sta].push_back(ter);
+	int test;
+	cin >> test;
+	REP(t,1,test+1){
+		int n,m;
+
+		// n vertices and m edges
+		cin >> n >> m;
+
+		// Clear
+		FILL(nums,-1);
+		FILL(lows, 0);
+		FILL(mark,0);
+		FILL(lead,-1);
+		head.clear();
+		all.clear();
+		vi tmp;
+		all.assign(n,tmp);
+		counter = 0;
+		numSCC = 0;
+
+		// Input
+		int sta,ter;
+		REP(i,0,m){
+			cin >> sta >> ter;
+			all[sta-1].push_back(ter-1);
+		}
+
+		// Begin
+		REP(i,0,n){
+			if(nums[i] == -1){
+				tarjan(i);
+			}
+		}
+		vi deg(n,0);
+		REP(i,0,n){
+			int sz = all[i].size();
+			REP(j,0,sz) if(lead[all[i][j]] != lead[i]){
+				deg[lead[all[i][j]]]++;
+			}
+		}
+		int cnt = 0;
+		REP(i,0,head.size()){
+			if(deg[head[i]]==0) cnt++;
+		}
+		printf("Case %d: %d\n", t, cnt);
 	}
-	Tarjan();
 	return 0;
 }

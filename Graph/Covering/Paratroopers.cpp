@@ -1,7 +1,9 @@
 /*
- *	Edmonds Karp's Algorithm
+ *	POJ 3308
  *	Created by Ziyi Tang
- *	O(VE^2)
+ *	Minimum Vertex Cover => Min Cut Problem
+ *	Create bipartite graph. One side are rows and another side are cols.
+ * 	Connect two side if there is a paratrooper on an intersection.
  */
 
 //#include <bits/stdc++.h>
@@ -34,12 +36,12 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 105
 
-int res[MAXN][MAXN]; // Adjacency Matrix for Weighted Directed Graph
-int mf; // Max Flow
-int f, s, t;
+double res[MAXN][MAXN]; // Adjacency Matrix for Weighted Directed Graph
+double f;
+int s, t;
 vi p; // BFS Spanning Tree
 
-void augment(int v, int minEdge){
+void augment(int v, double minEdge){
 	if(v == s){
 		f = minEdge;
 		return ;
@@ -53,13 +55,13 @@ void augment(int v, int minEdge){
 void init(int s_, int t_){
 	// Clear
 	p.clear();
-	FILL(res,0);
+	REP(i,0,MAXN) REP(j,0,MAXN) res[i][j] = 0.0;
 	s = s_; t = t_;
 }
 
-int run(){
+double run(){
 	// Begin
-	int mf = 0;
+	double mf = 0;
 	while(1){
 		f = 0;
 		vi dist(MAXN,INF);
@@ -85,8 +87,30 @@ int run(){
 	return mf;
 }
 int main(){
-	int mf = run();
-	
-	cout << mf << endl;
+	int test;
+	cin >> test;
+	while(test--){
+		int m,n,l;
+		cin >> m >> n >> l;
+		init(0,m+n+1);
+		REP(i,0,m){
+			double tmp;
+			cin >> tmp;
+			res[0][i+1] = log(tmp);
+		}
+		REP(i,0,n){
+			double tmp;
+			cin >> tmp;
+			res[i+1+m][n+m+1] = log(tmp);
+		}
+		REP(i,0,l){
+			int a,b;
+			cin >> a >> b;
+			a--;b--;
+			res[1+a][m+1+b] = INF;
+		}
+		double mf = run();
+		printf("%.4f\n", exp(mf));
+	}
 	return 0;
 }
