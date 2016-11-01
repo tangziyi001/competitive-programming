@@ -27,7 +27,7 @@ typedef vector<vi> vvi;
 typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
-const int INF = (int)1E9;
+const int INF = 0x3f3f3f;
 const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)

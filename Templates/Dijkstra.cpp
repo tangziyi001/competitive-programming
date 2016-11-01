@@ -38,10 +38,8 @@ vvpi all;
 priority_queue<pi, vpi, greater<pi> > pq;
 int dis[MAXN];
 int source = -1;
-
-int main(){
-	int n,m;
-	cin >> n >> m;
+int n,m;
+void init(){
 	// Clear
 	all.clear();
 	REP(i,0,n){
@@ -50,20 +48,10 @@ int main(){
 	while(!pq.empty()){
 		pq.pop();
 	}
-
-	// Initialize
-	vpi mtmp;
-	all.assign(n,mtmp);
-	int sta,ter,cost;
-	REP(i,0,m){
-		cin >> sta >> ter >> cost;
-		all[sta].push_back(make_pair(ter,cost));
-	}
-
-	// Source
-	cin >> source;
-	pq.push(make_pair(0,source));
-	dis[source] = 0;
+}
+int Dijkstra(int s, int t){
+	pq.push(make_pair(0,s));
+	dis[s] = 0;
 	
 	// Begin
 	while(!pq.empty()){
@@ -81,6 +69,24 @@ int main(){
 			}
 		}
 	}
+	return dis[t];
+}
+int main(){
+	
+	cin >> n >> m;
+	
+	// Initialize
+	vpi mtmp;
+	all.assign(n,mtmp);
+	int sta,ter,cost;
+	REP(i,0,m){
+		cin >> sta >> ter >> cost;
+		all[sta].push_back(make_pair(ter,cost));
+	}
+
+	// Source
+	cin >> source;
+	
 
 	// Test
 	// REP(i,0,n){

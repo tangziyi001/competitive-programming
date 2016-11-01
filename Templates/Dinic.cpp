@@ -126,18 +126,8 @@ int main(){
         int n,m;
         scanf("%d %d", &n, &m);
         init();
-        REP(i,0,n){
-            ll tmp;
-            scanf("%lld", &tmp);
-            add(n,i,tmp);
-        }
-        REP(i,0,m){
-            ll a,b,c;
-            scanf("%lld %lld %lld", &a,&b,&c);
-            add(a-1,b-1,c,c); // Undirected
-        }
+
         ll mf = Dinic(n,n+1);
-        printf("%lld\n", mf);
     }
     return 0;
 }
