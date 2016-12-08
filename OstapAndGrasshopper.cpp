@@ -1,7 +1,7 @@
 /*
- *	UVA 11264
+ *	Codeforces 735A - Ostap and Grasshopper
  *	Created by Ziyi Tang
- *	Greedy Algorithm: S[i-1] < c[i] && S[i] < c[i+1]
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -27,39 +27,38 @@ typedef vector<vi> vvi;
 typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
-const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const int INF = 0x3f3f3f;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
+#define MOD 1000000007
 
-vector<ll> all;
+int n,m;
+string line;
 int main(){
-	int test;
-	cin >> test;
-	while(test--){
-		all.clear();
-		int num;
-		cin >> num;
-		REP(i,0,num){
-			ll tmp;
-			cin >> tmp;
-			all.push_back(tmp);
-		}
-		ll sum = all[0];
-		if(num == 1){
-			cout << 1 << endl;
-			continue;
-		}
-		int re = 2;
-		REP(i,1,num-1){
-			if(sum < all[i] && sum+all[i] < all[i+1]){
-				sum += all[i];
-				re++;
-			}
-		}
-		cout << re << endl;
+	cin >> n >> m;
+	cin >> line;
+	int sta,ter;
+	REP(i,0,n){
+		if(line[i] == 'G') sta = i;
+		if(line[i] == 'T') ter = i;
 	}
+	for(int i = sta; i < line.size(); i+=m){
+		if(line[i] == '#') break;
+		if(i == ter){
+			cout << "YES" << endl;
+			return 0;
+		}
+	}
+	for(int i = sta; i >= 0; i-=m){
+		if(line[i] == '#') break;
+		if(i == ter){
+			cout << "YES" << endl;
+			return 0;
+		}
+	}
+	cout << "NO" << endl;
 	return 0;
 }

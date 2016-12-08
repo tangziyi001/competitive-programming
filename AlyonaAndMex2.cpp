@@ -1,7 +1,7 @@
 /*
- *	UVA 11264
+ *	Codeforeces 740C
  *	Created by Ziyi Tang
- *	Greedy Algorithm: S[i-1] < c[i] && S[i] < c[i+1]
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -27,39 +27,30 @@ typedef vector<vi> vvi;
 typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
-const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const int INF = 0x3f3f3f;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
+#define MOD 1000000007
 
-vector<ll> all;
+vpi all;
 int main(){
-	int test;
-	cin >> test;
-	while(test--){
-		all.clear();
-		int num;
-		cin >> num;
-		REP(i,0,num){
-			ll tmp;
-			cin >> tmp;
-			all.push_back(tmp);
-		}
-		ll sum = all[0];
-		if(num == 1){
-			cout << 1 << endl;
-			continue;
-		}
-		int re = 2;
-		REP(i,1,num-1){
-			if(sum < all[i] && sum+all[i] < all[i+1]){
-				sum += all[i];
-				re++;
-			}
-		}
-		cout << re << endl;
+	int n,m;
+	cin >> n >> m;
+	int mindiff = 1e9;
+	REP(i,0,m){
+		int a,b;
+		scanf("%d %d", &a, &b);
+		mindiff = min(mindiff, b-a+1);
+		all.push_back(make_pair(a,b));
 	}
+	cout << mindiff << endl;
+	REP(i,0,n){
+		cout << i%mindiff << " ";
+	}
+	cout << endl;
+
 	return 0;
 }

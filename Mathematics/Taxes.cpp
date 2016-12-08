@@ -1,7 +1,7 @@
 /*
- *	UVA 11264
+ *	Codeforces 735D - Taxes
  *	Created by Ziyi Tang
- *	Greedy Algorithm: S[i-1] < c[i] && S[i] < c[i+1]
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -21,45 +21,55 @@
 #include <queue>
 #include <bitset>
 using namespace std;
-typedef long long ll;
+typedef unsigned long long ll;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
-const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const int INF = 0x3f3f3f;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
+#define MOD 1000000007
 
-vector<ll> all;
+bool isPrime(ll n){
+	if(n == 2){
+		cout << 1 << endl;
+		return 0;
+	}
+	for(ll i = 2; i <= sqrt(n)+1; i++){
+		if(n%i == 0){
+			return false;
+		}
+	}
+	return true;
+}
 int main(){
-	int test;
-	cin >> test;
-	while(test--){
-		all.clear();
-		int num;
-		cin >> num;
-		REP(i,0,num){
-			ll tmp;
-			cin >> tmp;
-			all.push_back(tmp);
+	ll n;
+	cin >> n;
+	if(n == 2){
+		cout << 1 << endl;
+		return 0;
+	}
+	if(n == 3){
+		cout << 1 << endl;
+		return 0;
+	}
+	if(isPrime(n)){
+		cout << 1 << endl;
+		return 0;
+	}
+	if(n&1){
+		if(isPrime(n-2)){
+			cout << 2 << endl;
+		} else {
+			cout << 3 << endl;
 		}
-		ll sum = all[0];
-		if(num == 1){
-			cout << 1 << endl;
-			continue;
-		}
-		int re = 2;
-		REP(i,1,num-1){
-			if(sum < all[i] && sum+all[i] < all[i+1]){
-				sum += all[i];
-				re++;
-			}
-		}
-		cout << re << endl;
+	} else {
+		cout << 2 << endl;
 	}
 	return 0;
 }

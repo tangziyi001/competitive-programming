@@ -1,7 +1,7 @@
 /*
- *	UVA 11264
+ *	Codeforces 735B - Urbanization
  *	Created by Ziyi Tang
- *	Greedy Algorithm: S[i-1] < c[i] && S[i] < c[i+1]
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -27,39 +27,36 @@ typedef vector<vi> vvi;
 typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
-const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const int INF = 0x3f3f3f;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
+#define MOD 1000000007
 
 vector<ll> all;
 int main(){
-	int test;
-	cin >> test;
-	while(test--){
-		all.clear();
-		int num;
-		cin >> num;
-		REP(i,0,num){
-			ll tmp;
-			cin >> tmp;
-			all.push_back(tmp);
-		}
-		ll sum = all[0];
-		if(num == 1){
-			cout << 1 << endl;
-			continue;
-		}
-		int re = 2;
-		REP(i,1,num-1){
-			if(sum < all[i] && sum+all[i] < all[i+1]){
-				sum += all[i];
-				re++;
-			}
-		}
-		cout << re << endl;
+	ll n,n1,n2;
+	cin >> n >> n1 >> n2;
+	REP(i,0,n){
+		ll tmp;
+		cin >> tmp;
+		all.push_back(tmp);
 	}
+	sort(all.begin(), all.end());
+	if(n1 > n2) swap(n1,n2);
+	double sum = 0.0;
+	double tmp = 0.0;
+	REP(i,0,n1){
+		tmp += all[n-1-i];
+	}
+	sum += tmp/n1;
+	tmp = 0;
+	REP(i,0,n2){
+		tmp += all[n-1-n1-i];
+	}
+	sum += tmp/n2;
+	printf("%.7f\n", sum);
 	return 0;
 }
