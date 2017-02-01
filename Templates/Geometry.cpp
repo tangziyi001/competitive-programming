@@ -76,7 +76,7 @@ vec scale(vec v, double s){
 	return vec(v.x * s, v.y * s);
 }
 // Translate a point
-point translate(vec v, point p){
+point translate(point p,vec v){
 	return point(v.x + p.x, v.y + p.y);
 }
 // Dot Product
@@ -101,10 +101,28 @@ double angle(point a, point o, point b){
 	vec ob = toVec(o, b);
 	return acos(dot(oa, ob) / sqrt(norm_sq(oa) * norm_sq(ob))); 
 }
+
 // CCW Check
 bool ccw(point p, point q, point r) {
 	return cross(toVec(p, q), toVec(p, r)) > 0; 
 }
+
+double distToLine(point p, point a, point b, point &c) {
+	// formula: c = a + u * ab
+	vec ap = toVec(a, p), ab = toVec(a, b);
+	double u = dot(ap, ab) / norm_sq(ab);
+	c = translate(a, scale(ab, u)); // translate a to c 
+	return dist(p, c); 
+} // Euclidean distance between p and c
+
+double distToLineSegment(point p, point a, point b, point &c) {
+vec ap = toVec(a, p), ab = toVec(a, b);
+double u = dot(ap, ab) / norm_sq(ab);
+if (u < 0.0) { c = point(a.x, a.y); // closer to a
+return dist(p, a); } // Euclidean distance between p and a 
+if (u > 1.0) { c = point(b.x, b.y); // closer to b 
+return dist(p, b); } // Euclidean distance between p and b 
+return distToLine(p, a, b, c); } // run distToLine as above
 
 // Check Intersection for two line segment
 bool check(pair<point, point> a, pair<point, point> b){

@@ -1,7 +1,7 @@
 /*
- *	UVA 11572
+ *	Codeforces 757A - Gotta Catch Em' All!
  *	Created by Ziyi Tang
- *	Sliding Window: Two Pointers for Unique Interval
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -32,35 +32,28 @@ const long INFL = (long)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 10000005
+#define MAXN 1000
+#define MOD 1000000007
 
-map<int,int> mm;
-vector<int> all;
+map<char,int> all;
+string tar = "Bulbasaur";
 int main(){
-	int test;
-	cin >> test;
-	while(test--){
-		mm.clear();
-		all.clear();
-		int n;
-		cin >> n;
-		for(int i = 0; i < n; i++){
-			int tmp;
-			scanf("%d", &tmp);
-			all.push_back(tmp);
-		}
-		int i = 0, j = 0;
-		int maxp = 0;
-		while(j < n){
-			int now = all[j];
-			if(mm.count(now)){
-				i = max(i,mm[now]+1);	
+	string line;
+	getline(cin,line);
+	REP(i,0,line.size()) all[line[i]]++;
+	int cont = 0;
+	int flag = 1;
+	while(1){
+		REP(i,0,tar.size()){
+			all[tar[i]]--;
+			if(all[tar[i]] < 0){
+				flag = 0;
+				break;
 			}
-			mm[now] = j;
-			maxp = max(maxp, j-i+1);
-			j++;
 		}
-		printf("%d\n", maxp);
+		if(!flag) break;
+		cont++;
 	}
+	cout << cont << endl;
 	return 0;
 }

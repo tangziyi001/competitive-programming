@@ -1,7 +1,7 @@
 /*
- *	UVA 11572
+ *	Codeforces 754A - Lesha and array splitting
  *	Created by Ziyi Tang
- *	Sliding Window: Two Pointers for Unique Interval
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -27,40 +27,43 @@ typedef vector<vi> vvi;
 typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
-const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const int INF = 0x3f3f3f;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 10000005
+#define MAXN 1000
+#define MOD 1000000007
 
-map<int,int> mm;
-vector<int> all;
+vi all;
+vi non;
+vpi re;
 int main(){
-	int test;
-	cin >> test;
-	while(test--){
-		mm.clear();
-		all.clear();
-		int n;
-		cin >> n;
-		for(int i = 0; i < n; i++){
-			int tmp;
-			scanf("%d", &tmp);
-			all.push_back(tmp);
+	int n;
+	cin >> n;
+	int flag = 0;
+	REP(i,0,n){
+		int tmp; cin >> tmp;
+		all.push_back(tmp);
+		if(tmp != 0){
+			flag = 1;
+			non.push_back(i);
 		}
-		int i = 0, j = 0;
-		int maxp = 0;
-		while(j < n){
-			int now = all[j];
-			if(mm.count(now)){
-				i = max(i,mm[now]+1);	
+	}
+	if(flag){
+		cout << "YES" << endl;
+		cout << non.size() << endl;
+		int pre = 0;
+		REP(i,0,non.size()){
+			if(i == non.size()-1){
+				cout << pre+1 << " " << n << endl;
+			} else {
+				cout << pre+1 << " " << non[i]+1 << endl;
 			}
-			mm[now] = j;
-			maxp = max(maxp, j-i+1);
-			j++;
+			pre = non[i]+1;
 		}
-		printf("%d\n", maxp);
+	} else {
+		cout << "NO" << endl;
 	}
 	return 0;
 }

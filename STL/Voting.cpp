@@ -1,7 +1,7 @@
 /*
- *	UVA 11572
+ *	Codeforces 749C - Voting
  *	Created by Ziyi Tang
- *	Sliding Window: Two Pointers for Unique Interval
+ *	Queue
  */
 
 //#include <bits/stdc++.h>
@@ -27,40 +27,42 @@ typedef vector<vi> vvi;
 typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
-const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const int INF = 0x3f3f3f;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 10000005
+#define MAXN 200010
+#define MOD 1000000007
 
-map<int,int> mm;
-vector<int> all;
+queue<int> a;
+queue<int> b;
 int main(){
-	int test;
-	cin >> test;
-	while(test--){
-		mm.clear();
-		all.clear();
-		int n;
-		cin >> n;
-		for(int i = 0; i < n; i++){
-			int tmp;
-			scanf("%d", &tmp);
-			all.push_back(tmp);
+	int n;
+	string line;
+	cin >> n >> line;
+	REP(i,0,n){
+		if(line[i] == 'D') a.push(i);
+		else b.push(i);
+	}
+	while(1){
+		if(a.empty()){
+			cout << "R" << endl;
+			break;
 		}
-		int i = 0, j = 0;
-		int maxp = 0;
-		while(j < n){
-			int now = all[j];
-			if(mm.count(now)){
-				i = max(i,mm[now]+1);	
-			}
-			mm[now] = j;
-			maxp = max(maxp, j-i+1);
-			j++;
+		if(b.empty()){
+			cout << "D" << endl;
+			break;
 		}
-		printf("%d\n", maxp);
+		if(a.front() < b.front()){
+			b.pop();
+			a.push(a.front()+n);
+			a.pop();
+		} else {
+			a.pop();
+			b.push(b.front()+n);
+			b.pop();
+		}
 	}
 	return 0;
 }

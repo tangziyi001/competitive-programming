@@ -1,7 +1,7 @@
 /*
- *	UVA 11572
+ *	Facebook Hacker Cup 2017 Qualification Round B
  *	Created by Ziyi Tang
- *	Sliding Window: Two Pointers for Unique Interval
+ *	Two Pointers
  */
 
 //#include <bits/stdc++.h>
@@ -27,40 +27,41 @@ typedef vector<vi> vvi;
 typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
-const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const int INF = 0x3f3f3f;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 10000005
+#define MAXN 1000
+#define MOD 1000000007
 
-map<int,int> mm;
-vector<int> all;
+vi all;
+bool comp(int a, int b){
+	return a > b;
+}
 int main(){
-	int test;
-	cin >> test;
-	while(test--){
-		mm.clear();
-		all.clear();
-		int n;
+	int t,n;
+	cin >> t;
+	REP(cas,1,t+1){
 		cin >> n;
-		for(int i = 0; i < n; i++){
+		all.clear();
+		REP(i,0,n){
 			int tmp;
-			scanf("%d", &tmp);
+			cin >> tmp;
 			all.push_back(tmp);
 		}
-		int i = 0, j = 0;
-		int maxp = 0;
-		while(j < n){
-			int now = all[j];
-			if(mm.count(now)){
-				i = max(i,mm[now]+1);	
-			}
-			mm[now] = j;
-			maxp = max(maxp, j-i+1);
-			j++;
+		sort(all.begin(), all.end(), comp);
+		int i = 0, j = n-1, cont = 0;
+		while(i <= j){
+			int least = ceil(50.0/all[i]);
+			//cout << all[i] << " " << all[j] << " " << least << endl;
+			j -= least-1;
+			if(i <= j) cont++;
+			i++;
 		}
-		printf("%d\n", maxp);
+		printf("Case #%d: ", cas);
+		cout << cont << endl;
 	}
+
 	return 0;
 }

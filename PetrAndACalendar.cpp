@@ -1,7 +1,7 @@
 /*
- *	UVA 11572
+ *	Codeforces 760A - Petr and a calendar
  *	Created by Ziyi Tang
- *	Sliding Window: Two Pointers for Unique Interval
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -27,40 +27,22 @@ typedef vector<vi> vvi;
 typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
-const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const int INF = 0x3f3f3f;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 10000005
+#define MAXN 1000
+#define MOD 1000000007
 
-map<int,int> mm;
-vector<int> all;
 int main(){
-	int test;
-	cin >> test;
-	while(test--){
-		mm.clear();
-		all.clear();
-		int n;
-		cin >> n;
-		for(int i = 0; i < n; i++){
-			int tmp;
-			scanf("%d", &tmp);
-			all.push_back(tmp);
-		}
-		int i = 0, j = 0;
-		int maxp = 0;
-		while(j < n){
-			int now = all[j];
-			if(mm.count(now)){
-				i = max(i,mm[now]+1);	
-			}
-			mm[now] = j;
-			maxp = max(maxp, j-i+1);
-			j++;
-		}
-		printf("%d\n", maxp);
-	}
+	int m,d;
+	cin >> m >> d;
+	int last = 0;
+	if(m == 4 || m == 6 || m == 9 || m == 11){
+		last = 30;
+	} else last = 31;
+	if(m == 2) last = 28;
+	cout << ceil((d+last-1)/7.0) << endl;
 	return 0;
 }

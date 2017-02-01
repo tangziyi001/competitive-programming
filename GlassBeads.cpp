@@ -1,7 +1,7 @@
 /*
- *	UVA 11572
+ *	UVA 719
  *	Created by Ziyi Tang
- *	Sliding Window: Two Pointers for Unique Interval
+ *	
  */
 
 //#include <bits/stdc++.h>
@@ -27,40 +27,33 @@ typedef vector<vi> vvi;
 typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
-const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const int INF = 0x3f3f3f;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 10000005
+#define MAXN 1000
+#define MOD 1000000007
 
-map<int,int> mm;
-vector<int> all;
+int n;
 int main(){
-	int test;
-	cin >> test;
+	int test; cin >> test;
 	while(test--){
-		mm.clear();
-		all.clear();
-		int n;
-		cin >> n;
-		for(int i = 0; i < n; i++){
-			int tmp;
-			scanf("%d", &tmp);
-			all.push_back(tmp);
-		}
-		int i = 0, j = 0;
-		int maxp = 0;
-		while(j < n){
-			int now = all[j];
-			if(mm.count(now)){
-				i = max(i,mm[now]+1);	
+		string line;
+		cin >> line;
+		string mins = line;
+		int minp = 0;
+		int n = line.size();
+		REP(i,1,n){
+			string tmp = line.substr(1,n-1);
+			tmp += line[0];
+			if(tmp < mins){
+				mins = tmp;
+				minp = i;
 			}
-			mm[now] = j;
-			maxp = max(maxp, j-i+1);
-			j++;
+			line = tmp;
 		}
-		printf("%d\n", maxp);
+		cout << minp+1 << endl;
 	}
 	return 0;
 }
