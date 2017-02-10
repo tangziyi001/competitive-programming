@@ -1,10 +1,7 @@
 /*
- *	Codeforces 226C
+ *	Codeforces 761D - Dasha and Very Difficult Problem
  *	Created by Ziyi Tang
- *	Prefix Sum with two pointers
- *	Use prefix sum to count the number of ways 0...i has sum of sum/3.
- *	One pointer i iterates from right to left. Each time the sum on i's right
- *	equals to sum/3, we add prefixsum[i-2].
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -35,43 +32,48 @@ const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 500005
+#define MAXN 1000
 #define MOD 1000000007
 
-vi all;
-ll presum[MAXN];
+vpi all;
+vi re;
+int minp,maxp;
+map<int,int> reco;
 int main(){
 	int n;
-	cin >> n;
-	ll sum = 0LL;
+	cin >> n >> minp >> maxp;
+	re.assign(n,0);
 	REP(i,0,n){
 		int tmp;
-		cin >> tmp;
-		all.push_back(tmp);
-		sum += tmp;
+		scanf("%d", &tmp);
+		all.push_back(make_pair(0,tmp));
 	}
-	FILL(presum,0);
-	ll cont = 0;
-	if(sum%3 != 0 || n <= 2){
-		cout << 0 << endl;
-		return 0;
-	}
-	ll cur = 0;
-	// Compute how many presums that equals sum/3 before i
 	REP(i,0,n){
-		if(i != 0)
-			presum[i] = presum[i-1];
-		cur += all[i];
-		if(cur == sum/3)
-			presum[i]++;
+		int tmp;
+		scanf("%d", &tmp);
+		all[i].first = tmp;
+		reco[tmp] = i;
 	}
-	cur = 0;
-	for(int i = n-1; i > 1; i--){
-		cur += all[i];
-		if(cur == sum/3){
-			cont += presum[i-2];
+	sort(all.begin(), all.end());
+	int now = -INF;
+	int flag = 1;
+	REP(i,0,n){
+		int low = minp-all[i].second;
+		int high = maxp-all[i].second;
+		if(now > high){
+			flag = 0;
+			break;
 		}
+		now = max(now, low);
+		re[reco[all[i].first]] = now+all[i].second;
+		now++;
 	}
-	cout << cont << endl;
+	if(flag){
+		REP(i,0,n){
+			printf("%d ", re[i]);
+		}
+		cout << endl;
+	} else
+		cout << -1 << endl;
 	return 0;
 }

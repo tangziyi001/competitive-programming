@@ -1,10 +1,7 @@
 /*
- *	Codeforces 226C
+ *	Codeforces 761C	
  *	Created by Ziyi Tang
- *	Prefix Sum with two pointers
- *	Use prefix sum to count the number of ways 0...i has sum of sum/3.
- *	One pointer i iterates from right to left. Each time the sum on i's right
- *	equals to sum/3, we add prefixsum[i-2].
+ *	Brute Force
  */
 
 //#include <bits/stdc++.h>
@@ -35,43 +32,51 @@ const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 500005
+#define MAXN 55
 #define MOD 1000000007
 
-vi all;
-ll presum[MAXN];
+char all[MAXN][MAXN];
+vi digit;
+vi letter;
+vi mark;
 int main(){
-	int n;
-	cin >> n;
-	ll sum = 0LL;
+	int n,m;
+	cin >> n >> m;
 	REP(i,0,n){
-		int tmp;
-		cin >> tmp;
-		all.push_back(tmp);
-		sum += tmp;
-	}
-	FILL(presum,0);
-	ll cont = 0;
-	if(sum%3 != 0 || n <= 2){
-		cout << 0 << endl;
-		return 0;
-	}
-	ll cur = 0;
-	// Compute how many presums that equals sum/3 before i
-	REP(i,0,n){
-		if(i != 0)
-			presum[i] = presum[i-1];
-		cur += all[i];
-		if(cur == sum/3)
-			presum[i]++;
-	}
-	cur = 0;
-	for(int i = n-1; i > 1; i--){
-		cur += all[i];
-		if(cur == sum/3){
-			cont += presum[i-2];
+		string line;
+		cin >> line;
+		REP(j,0,m){
+			all[i][j] = line[j];
 		}
 	}
-	cout << cont << endl;
+	REP(i,0,n){
+		int d = INF, l = INF, a = INF;
+		REP(j,0,m){
+			char now = all[i][j];
+			if(now >= '0' && now <= '9'){
+				d = min(d, min(j,m-j));
+			}
+			else if(now >= 'a' && now <= 'z'){
+				l = min(l, min(j,m-j));
+			}
+			else {
+				a = min(a, min(j,m-j));
+			}
+		}
+		digit.push_back(d);
+		letter.push_back(l);
+		mark.push_back(a);
+	}
+	int minp = INF;
+	REP(i,0,n) REP(j,0,n) REP(k,0,n){
+		int d = digit[i];
+		int l = letter[j];
+		int a = mark[k];
+		if(i == j || j == k || i == k){
+			continue;
+		}
+		minp = min(minp, d+l+a);
+	}
+	cout << minp << endl;
 	return 0;
 }

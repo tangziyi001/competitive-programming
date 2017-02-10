@@ -1,10 +1,7 @@
 /*
- *	Codeforces 226C
+ *	Codeforces 756B - Travel Card
  *	Created by Ziyi Tang
- *	Prefix Sum with two pointers
- *	Use prefix sum to count the number of ways 0...i has sum of sum/3.
- *	One pointer i iterates from right to left. Each time the sum on i's right
- *	equals to sum/3, we add prefixsum[i-2].
+ *	DP with binary search
  */
 
 //#include <bits/stdc++.h>
@@ -35,43 +32,32 @@ const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 500005
+#define MAXN 100005
 #define MOD 1000000007
 
 vi all;
-ll presum[MAXN];
+int dp[MAXN];
 int main(){
 	int n;
 	cin >> n;
-	ll sum = 0LL;
+	all.push_back(-INF);
 	REP(i,0,n){
 		int tmp;
 		cin >> tmp;
 		all.push_back(tmp);
-		sum += tmp;
 	}
-	FILL(presum,0);
-	ll cont = 0;
-	if(sum%3 != 0 || n <= 2){
-		cout << 0 << endl;
-		return 0;
+	dp[0] = 0;
+	int now = 0;
+	int off = 0;
+	REP(i,1,n+1){
+		dp[i] = dp[i-1]+20;
+		int pre = distance(all.begin(),upper_bound(all.begin(),all.end(),all[i]-90))-1;
+		dp[i] = min(dp[i], 50+dp[pre]);
+		pre = distance(all.begin(),upper_bound(all.begin(),all.end(),all[i]-1440))-1;
+		dp[i] = min(dp[i], 120+dp[pre]);
+		off = max(0,dp[i]-now);
+		now = max(now,dp[i]);
+		cout << off << endl;
 	}
-	ll cur = 0;
-	// Compute how many presums that equals sum/3 before i
-	REP(i,0,n){
-		if(i != 0)
-			presum[i] = presum[i-1];
-		cur += all[i];
-		if(cur == sum/3)
-			presum[i]++;
-	}
-	cur = 0;
-	for(int i = n-1; i > 1; i--){
-		cur += all[i];
-		if(cur == sum/3){
-			cont += presum[i-2];
-		}
-	}
-	cout << cont << endl;
 	return 0;
 }
