@@ -78,6 +78,7 @@ int main(){
 	// Initialize
 	vpi mtmp;
 	all.assign(n,mtmp);
+	init();
 	int sta,ter,cost;
 	REP(i,0,m){
 		cin >> sta >> ter >> cost;
@@ -86,7 +87,7 @@ int main(){
 
 	// Source
 	cin >> source;
-	
+	Dijkstra();
 
 	// Test
 	// REP(i,0,n){
