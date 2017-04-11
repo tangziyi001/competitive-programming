@@ -73,6 +73,15 @@ ll power(ll base, ll n){
 	return now;
 }
 
+ll mylog2(ll temp){
+  ll x=1;
+  while(temp>1){
+    temp/=2;
+    x+=1;
+  }
+  return x;
+}
+
 
 int main(){
 	REP(i,0,10)

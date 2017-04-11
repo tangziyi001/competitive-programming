@@ -1,7 +1,7 @@
 /*
- *	Codeforces 719B
+ *	Codeforces 782B - The Meeting Place Cannot Be Changed
  *	Created by Ziyi Tang
- *
+ *	Binary Search the time
  */
 
 //#include <bits/stdc++.h>
@@ -34,67 +34,41 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 #define MOD 1000000007
-
+vector<long double> all;
+vector<long double> v;
 int main(){
 	int n;
-	string line;
-	cin >> n >> line;
-	int minp = INF;
-
-	// brbrbr...
-	int cont = 0;
-	int wB = 0, wR = 0;
+	cin >> n;
 	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 0){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
+		long double tmp;
+		cin >> tmp;
+		all.push_back(tmp);
+	}
+	REP(i,0,n){
+		long double tmp;
+		cin >> tmp;
+		v.push_back(tmp);
+	}
+	long double i = 0, j = 1e9;
+	while(fabs(j-i) > 1e-8){
+		long double mid = (i+j)/2;
+		//cout << mid << endl;
+		vector<pair<long double,long double> > vd;
+		REP(k,0,n){
+			vd.push_back(make_pair(max((long double)0.0, all[k]-mid*v[k]), min((long double)1e9,all[k]+mid*v[k])));
+			//cout << all[k] << " " << vd[k].first << " " << vd[k].second << endl;
+		}
+		long double l = vd[0].first, r = vd[0].second;
+		REP(k,1,n){
+			l = max(l, vd[k].first);
+			r = min(r, vd[k].second);
+		}
+		if(l > r){
+			i = mid;
 		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
+			j = mid;
 		}
 	}
-	minp = min(minp, cont);
-	// rbrbrb...
-	cont = 0;
-	wB = 0;
-	wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 1){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
-		}
-	}
-	minp = min(minp, cont);
-
-	cout << minp << endl;
+	printf("%.7Lf", i);
 	return 0;
 }

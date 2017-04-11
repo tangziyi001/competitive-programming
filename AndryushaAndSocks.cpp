@@ -1,5 +1,5 @@
 /*
- *	Codeforces 719B
+ *	Codeforces 782A - Andryusha and Socks
  *	Created by Ziyi Tang
  *
  */
@@ -34,67 +34,24 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
 #define MOD 1000000007
-
+set<int> ss;
 int main(){
 	int n;
-	string line;
-	cin >> n >> line;
-	int minp = INF;
-
-	// brbrbr...
+	cin >> n;
+	int maxp = 0;
 	int cont = 0;
-	int wB = 0, wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 0){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
+	REP(i,0,2*n){
+		int tmp;
+		cin >> tmp;
+		if(ss.count(tmp)){
+			ss.erase(tmp);
+			cont--;
+		} else{
+			ss.insert(tmp);
+			cont++;
 		}
+		maxp = max(maxp, cont);
 	}
-	minp = min(minp, cont);
-	// rbrbrb...
-	cont = 0;
-	wB = 0;
-	wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 1){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
-		}
-	}
-	minp = min(minp, cont);
-
-	cout << minp << endl;
+	cout << maxp << endl;
 	return 0;
 }

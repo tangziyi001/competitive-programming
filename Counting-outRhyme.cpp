@@ -1,5 +1,5 @@
 /*
- *	Codeforces 719B
+ *	Codeforces 792B
  *	Created by Ziyi Tang
  *
  */
@@ -35,66 +35,25 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 #define MOD 1000000007
 
+vi all;
+vi tmp;
 int main(){
-	int n;
-	string line;
-	cin >> n >> line;
-	int minp = INF;
-
-	// brbrbr...
-	int cont = 0;
-	int wB = 0, wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 0){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
-		}
+	int n,k;
+	cin >> n >> k;
+	REP(i,0,k){
+		int tmp; cin >> tmp;
+		all.push_back(tmp);
 	}
-	minp = min(minp, cont);
-	// rbrbrb...
-	cont = 0;
-	wB = 0;
-	wR = 0;
 	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 1){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
-		}
+		tmp.push_back(i);
 	}
-	minp = min(minp, cont);
-
-	cout << minp << endl;
+	int lea = 0;
+	REP(i,0,k){
+		int eli = (all[i]+lea)%(n-i);
+		cout << tmp[eli]+1 << " ";
+		tmp.erase(tmp.begin()+eli);
+		lea = eli%(n-i-1);
+	}
+	cout << endl;
 	return 0;
 }

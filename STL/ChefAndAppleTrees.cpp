@@ -1,5 +1,5 @@
 /*
- *	Codeforces 719B
+ *	Codechef CAPPLE
  *	Created by Ziyi Tang
  *
  */
@@ -35,66 +35,20 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 #define MOD 1000000007
 
+set<int> ss;
 int main(){
+	int T;
+	cin >> T;
 	int n;
-	string line;
-	cin >> n >> line;
-	int minp = INF;
-
-	// brbrbr...
-	int cont = 0;
-	int wB = 0, wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 0){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
+	while(T--){
+		ss.clear();
+		cin >> n;
+		REP(i,0,n){
+			int tmp;
+			scanf("%d", &tmp);
+			ss.insert(tmp);
 		}
+		cout << ss.size() << endl;
 	}
-	minp = min(minp, cont);
-	// rbrbrb...
-	cont = 0;
-	wB = 0;
-	wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 1){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
-		}
-	}
-	minp = min(minp, cont);
-
-	cout << minp << endl;
 	return 0;
 }

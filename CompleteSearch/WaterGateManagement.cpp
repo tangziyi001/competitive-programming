@@ -1,7 +1,7 @@
 /*
- *	Codeforces 719B
+ *	UVA 12346
  *	Created by Ziyi Tang
- *
+ *	Enumerate all sets of gates and check if works
  */
 
 //#include <bits/stdc++.h>
@@ -35,66 +35,40 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 #define MOD 1000000007
 
+vpi all;
 int main(){
-	int n;
-	string line;
-	cin >> n >> line;
-	int minp = INF;
-
-	// brbrbr...
-	int cont = 0;
-	int wB = 0, wR = 0;
+	int n,m;
+	cin >> n;
 	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 0){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
+		int a,b;
+		cin >> a >> b;
+		all.push_back(make_pair(a,b));
+	}
+	cin >> m;
+	REP(j,0,m){
+		int v,t;
+		cin >> v >> t;
+		ll bit = 0LL;
+		ll minCost = INFL;
+		while(bit < (1<<n)){
+			ll curCost = 0LL;
+			ll curVol = 0LL;
+			REP(i,0,n){
+				if(bit&(1<<i)){
+					curCost += all[i].second;
+					curVol += all[i].first*t;
 				}
 			}
+			if(curVol >= v){
+				minCost = min(minCost, curCost);
+			}
+			bit++;
+		}
+		if(minCost == INFL){
+			printf("Case %d: IMPOSSIBLE\n", j+1);
 		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
+			printf("Case %d: %lld\n", j+1, minCost);
 		}
 	}
-	minp = min(minp, cont);
-	// rbrbrb...
-	cont = 0;
-	wB = 0;
-	wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 1){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
-		}
-	}
-	minp = min(minp, cont);
-
-	cout << minp << endl;
 	return 0;
 }

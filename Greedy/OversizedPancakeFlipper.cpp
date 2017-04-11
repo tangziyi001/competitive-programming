@@ -1,7 +1,7 @@
 /*
- *	Codeforces 719B
+ *	Google Code Jam Qualification Round 2017 A
  *	Created by Ziyi Tang
- *
+ *	Greedy
  */
 
 //#include <bits/stdc++.h>
@@ -36,65 +36,38 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MOD 1000000007
 
 int main(){
-	int n;
-	string line;
-	cin >> n >> line;
-	int minp = INF;
-
-	// brbrbr...
-	int cont = 0;
-	int wB = 0, wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 0){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
+	int T;
+	cin >> T;
+	REP(t,1,T+1){
+		string line;
+		int n;
+		cin >> line >> n;
+		int maxp = 0;
+		int idx = 0;
+		int sz = line.size();
+		while(idx <= sz-n){
+			if(line[idx] == '-'){
+				maxp++;
+				REP(i,idx,idx+n){
+					if(line[i] == '-') line[i] = '+';
+					else line[i] = '-';
 				}
 			}
+			idx++;
+		}
+		int flag = 1;
+		while(idx < sz){
+			if(line[idx] == '-'){
+				flag = 0;
+				break;
+			}
+			idx++;
+		}
+		if(flag){
+			printf("Case #%d: %d\n", t, maxp);
 		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
+			printf("Case #%d: IMPOSSIBLE\n", t);
 		}
 	}
-	minp = min(minp, cont);
-	// rbrbrb...
-	cont = 0;
-	wB = 0;
-	wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 1){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
-		}
-	}
-	minp = min(minp, cont);
-
-	cout << minp << endl;
 	return 0;
 }

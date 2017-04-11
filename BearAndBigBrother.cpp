@@ -1,5 +1,5 @@
 /*
- *	Codeforces 719B
+ *	Codeforces 791A
  *	Created by Ziyi Tang
  *
  */
@@ -36,65 +36,14 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MOD 1000000007
 
 int main(){
-	int n;
-	string line;
-	cin >> n >> line;
-	int minp = INF;
-
-	// brbrbr...
+	ll a,b;
 	int cont = 0;
-	int wB = 0, wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 0){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
-		}
+	cin >> a >> b;
+	while(a <= b){
+		cont++;
+		a*=3;
+		b*=2;
 	}
-	minp = min(minp, cont);
-	// rbrbrb...
-	cont = 0;
-	wB = 0;
-	wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 1){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
-		}
-	}
-	minp = min(minp, cont);
-
-	cout << minp << endl;
+	cout << cont << endl;
 	return 0;
 }

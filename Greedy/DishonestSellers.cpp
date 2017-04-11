@@ -1,7 +1,7 @@
 /*
- *	Codeforces 719B
+ *	Codeforces 779C
  *	Created by Ziyi Tang
- *
+ *	Greedy Algorithm
  */
 
 //#include <bits/stdc++.h>
@@ -35,66 +35,36 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 #define MOD 1000000007
 
+vi all1;
+vi all2;
+vpi all;
 int main(){
-	int n;
-	string line;
-	cin >> n >> line;
-	int minp = INF;
-
-	// brbrbr...
+	int n,k;
+	cin >> n >> k;
+	REP(i,0,n){
+		int tmp;
+		cin >> tmp;
+		all1.push_back(tmp);
+	}
 	int cont = 0;
-	int wB = 0, wR = 0;
 	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 0){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
+		int tmp;
+		cin >> tmp;
+		all2.push_back(tmp);
+		all.push_back(make_pair(all1[i]-tmp,i));
+		if(all[i].first < 0){
+			cont++;
 		}
 	}
-	minp = min(minp, cont);
-	// rbrbrb...
-	cont = 0;
-	wB = 0;
-	wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 1){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
-		}
+	cont = max(cont,k);
+	int sum = 0;
+	sort(all.begin(), all.end());
+	REP(i,0,cont){
+		sum += all1[all[i].second];
 	}
-	minp = min(minp, cont);
-
-	cout << minp << endl;
+	REP(i,cont,n){
+		sum += all2[all[i].second];
+	}
+	cout << sum << endl;
 	return 0;
 }

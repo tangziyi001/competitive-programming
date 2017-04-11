@@ -1,7 +1,7 @@
 /*
- *	Segment Tree for RMQ
- *	Created by Ziyi Tang
- *	O(logn)
+ *	USACO 2007 January Silver
+ *	Coded by Ziyi Tang
+ *	Min & Max Segment Trees
  */
 
 //#include <bits/stdc++.h>
@@ -32,8 +32,8 @@ const long INFL = (long)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
-#define MAXN 1000
-
+#define MAXN 50005
+#define MOD 1000000007
 
 struct SegmentTree{
 	vi A;
@@ -100,36 +100,25 @@ struct SegmentTree{
 };
 
 vi all;
+vi inv;
 int main(){
-	int n;
-	cin >> n; // Numbers
-
-	// Clear
-	all.clear();
+	int n,m;
+	cin >> n >> m;
 	all.assign(n,0);
-
-	// Input
-	int ttmp;
+	inv.assign(n,0);
 	REP(i,0,n){
-		cin >> ttmp;
-		all[i] = ttmp;
+		int tmp;
+		scanf("%d", &tmp);
+		all[i] = tmp;
+		inv[i] = -tmp;
 	}
-
-	SegmentTree st(all);
-
-	// Test
-	int l,r;
-	int i,v;
-	cin >> i >> v;
-
-	//////// Update
-	all[i] = v; // Must change the original array
-	st.update(i,v);
-	////////
-
-	while(cin >> l >> r){
-		int p = st.rmq(l,r);
-		cout << p << " is " << all[p] << endl;
+	SegmentTree stmin(all);
+	SegmentTree stmax(inv);
+	REP(i,0,m){
+		int a,b;
+		scanf("%d %d", &a, &b);
+		a--;b--;
+		cout << all[stmax.rmq(a,b)] - all[stmin.rmq(a,b)] << endl;
 	}
 	return 0;
 }

@@ -1,5 +1,5 @@
 /*
- *	Codeforces 719B
+ *	Code Jam to I/O 2017 for Women B
  *	Created by Ziyi Tang
  *
  */
@@ -36,65 +36,30 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MOD 1000000007
 
 int main(){
-	int n;
-	string line;
-	cin >> n >> line;
-	int minp = INF;
-
-	// brbrbr...
-	int cont = 0;
-	int wB = 0, wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 0){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
+	int T;
+	cin >> T;
+	REP(t,1,T+1){
+		double tmp;
+		vector<double> all;
+		int n;
+		cin >> n;
+		REP(i,0,2*n){
+			cin >> tmp;
+			all.push_back(tmp);
 		}
-	}
-	minp = min(minp, cont);
-	// rbrbrb...
-	cont = 0;
-	wB = 0;
-	wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 1){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
+		vector<double> a,b;
+		sort(all.begin(), all.end());
+		REP(i,0,n){
+			a.push_back(all[i]);
 		}
+		REP(i,0,n){
+			b.push_back(all[2*n-1-i]);
+		}
+		double re = 1.0;
+		REP(i,0,n){
+			re *= (1-a[i]*b[i]);
+		}
+		printf("Case #%d: %.7f\n", t,re);
 	}
-	minp = min(minp, cont);
-
-	cout << minp << endl;
 	return 0;
 }

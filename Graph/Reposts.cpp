@@ -1,7 +1,7 @@
 /*
- *	Codeforces 719B
+ *	Codeforces 522A - Reposts
  *	Created by Ziyi Tang
- *
+ *  DFS to find the max path
  */
 
 //#include <bits/stdc++.h>
@@ -35,66 +35,49 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 #define MOD 1000000007
 
+map<string,int> mm;
+vvi all;
+int dfs(int now){
+	int tsz = all[now].size();
+	int sum = 0;
+	REP(i,0,tsz){
+		int nxt = all[now][i];
+		sum = max(sum, dfs(nxt));
+	}
+	return 1+sum;
+}
+string low(string now){
+	string re;
+	REP(i,0,now.size()){
+		char a = now[i];
+		if(a >= 'A' && a <= 'Z'){
+			a = (char)(a-'A'+'a');
+		}
+		re += a;
+	}
+	return re;
+}
 int main(){
 	int n;
-	string line;
-	cin >> n >> line;
-	int minp = INF;
-
-	// brbrbr...
-	int cont = 0;
-	int wB = 0, wR = 0;
+	cin >> n;
+	int idx = 0;
+	all.assign(500,vi(0,0));
+	mm["polycarp"]=idx++;
 	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 0){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
+		string a,r,b;
+		cin >> a >> r >> b;
+		a = low(a);
+		b = low(b);
+		//cout << a << " " << b << endl;
+		if(!mm.count(a)){
+			mm[a] = idx++;
 		}
-	}
-	minp = min(minp, cont);
-	// rbrbrb...
-	cont = 0;
-	wB = 0;
-	wR = 0;
-	REP(i,0,n){
-		// 0,2,4...
-		if((i&1) == 1){
-			if(line[i] == 'r'){
-				if(wB > 0){
-					wB--;
-				} else {
-					cont++;
-					wR++;
-				}
-			}
-		} else {
-			if(line[i] == 'b'){
-				if(wR > 0){
-					wR--;
-				} else {
-					cont++;
-					wB++;
-				}
-			}
+		if(!mm.count(b)){
+			mm[b] = idx++;
 		}
+		all[mm[b]].push_back(mm[a]);
 	}
-	minp = min(minp, cont);
-
-	cout << minp << endl;
+	int re = dfs(0);
+	cout << re << endl;
 	return 0;
 }
