@@ -1,7 +1,7 @@
 /*
- *	Binary Indexed Tree
+ *	CodeForces 484A
  *	Created by Ziyi Tang
- *	
+ *
  */
 
 //#include <bits/stdc++.h>
@@ -27,47 +27,28 @@ typedef vector<vi> vvi;
 typedef pair<int,int> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
-const int INF = (int)1E9;
-const long INFL = (long)1E18;
+const int INF = 0x3f3f3f;
+const ll INFL = (ll)1E18;
 const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define REP(i,s,t) for(int i=(s);i<(t);i++)
 #define FILL(x,v) memset(x,v,sizeof(x))
 #define MAXN 1000
+#define MOD 1000000007
 
-int ft[MAXN+1];
-int sz;
-vi all;
-
-struct BITree{
-	// Start Index 1
-	int n_;
-	int bt[MAXN];
-	BITree(int n) : n_(n) {
-		FILL(bt,0);
-	}
-	int req(int b){
-		int sum = 0;
-		for(; b; b-=(b&-b)){
-			sum+=bt[b];
-		}
-		return sum;
-	}
-	int req(int a, int b){
-		return req(b)-req(a);
-	}
-	void update(int i, int val){
-		for(; i <= n_; i+=(i&-i)){
-			bt[i] += val;
-		}
-	}
-	void clear(){
-		FILL(bt,0);
-	}
-};
 int main(){
-	
-	// Clear
-	all.clear();
-
+	int n;
+	cin >> n;
+	REP(i,0,n){
+		ll l,r;
+		cin >> l >> r;
+		REP(i,0,64){
+			ll tmp = (l | (1LL << (62-i)));
+			cout << tmp << endl;
+			if(tmp <= r){
+				l = tmp;
+			}
+		}
+		cout << l << endl;
+	}
 	return 0;
 }

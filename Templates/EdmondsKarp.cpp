@@ -50,11 +50,11 @@ void augment(int v, int minEdge){
 		res[v][p[v]] += f;
 	}
 }
-void init(int s_, int t_){
+void init(){
 	// Clear
 	p.clear();
 	FILL(res,0);
-	s = s_; t = t_;
+	
 }
 
 int run(){
