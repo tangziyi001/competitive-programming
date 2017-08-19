@@ -1,7 +1,7 @@
 /*
- *	
+ *	Goldman Sachs CodeSprint 3
  *	Created by Ziyi Tang
- *
+ *	Stock Buying DP
  */
 
 //#include <bits/stdc++.h>
@@ -39,7 +39,29 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 #define MOD 1000000007
 
+int dp[40][15];
+vi all;
 int main(){
-	
+	int test;
+	cin >> test;
+	while(test--){
+		all.clear();
+		int k,n;
+		cin >> k >> n;
+		REP(i,0,n){
+			int tmp; cin >> tmp;
+			all.push_back(tmp);
+		}
+		FILL(dp,0);
+		REP(j,1,k+1){
+			REP(i,1,n+1){
+				dp[i][j] = dp[i-1][j];
+				REP(s,0,i){
+					dp[i][j] = max(dp[i][j], all[i-1]-all[s]+dp[s][j-1]);
+				}
+			}
+		}
+		cout << dp[n][k] << endl;
+	}
 	return 0;
 }

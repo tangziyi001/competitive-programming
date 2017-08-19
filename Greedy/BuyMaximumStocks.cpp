@@ -1,7 +1,7 @@
 /*
- *	
+ *	Goldman Sachs CodeSprint 2
  *	Created by Ziyi Tang
- *
+ *	Greedy Sort
  */
 
 //#include <bits/stdc++.h>
@@ -24,7 +24,7 @@ using namespace std;
 typedef long long ll;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
-typedef pair<int,int> pi;
+typedef pair<ll,ll> pi;
 typedef vector<pi> vpi;
 typedef vector<vpi> vvpi;
 typedef vector<double> vd;
@@ -39,7 +39,23 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 #define MOD 1000000007
 
+vpi all;
 int main(){
-	
+	int n;
+	cin >> n;
+	REP(i,0,n){
+		ll tmp; cin >> tmp;
+		all.push_back(make_pair(tmp, (ll)i+1));
+	}
+	ll k; cin >> k;
+	sort(all.begin(), all.end());
+	ll total = 0LL;
+	ll rem = k;
+	REP(i,0,n){
+		ll num = min(all[i].second, rem/all[i].first);
+		total += num;
+		rem -= num*all[i].first;
+	}
+	cout << total << endl;
 	return 0;
 }

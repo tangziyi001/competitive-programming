@@ -1,5 +1,5 @@
 /*
- *	
+ *	Goldman Sachs CodeSprint 1
  *	Created by Ziyi Tang
  *
  */
@@ -39,7 +39,27 @@ const int dir[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 #define MAXN 1000
 #define MOD 1000000007
 
+vi all;
 int main(){
-	
+	int test;
+	cin >> test;
+	while(test--){
+		all.clear();
+		int n,k,x,d; cin >> n >> k >> x >> d;
+		REP(i,0,n){
+			int tmp;
+			cin >> tmp;
+			all.push_back(tmp);
+		}
+		double cost = 0.0;
+		REP(i,0,n){
+			cost += max((double)k, x*all[i]*1.0/100);
+		}
+		if(cost <= d){
+			cout << "fee" << endl;
+		} else {
+			cout << "upfront" << endl;
+		}
+	}
 	return 0;
 }
